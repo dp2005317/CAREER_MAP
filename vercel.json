@@ -1,0 +1,5 @@
+{
+  "name": "career-map-ai",
+  "framework": "nextjs",
+  "alias": ["careermap-ai.vercel.app"]
+}
