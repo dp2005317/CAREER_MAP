@@ -10,7 +10,9 @@ import {
   Briefcase, 
   ChevronRight, 
   Sparkles,
-  Compass
+  Compass,
+  GraduationCap,
+  LayoutDashboard
 } from "lucide-react";
 import Image from "next/image";
 
@@ -41,11 +43,13 @@ export function AppSidebar({
   };
 
   const navItems = [
+    { id: "overview", label: "Dashboard", icon: LayoutDashboard, hasChevron: true },
     { id: "search", label: "Search", icon: Search },
     { id: "saved", label: "Saved Jobs", icon: Bookmark, hasChevron: true },
     { id: "map", label: "Map View", icon: MapIcon, hasChevron: true },
     { id: "companies", label: "Companies", icon: Building2, hasChevron: true },
     { id: "jobs", label: "All Jobs", icon: Briefcase },
+    { id: "courses", label: "Free Courses", icon: GraduationCap, hasChevron: true, external: true },
   ];
 
   return (
@@ -92,6 +96,30 @@ export function AppSidebar({
           {navItems.map((item) => {
             const isActive = activeTab === item.id;
             const Icon = item.icon;
+            const isExternal = (item as any).external;
+            
+            if (isExternal) {
+              return (
+                <a
+                  key={item.id}
+                  href="/courses"
+                  className={`flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer no-underline ${
+                    isActive
+                      ? "neu-btn-primary"
+                      : "neu-btn text-gray-700 hover:text-gray-900"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-blue-600"}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.hasChevron && (
+                    <ChevronRight className={`w-3.5 h-3.5 ${isActive ? "text-white/80" : "text-gray-400"}`} />
+                  )}
+                </a>
+              );
+            }
+
             return (
               <button
                 key={item.id}

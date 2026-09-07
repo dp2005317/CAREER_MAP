@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { generateJobsNearCoordinates } from '@/lib/mockData';
+import { generateJobsNearCoordinates } from '@/backend/mockData';
 import fs from 'fs';
 import path from 'path';
 

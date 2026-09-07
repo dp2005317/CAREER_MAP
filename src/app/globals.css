@@ -258,3 +258,180 @@
   box-shadow: 3px 3px 10px var(--neu-shadow-dark), -3px -3px 10px var(--neu-shadow-light);
   border: 1px solid rgba(255, 255, 255, 0.85);
 }
+
+/* ═══════════════════════════════════════════
+   Premium 3D & Glass Design System
+   ═══════════════════════════════════════════ */
+
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-4px);
+}
+
+/* 3D Card Depth */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-3d:hover {
+  transform: translateZ(20px) scale(1.02);
+}
+
+/* Gradient Border Glow */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+/* Animated Gradient Background */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ec4899, #06b6d4);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Shine Sweep Effect */
+@keyframes shine-sweep {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+.shine-hover:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shine-sweep 0.8s ease;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(1deg); }
+  66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.4); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Perspective Container */
+.perspective-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Layered Shadow System */
+.shadow-depth-sm {
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 2px 4px rgba(0,0,0,0.04),
+    0 4px 8px rgba(0,0,0,0.04);
+}
+
+.shadow-depth-md {
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 2px 4px rgba(0,0,0,0.04),
+    0 4px 8px rgba(0,0,0,0.04),
+    0 8px 16px rgba(0,0,0,0.04);
+}
+
+.shadow-depth-lg {
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 2px 4px rgba(0,0,0,0.04),
+    0 4px 8px rgba(0,0,0,0.04),
+    0 8px 16px rgba(0,0,0,0.04),
+    0 16px 32px rgba(0,0,0,0.06);
+}
+
+/* Professional Card Hover Lift */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.1),
+    0 40px 80px rgba(0,0,0,0.05);
+}
+
+/* Glassmorphism Dark */
+.glass-dark {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Text Gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Transform GPU for smoother animations */
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}

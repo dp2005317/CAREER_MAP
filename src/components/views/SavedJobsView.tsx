@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { Job } from "@/lib/mockData";
+import { Job } from "@/backend/mockData";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
-import { getExactJobApplyUrl } from "@/lib/jobUrls";
+import { getExactJobApplyUrl } from "@/backend/jobUrls";
 import { Bookmark, MapPin, ExternalLink, Trash2, Map, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 

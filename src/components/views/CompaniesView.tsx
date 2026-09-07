@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Job } from "@/lib/mockData";
+import { Job } from "@/backend/mockData";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
 import { MapPin, ArrowRight, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";

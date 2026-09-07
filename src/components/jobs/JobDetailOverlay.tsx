@@ -3,9 +3,9 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Building2, MapPin, DollarSign, Briefcase, Clock, Sparkles, ExternalLink, Bookmark } from "lucide-react";
-import { Job } from "@/lib/mockData";
+import { Job } from "@/backend/mockData";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
-import { getExactJobApplyUrl } from "@/lib/jobUrls";
+import { getExactJobApplyUrl } from "@/backend/jobUrls";
 
 interface JobDetailOverlayProps {
   job: Job | null;

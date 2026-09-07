@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
 import Image from "next/image";
@@ -11,11 +12,21 @@ import {
   Compass, 
   ArrowRight, 
   Briefcase, 
-  Zap
+  Zap,
+  User as UserIcon
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/database/authContext";
 
 export default function Home() {
+  const router = useRouter();
+  const { user, profile } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/dashboard?tab=overview");
+    }
+  }, [user, router]);
   const topCompanies = [
     "Google", "Microsoft", "Apple", "Amazon", 
     "Meta", "Flipkart", "Zomato", "Swiggy", 
@@ -47,8 +58,11 @@ export default function Home() {
 
         {/* Center: Perfectly Centered Pill Navigation */}
         <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 text-xs font-bold text-gray-700 neu-pill px-3 py-1.5 z-10">
-          <Link href="/dashboard?tab=map" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
+          <Link href="/dashboard?tab=overview" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
             Map Discovery
+          </Link>
+          <Link href="/courses" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
+            Free Courses
           </Link>
           <Link href="/dashboard?tab=companies" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
             Companies
@@ -60,13 +74,23 @@ export default function Home() {
 
         {/* Right: Action Button */}
         <div className="flex items-center z-10">
-          <Link
-            href="/dashboard?tab=map"
-            className="neu-btn-primary px-3 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer whitespace-nowrap"
-          >
-            <span>Launch Map</span>
-            <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 hidden sm:block" />
-          </Link>
+          {user ? (
+            <Link
+              href="/dashboard"
+              className="neu-btn-primary px-3 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer whitespace-nowrap"
+            >
+              <span>Dashboard</span>
+              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 hidden sm:block" />
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="neu-btn-primary px-3 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 sm:gap-2 cursor-pointer whitespace-nowrap"
+            >
+              <span>Login</span>
+              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 hidden sm:block" />
+            </Link>
+          )}
         </div>
       </header>
 
@@ -103,7 +127,7 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 justify-center mb-12 sm:mb-16 w-full sm:w-auto"
         >
-          <Link href="/dashboard?tab=map" className="w-full sm:w-auto">
+          <Link href="/dashboard?tab=overview" className="w-full sm:w-auto">
             <button className="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 neu-btn-primary text-sm font-bold flex items-center justify-center gap-2.5 cursor-pointer">
               <span>Launch Interactive Map</span>
               <ArrowRight className="w-4 h-4" />
@@ -244,11 +268,10 @@ export default function Home() {
         </div>
       </main>
 
-      {/* 6. Footer */}
       <footer className="w-full border-t border-slate-200/80 bg-[#EEF2F6]/90 backdrop-blur-md py-6 px-4 sm:px-6 text-center text-[10px] sm:text-xs text-gray-400 font-medium z-10 flex flex-col sm:flex-row items-center justify-between max-w-6xl mx-auto gap-3 sm:gap-0">
         <p>© 2026 CareerMap AI. Built for tech talent in India.</p>
         <div className="flex items-center gap-3 sm:gap-4">
-          <Link href="/dashboard?tab=map" className="text-blue-600 font-bold hover:underline">
+          <Link href="/dashboard?tab=overview" className="text-blue-600 font-bold hover:underline">
             Launch App
           </Link>
           <span>•</span>

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { Job } from "@/lib/mockData";
+import { Job } from "@/backend/mockData";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
-import { getExactJobApplyUrl } from "@/lib/jobUrls";
+import { getExactJobApplyUrl } from "@/backend/jobUrls";
 import { 
   Search, 
   MapPin, 

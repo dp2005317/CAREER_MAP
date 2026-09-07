@@ -49,3 +49,6 @@ next-env.d.ts
 # temporary / scratch test scripts
 test_*.js
 populate.js
+
+# Embedded repos
+Carrer_Map/

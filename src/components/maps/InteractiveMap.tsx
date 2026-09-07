@@ -2,7 +2,7 @@
 
 import React from "react";
 import Map, { Marker, NavigationControl, GeolocateControl } from "react-map-gl/maplibre";
-import { Job } from "@/lib/mockData";
+import { Job } from "@/backend/mockData";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, MapPin } from "lucide-react";
 
@@ -16,6 +16,7 @@ interface InteractiveMapProps {
   onSearchChange?: (val: string) => void;
   activeFilter?: string;
   onFilterChange?: (filter: string) => void;
+  hasResumeSkills?: boolean;
 }
 
 export const InteractiveMap = ({
@@ -28,8 +29,11 @@ export const InteractiveMap = ({
   onSearchChange,
   activeFilter = "All",
   onFilterChange,
+  hasResumeSkills = false,
 }: InteractiveMapProps) => {
-  const filters = ["All", "Full Time", "Internship", "Remote"];
+  const filters = hasResumeSkills 
+    ? ["Recommended", "All", "Full Time", "Internship", "Remote"]
+    : ["All", "Full Time", "Internship", "Remote"];
 
   return (
     <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-sm border border-gray-200/80 bg-slate-50">
@@ -59,7 +63,7 @@ export const InteractiveMap = ({
                   : "neu-btn text-gray-700 hover:text-gray-900"
               }`}
             >
-              {f === "All" ? "All Roles" : f}
+              {f === "Recommended" ? "✨ Recommended" : (f === "All" ? "All Roles" : f)}
             </button>
           ))}
         </div>
@@ -68,28 +72,8 @@ export const InteractiveMap = ({
       <Map
         {...viewState}
         onMove={onMove}
-        mapStyle={{
-          version: 8,
-          sources: {
-            carto: {
-              type: "raster",
-              tiles: [
-                "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-              ],
-              tileSize: 256,
-              attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
-            }
-          },
-          layers: [
-            {
-              id: "carto-tiles",
-              type: "raster",
-              source: "carto",
-              minzoom: 0,
-              maxzoom: 19
-            }
-          ]
-        }}
+        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+        mapStyle="mapbox://styles/mapbox/light-v11"
         style={{ width: "100%", height: "100%" }}
         minZoom={3}
         maxBounds={[

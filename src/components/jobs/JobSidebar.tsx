@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, DollarSign, Menu, X, Navigation } from 'lucide-react';
-import { Job, JOB_TYPES } from '@/lib/mockData';
+import { Job, JOB_TYPES } from '@/backend/mockData';
 import { LiquidGlass } from '@/components/layout/LiquidGlass';
 import { CompanyLogo } from '@/components/jobs/CompanyLogo';
 import Image from 'next/image';

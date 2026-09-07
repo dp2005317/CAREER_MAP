@@ -3,9 +3,11 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { MoreHorizontal, ExternalLink, MapPin, DollarSign, Bookmark, ArrowRight } from "lucide-react";
-import { Job } from "@/lib/mockData";
+import { Job } from "@/backend/mockData";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
-import { getExactJobApplyUrl } from "@/lib/jobUrls";
+import { getExactJobApplyUrl } from "@/backend/jobUrls";
+import { calculateJobMatch } from "@/backend/recommendations";
+import { Sparkles } from "lucide-react";
 
 interface JobCardRowProps {
   jobs: Job[];
@@ -14,6 +16,8 @@ interface JobCardRowProps {
   onOpenDetails?: (job: Job) => void;
   savedJobIds?: Set<string>;
   onToggleSave?: (jobId: string) => void;
+  userSkills?: string[];
+  targetRole?: string;
 }
 
 function formatSalaryBadge(salary?: string) {
@@ -30,7 +34,9 @@ export function JobCardRow({
   onJobSelect,
   onOpenDetails,
   savedJobIds,
-  onToggleSave
+  onToggleSave,
+  userSkills,
+  targetRole
 }: JobCardRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -116,11 +122,25 @@ export function JobCardRow({
 
               {/* Body: Title & Meta Info */}
               <div className="mb-3">
-                <h3 className="font-bold text-gray-900 text-sm line-clamp-1 group-hover:text-blue-600 transition-colors">
-                  {job.title}
-                </h3>
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h3 className="font-bold text-gray-900 text-sm line-clamp-1 group-hover:text-blue-600 transition-colors">
+                    {job.title}
+                  </h3>
+                  {userSkills && userSkills.length > 0 && (() => {
+                    const match = calculateJobMatch(job, userSkills, targetRole);
+                    if (match.matchScore >= 50) {
+                      return (
+                        <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500 text-white shrink-0 shadow-xs flex items-center gap-1">
+                          <Sparkles className="w-2.5 h-2.5" />
+                          <span>{match.matchScore}%</span>
+                        </span>
+                      );
+                    }
+                    return null;
+                  })()}
+                </div>
                 
-                <div className="flex items-center gap-2 mt-1.5 text-[11px] font-semibold text-gray-500">
+                <div className="flex items-center gap-2 mt-1.5 text-[11px] font-semibold text-gray-500 flex-wrap">
                   <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60 font-bold">
                     {formatSalaryBadge(job.salary)}
                   </span>
@@ -133,6 +153,27 @@ export function JobCardRow({
                     {job.type}
                   </span>
                 </div>
+
+                {userSkills && userSkills.length > 0 && (() => {
+                  const match = calculateJobMatch(job, userSkills, targetRole);
+                  if (match.matchedSkills.length > 0) {
+                    return (
+                      <div className="flex items-center gap-1 overflow-hidden mt-2">
+                        {match.matchedSkills.slice(0, 2).map((s) => (
+                          <span key={s} className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200/60 truncate">
+                            ✓ {s}
+                          </span>
+                        ))}
+                        {match.matchedSkills.length > 2 && (
+                          <span className="text-[9px] font-bold text-gray-400">
+                            +{match.matchedSkills.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
               </div>
 
               {/* Footer: Apply Button & Details */}

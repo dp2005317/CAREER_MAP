@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { AuthProvider } from "@/database/authContext";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://careermap-ai.vercel.app"),
@@ -35,7 +36,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className="h-full antialiased font-sans"
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Job, generateJobsNearCoordinates } from "@/lib/mockData";
+import { Job, generateJobsNearCoordinates } from "@/backend/mockData";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { InteractiveMap } from "@/components/maps/InteractiveMap";
@@ -10,22 +10,32 @@ import { JobDetailOverlay } from "@/components/jobs/JobDetailOverlay";
 import { CompaniesView } from "@/components/views/CompaniesView";
 import { AllJobsView } from "@/components/views/AllJobsView";
 import { SavedJobsView } from "@/components/views/SavedJobsView";
+import { StudentDashboardView } from "@/components/views/StudentDashboardView";
 import { useRouter } from "next/navigation";
-import { auth } from "@/lib/firebase/config";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { useAuth, UserCertificate } from "@/database/authContext";
+import { OnboardingModal } from "@/components/profile/OnboardingModal";
+import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
+import { CertificateModal } from "@/components/courses/CertificateModal";
+import { calculateJobMatch } from "@/backend/recommendations";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { user, profile, certificates, courseProgress } = useAuth();
+
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [inspectedJob, setInspectedJob] = useState<Job | null>(null);
-  const [activeTab, setActiveTab] = useState("map");
+  const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isLoadingLocation, setIsLoadingLocation] = useState(true);
   const [savedJobIds, setSavedJobIds] = useState<Set<string>>(new Set());
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Modals
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
+  const [viewingCertificate, setViewingCertificate] = useState<UserCertificate | null>(null);
 
   // Read query params on initial load
   useEffect(() => {
@@ -33,14 +43,30 @@ export default function DashboardPage() {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get("tab");
       const companyParam = params.get("company");
-      if (tabParam && ["map", "companies", "saved", "jobs", "search"].includes(tabParam)) {
+      const onboardingParam = params.get("onboarding");
+
+      if (tabParam && ["overview", "map", "companies", "saved", "jobs", "search"].includes(tabParam)) {
         setActiveTab(tabParam);
       }
       if (companyParam) {
         setSearchQuery(companyParam);
       }
+      if (onboardingParam === "prompt") {
+        setIsOnboardingOpen(true);
+      }
     }
   }, []);
+
+  // Auto prompt onboarding if user has logged in but has no skills/resume
+  useEffect(() => {
+    if (user && profile && !profile.skills?.length && !profile.resumeName) {
+      const hasDismissed = sessionStorage.getItem("careermap_onboarding_dismissed");
+      if (!hasDismissed) {
+        setIsOnboardingOpen(true);
+        sessionStorage.setItem("careermap_onboarding_dismissed", "true");
+      }
+    }
+  }, [user, profile]);
 
   // Load saved jobs from localStorage
   useEffect(() => {
@@ -55,6 +81,15 @@ export default function DashboardPage() {
   }, []);
 
   const handleToggleSave = (jobId: string) => {
+    if (!user) {
+      router.push("/login?redirect=/dashboard");
+      return;
+    }
+    if (!profile?.skills?.length && !profile?.resumeName) {
+      setIsOnboardingOpen(true);
+      return;
+    }
+
     setSavedJobIds((prev) => {
       const next = new Set(prev);
       if (next.has(jobId)) {
@@ -65,7 +100,7 @@ export default function DashboardPage() {
       try {
         localStorage.setItem("careermap_saved_jobs", JSON.stringify(Array.from(next)));
       } catch (e) {
-        console.error("Error saving to localStorage", e);
+        console.error("Error saving job", e);
       }
       return next;
     });
@@ -78,13 +113,6 @@ export default function DashboardPage() {
     pitch: 0,
     bearing: 0
   });
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     const fetchRealJobs = async (lat: number, lng: number) => {
@@ -118,14 +146,12 @@ export default function DashboardPage() {
           setViewState((prev) => ({
             ...prev,
             longitude: lng,
-            latitude: lat,
-            zoom: 9.5
+            latitude: lat
           }));
 
           fetchRealJobs(lat, lng);
         },
-        (error) => {
-          console.error("Geolocation error:", error);
+        () => {
           fetchRealJobs(22.5726, 88.3639);
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -136,7 +162,7 @@ export default function DashboardPage() {
   }, []);
 
   const filteredJobs = useMemo(() => {
-    return jobs.filter((job) => {
+    let result = jobs.filter((job) => {
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
         !q ||
@@ -144,12 +170,24 @@ export default function DashboardPage() {
         job.company.toLowerCase().includes(q) ||
         job.location.toLowerCase().includes(q);
 
-      const matchesFilter =
-        activeFilter === "All" || job.type === activeFilter;
+      if (!matchesSearch) return false;
 
-      return matchesSearch && matchesFilter;
+      if (activeFilter === "Recommended") return true;
+      if (activeFilter === "All") return true;
+      return job.type === activeFilter;
     });
-  }, [jobs, searchQuery, activeFilter]);
+
+    // If Recommended filter is active, sort by highest match score
+    if (activeFilter === "Recommended" && profile?.skills?.length) {
+      result = [...result].sort((a, b) => {
+        const scoreA = calculateJobMatch(a, profile.skills, profile.targetRole).matchScore;
+        const scoreB = calculateJobMatch(b, profile.skills, profile.targetRole).matchScore;
+        return scoreB - scoreA;
+      });
+    }
+
+    return result;
+  }, [jobs, searchQuery, activeFilter, profile]);
 
   const savedJobsList = useMemo(() => {
     return jobs.filter((j) => savedJobIds.has(j.id));
@@ -189,6 +227,8 @@ export default function DashboardPage() {
 
   const getHeaderTitle = () => {
     switch (activeTab) {
+      case "overview":
+        return "Student Dashboard";
       case "saved":
         return "Saved Opportunities";
       case "companies":
@@ -202,46 +242,72 @@ export default function DashboardPage() {
     }
   };
 
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
-      url.searchParams.set("tab", tab);
-      window.history.replaceState({}, "", url.toString());
-    }
-  };
-
   return (
-    <div className="flex h-screen w-full bg-[#EEF2F6] font-sans text-gray-900 overflow-hidden select-none">
-      {/* 1. Left Navigation Sidebar */}
+    <div className="flex h-screen w-screen overflow-hidden bg-[#EEF2F6] text-gray-800 antialiased font-sans">
+      {/* Dynamic Left Sidebar */}
       <AppSidebar
         activeTab={activeTab}
         onTabChange={(tab) => {
-          handleTabChange(tab);
+          if (!user && tab !== "map") {
+            router.push("/login?redirect=/dashboard");
+            return;
+          }
+          if (tab !== "map" && tab !== "overview" && !profile?.skills?.length && !profile?.resumeName) {
+            setIsOnboardingOpen(true);
+            return;
+          }
+          setActiveTab(tab);
           setIsMobileMenuOpen(false);
         }}
         onSearchChange={(q) => {
+          if (!user) {
+            router.push("/login?redirect=/dashboard");
+            return;
+          }
+          if (!profile?.skills?.length && !profile?.resumeName) {
+            setIsOnboardingOpen(true);
+            return;
+          }
           setSearchQuery(q);
         }}
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* 2. Main Dashboard Layout Area */}
-      <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
-        {/* Top Header */}
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
+        {/* Header */}
         <DashboardHeader
           title={getHeaderTitle()}
           nearestDistanceKm={nearestDistance}
-          user={currentUser}
+          user={user || profile}
+          hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onOpenProfileDrawer={() => setIsProfileDrawerOpen(true)}
+          onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
 
-        {/* Central Content Area Switcher */}
+        {/* Tab 0: Overview View */}
+        {activeTab === "overview" && (
+          <StudentDashboardView
+            user={user}
+            profile={profile}
+            savedJobs={savedJobsList}
+            certificates={certificates}
+            courseProgress={courseProgress}
+            onGoToSavedJobs={() => setActiveTab("saved")}
+            onGoToCourses={() => router.push("/courses")}
+            onOpenProfile={() => setIsProfileDrawerOpen(true)}
+            onOpenJob={handleOpenDetails}
+            onOpenCertificate={setViewingCertificate}
+          />
+        )}
+
+        {/* Tab 1: Map View */}
         {activeTab === "map" && (
-          <main className="flex-1 flex flex-col p-4 gap-4 overflow-hidden min-h-0">
-            {/* Upper: Embedded Interactive Map */}
-            <div className="flex-1 w-full min-h-[300px] relative rounded-3xl overflow-hidden shadow-sm">
+          <main className="flex-1 flex flex-col min-h-0 relative p-3 sm:p-4 gap-3 sm:gap-4 overflow-hidden">
+            {/* Top Area: Map View */}
+            <div className="flex-1 min-h-0 relative rounded-3xl overflow-hidden">
               <InteractiveMap
                 jobs={filteredJobs}
                 selectedJob={selectedJob}
@@ -252,19 +318,12 @@ export default function DashboardPage() {
                 onSearchChange={setSearchQuery}
                 activeFilter={activeFilter}
                 onFilterChange={setActiveFilter}
+                hasResumeSkills={!!profile?.skills?.length}
               />
             </div>
 
-            {/* Lower: Horizontal Job Cards Deck */}
-            <div className="shrink-0 w-full">
-              <div className="flex items-center justify-between px-1 mb-2">
-                <span className="text-xs font-bold text-gray-700 uppercase tracking-wider">
-                  Explore Opportunities ({filteredJobs.length})
-                </span>
-                <span className="text-[11px] font-semibold text-blue-600">
-                  Sorted by Proximity
-                </span>
-              </div>
+            {/* Bottom Area: Job Card Row */}
+            <div className="h-auto shrink-0 z-10">
               <JobCardRow
                 jobs={filteredJobs}
                 selectedJob={selectedJob}
@@ -272,6 +331,8 @@ export default function DashboardPage() {
                 onOpenDetails={handleOpenDetails}
                 savedJobIds={savedJobIds}
                 onToggleSave={handleToggleSave}
+                userSkills={profile?.skills}
+                targetRole={profile?.targetRole}
               />
             </div>
           </main>
@@ -310,6 +371,35 @@ export default function DashboardPage() {
         isSaved={inspectedJob ? savedJobIds.has(inspectedJob.id) : false}
         onToggleSave={handleToggleSave}
       />
+
+      {/* Onboarding & Resume Upload Modal */}
+      <OnboardingModal
+        isOpen={isOnboardingOpen}
+        onClose={() => setIsOnboardingOpen(false)}
+        onComplete={() => {
+          setActiveFilter("Recommended");
+        }}
+      />
+
+      {/* User Profile Drawer */}
+      <UserProfileDrawer
+        isOpen={isProfileDrawerOpen}
+        onClose={() => setIsProfileDrawerOpen(false)}
+        onOpenResumeUpload={() => {
+          setIsProfileDrawerOpen(false);
+          setIsOnboardingOpen(true);
+        }}
+        onViewCertificate={(cert) => setViewingCertificate(cert)}
+      />
+
+      {/* Certificate Modal */}
+      {viewingCertificate && (
+        <CertificateModal
+          isOpen={!!viewingCertificate}
+          onClose={() => setViewingCertificate(null)}
+          certificate={viewingCertificate}
+        />
+      )}
 
       {/* Loading Overlay */}
       {isLoadingLocation && (
