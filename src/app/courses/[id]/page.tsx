@@ -161,8 +161,8 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
             </div>
           )}
 
-          <div className="flex-1 flex flex-col lg:flex-row gap-6 min-h-0 overflow-hidden">
-            <div className="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scrollbar pr-1">
+          <div className="flex-1 flex flex-col lg:flex-row gap-6 lg:min-h-0 lg:overflow-hidden">
+            <div className="flex-1 flex flex-col lg:min-h-0 lg:overflow-y-auto custom-scrollbar lg:pr-1">
               <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-md border border-gray-200/80 bg-black shrink-0">
                 <iframe
                   key={embedSrc}
@@ -251,7 +251,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
               </div>
             </div>
 
-            <div className="w-full lg:w-80 bg-white border border-gray-200/80 rounded-3xl shadow-sm flex flex-col shrink-0 overflow-hidden">
+            <div className="w-full lg:w-80 bg-white border border-gray-200/80 rounded-3xl shadow-sm flex flex-col shrink-0 lg:overflow-hidden">
               <div className="p-4 bg-gray-50/80 border-b border-gray-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-blue-600" />
@@ -262,7 +262,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
                 </span>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2 custom-scrollbar">
+              <div className="flex-1 lg:overflow-y-auto max-h-[400px] lg:max-h-none p-3 flex flex-col gap-2 custom-scrollbar overflow-y-auto">
                 {modules.map((mod, idx) => {
                   const isCompleted = isModuleCompleted(course.id, mod.id);
                   const isActive = activeModuleIndex === idx;
