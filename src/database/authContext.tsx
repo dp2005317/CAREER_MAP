@@ -215,14 +215,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
+  const executeAuthWithRetry = async <T,>(action: () => Promise<T>, retries = 2): Promise<T> => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        return await action();
+      } catch (err: any) {
+        const msg = (err?.message || "") + " " + (err?.code || "");
+        if (
+          msg.includes("Database is closing") ||
+          msg.includes("closing/hidden") ||
+          msg.includes("database-error")
+        ) {
+          console.warn(`Transient database storage error during auth, retrying (${i + 1}/${retries})...`, err);
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          continue;
+        }
+        throw err;
+      }
+    }
+    return action();
+  };
+
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await executeAuthWithRetry(() => signInWithPopup(auth, provider));
   };
 
   const loginWithGithub = async () => {
     const provider = new GithubAuthProvider();
-    const result = await signInWithPopup(auth, provider);
+    const result = await executeAuthWithRetry(() => signInWithPopup(auth, provider));
     
     // Fetch GitHub username and data
     try {

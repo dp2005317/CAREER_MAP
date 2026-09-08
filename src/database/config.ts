@@ -33,11 +33,11 @@ let auth: Auth;
 
 if (typeof window !== "undefined") {
   try {
-    // Try to initialize with IndexedDB fallback persistence to prevent "database error" on mobile/private browsing
+    // Prioritize browserLocalPersistence (localStorage) to avoid IndexedDB "database is closing/hidden" race conditions on mobile/tab-switch
     auth = initializeAuth(app, {
       persistence: [
-        indexedDBLocalPersistence, 
-        browserLocalPersistence, 
+        browserLocalPersistence,
+        indexedDBLocalPersistence,
         browserSessionPersistence, 
         inMemoryPersistence
       ],
