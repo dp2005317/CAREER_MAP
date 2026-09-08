@@ -87,6 +87,25 @@ const PROFILE_STORAGE_KEY = "careermap_user_profile";
 const PROGRESS_STORAGE_KEY = "careermap_course_progress";
 const CERTS_STORAGE_KEY = "careermap_user_certificates";
 
+function sanitizeForFirestore<T>(data: T): T {
+  if (data === null || data === undefined) {
+    return data;
+  }
+  if (Array.isArray(data)) {
+    return data.map(item => sanitizeForFirestore(item)) as unknown as T;
+  }
+  if (typeof data === "object") {
+    const result: Record<string, any> = {};
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined) {
+        result[key] = sanitizeForFirestore(value);
+      }
+    }
+    return result as T;
+  }
+  return data;
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -187,7 +206,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               uid: currentUser.uid,
               email: currentUser.email || "",
               displayName: currentUser.displayName || (currentUser.isAnonymous ? "Guest Explorer" : "Learner"),
-              photoURL: currentUser.photoURL || undefined,
+              ...(currentUser.photoURL ? { photoURL: currentUser.photoURL } : {}),
               skills: [],
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString()
@@ -196,8 +215,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (typeof window !== "undefined") {
               localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(initialProfile));
             }
-            // Save to Firestore non-blocking
-            setDoc(userDocRef, initialProfile, { merge: true }).catch(() => {});
+            // Save to Firestore with sanitization
+            setDoc(userDocRef, sanitizeForFirestore(initialProfile), { merge: true })
+              .catch((err) => console.error("Initial Firestore user creation failed:", err));
           }
         } catch (err) {
           console.warn("Firestore fetch error, using local state", err);
@@ -238,12 +258,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await executeAuthWithRetry(() => signInWithPopup(auth, provider));
+    const result = await executeAuthWithRetry(() => signInWithPopup(auth, provider));
+    if (result?.user) {
+      try {
+        const userDocRef = doc(db, "users", result.user.uid);
+        const snap = await getDoc(userDocRef);
+        if (!snap.exists()) {
+          const initialProfile: UserProfile = {
+            uid: result.user.uid,
+            email: result.user.email || "",
+            displayName: result.user.displayName || "Learner",
+            ...(result.user.photoURL ? { photoURL: result.user.photoURL } : {}),
+            skills: [],
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+          await setDoc(userDocRef, sanitizeForFirestore(initialProfile), { merge: true });
+        }
+      } catch (err) {
+        console.warn("Failed to ensure user doc exists in Firestore:", err);
+      }
+    }
   };
 
   const loginWithGithub = async () => {
     const provider = new GithubAuthProvider();
     const result = await executeAuthWithRetry(() => signInWithPopup(auth, provider));
+    if (result?.user) {
+      try {
+        const userDocRef = doc(db, "users", result.user.uid);
+        const snap = await getDoc(userDocRef);
+        if (!snap.exists()) {
+          const initialProfile: UserProfile = {
+            uid: result.user.uid,
+            email: result.user.email || "",
+            displayName: result.user.displayName || "Learner",
+            ...(result.user.photoURL ? { photoURL: result.user.photoURL } : {}),
+            skills: [],
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+          await setDoc(userDocRef, sanitizeForFirestore(initialProfile), { merge: true });
+        }
+      } catch (err) {
+        console.warn("Failed to ensure user doc exists in Firestore:", err);
+      }
+    }
     
     // Fetch GitHub username and data
     try {
@@ -372,9 +432,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (user?.uid) {
       try {
         const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, newProfile, { merge: true });
+        await setDoc(userDocRef, sanitizeForFirestore(newProfile), { merge: true });
       } catch (e) {
-        console.warn("Firestore profile save skipped (offline/rules)", e);
+        console.error("Firestore profile save failed", e);
       }
     }
   };
@@ -413,7 +473,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (user?.uid) {
       try {
         const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, { courseProgress: nextProgress }, { merge: true });
+        await setDoc(userDocRef, sanitizeForFirestore({ courseProgress: nextProgress }), { merge: true });
       } catch (e) {
         console.warn("Progress sync to Firestore failed", e);
       }
@@ -454,7 +514,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (user?.uid) {
       try {
         const userDocRef = doc(db, "users", user.uid);
-        await setDoc(userDocRef, { certificates: updatedCerts }, { merge: true });
+        await setDoc(userDocRef, sanitizeForFirestore({ certificates: updatedCerts }), { merge: true });
       } catch (e) {
         console.warn("Cert sync to Firestore failed", e);
       }
