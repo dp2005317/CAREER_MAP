@@ -6,6 +6,7 @@ import { MapPin } from 'lucide-react';
 import { LiquidGlass } from './LiquidGlass';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BrandLogo } from './BrandLogo';
 
 export const LiquidNavbar = () => {
   return (
@@ -16,8 +17,8 @@ export const LiquidNavbar = () => {
       className="w-full px-4 sm:px-8 py-6 flex justify-between items-center z-10"
     >
       <LiquidGlass className="px-6 py-3 rounded-full flex items-center gap-2">
-        <Image src="/logo.png" alt="CareerMap AI Logo" width={200} height={200} className="object-contain w-auto h-12 scale-[1.3]" priority />
-        <span className="text-lg font-bold tracking-tight text-gray-900">CareerMap AI</span>
+        <BrandLogo width={200} height={200} className="object-contain w-auto h-12 scale-[1.3]" priority />
+        <span className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">CareerMap AI</span>
       </LiquidGlass>
       
       <LiquidGlass className="hidden md:flex px-8 py-3 rounded-full gap-8 text-sm font-medium text-gray-700">

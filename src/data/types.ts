@@ -74,5 +74,90 @@ export interface LearningFilters {
   duration: string;
   certificateOnly: boolean;
   freeOnly: boolean;
+  language?: string;
+}
+
+export interface FundamentalQuestion {
+  id: string;
+  type: "fundamental";
+  difficulty: "easy" | "medium" | "hard" | "interview";
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+}
+
+export interface CodingQuestion {
+  id: string;
+  type: "coding";
+  subType: "implementation" | "debugging" | "output_prediction" | "problem_solving" | "interview_challenge";
+  difficulty: "easy" | "medium" | "hard" | "interview";
+  question: string;
   language: string;
+  starterCode?: string;
+  buggyCode?: string;
+  code?: string;
+  options?: string[];
+  inputFormat?: string;
+  outputFormat?: string;
+  exampleInput?: string;
+  exampleOutput?: string;
+  expectedOutput?: string;
+  solution: string;
+  explanation: string;
+  correctAnswer?: number;
+}
+
+export interface LectureAssessment {
+  totalQuestions: number;
+  fundamentalQuestions: number;
+  codingQuestions: number;
+}
+
+export interface Lecture {
+  lectureId: string;
+  lectureNumber: number;
+  title: string;
+  videoUrl: string;
+  duration?: string;
+  topics: string[];
+  assessment: LectureAssessment;
+  fundamentalQuestions: FundamentalQuestion[];
+  codingQuestions: CodingQuestion[];
+}
+
+export interface Module {
+  moduleId: string;
+  title: string;
+  lectures: Lecture[];
+}
+
+export interface Course {
+  courseId: string;
+  title: string;
+  description: string;
+  category: string;
+  company: string;
+  instructor?: string;
+  thumbnail?: string;
+  difficulty?: "Beginner" | "Intermediate" | "Advanced";
+  duration?: string;
+  durationHours?: number;
+  language?: string;
+  rating?: number;
+  learners?: string;
+  skills: string[];
+  playlistUrl?: string;
+  officialUrl?: string;
+  certificateAvailable?: boolean;
+  isFree?: boolean;
+  isNew?: boolean;
+  isTrending?: boolean;
+  jobRoles?: string[];
+  source: {
+    type: "youtube_playlist" | "youtube_video";
+    playlistUrl?: string;
+    videoUrl?: string;
+  };
+  modules: Module[];
 }

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -7,7 +8,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-sans: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -84,48 +85,53 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.05 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.05 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --primary: oklch(0.65 0.22 40);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.15 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --muted: oklch(0.15 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --accent: oklch(0.65 0.22 40 / 15%);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.65 0.22 40);
+  --sidebar: oklch(0 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: oklch(0.65 0.22 40);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.65 0.22 40);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   html {
     @apply font-sans;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .dark body {
+    background-color: #000000;
+    background-image: 
+      radial-gradient(circle at 50% 30%, rgba(240, 86, 46, 0.08) 0%, transparent 60%),
+      repeating-radial-gradient(circle at 50% 30%, transparent 0, transparent 150px, rgba(255, 255, 255, 0.015) 150px, rgba(255, 255, 255, 0.015) 151px);
+    background-attachment: fixed;
   }
 }
 
@@ -257,6 +263,155 @@
   border-radius: 9999px;
   box-shadow: 3px 3px 10px var(--neu-shadow-dark), -3px -3px 10px var(--neu-shadow-light);
   border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+/* Dark Mode Overrides for Neumorphic Classes */
+.dark .neu-card, .dark .neu-card-sm {
+  background: #080808 !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #f9fafb !important;
+}
+.dark .neu-btn, .dark .neu-icon-btn {
+  background: #0f0f10 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: #f9fafb !important;
+}
+.dark .neu-btn:hover, .dark .neu-icon-btn:hover {
+  background: #18181b !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.25) !important;
+  border-color: rgba(234, 88, 12, 0.3) !important;
+}
+.dark .neu-btn-primary {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(234, 88, 12, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+.dark .neu-btn-primary:hover {
+  box-shadow: 0 6px 28px rgba(234, 88, 12, 0.55) !important;
+  filter: brightness(1.08) !important;
+  transform: translateY(-2px);
+}
+.dark .neu-inset {
+  background: rgba(0, 0, 0, 0.9) !important;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+.dark .neu-pill {
+  background: #0c0c0e !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #f3f4f6 !important;
+}
+
+/* Universal Dark Theme Orange Accent Overrides */
+.dark .text-blue-400,
+.dark .text-blue-500,
+.dark .text-blue-600,
+.dark .text-blue-700,
+.dark .text-blue-800,
+.dark .text-indigo-400,
+.dark .text-indigo-500,
+.dark .text-indigo-600,
+.dark .text-indigo-700 {
+  color: #fb923c !important;
+}
+
+.dark .hover\:text-blue-600:hover,
+.dark .hover\:text-blue-700:hover,
+.dark .hover\:text-blue-800:hover,
+.dark .group:hover .group-hover\:text-blue-600,
+.dark .group:hover .group-hover\:text-blue-700,
+.dark [class*="hover:text-blue"]:hover {
+  color: #f97316 !important;
+}
+
+.dark .bg-blue-50,
+.dark .bg-blue-50\/20,
+.dark .bg-blue-50\/30,
+.dark .bg-blue-50\/40,
+.dark .bg-blue-50\/50,
+.dark .bg-blue-50\/60,
+.dark .bg-blue-50\/80,
+.dark .bg-blue-100,
+.dark .bg-blue-100\/50,
+.dark .bg-blue-500\/10,
+.dark .bg-blue-500\/20,
+.dark .bg-blue-600\/10,
+.dark .bg-blue-600\/20,
+.dark .bg-indigo-50,
+.dark .bg-indigo-100 {
+  background-color: rgba(234, 88, 12, 0.15) !important;
+}
+
+.dark .bg-blue-500,
+.dark .bg-blue-600,
+.dark .bg-blue-700,
+.dark .bg-indigo-600 {
+  background-color: #ea580c !important;
+}
+
+.dark .hover\:bg-blue-600:hover,
+.dark .hover\:bg-blue-700:hover {
+  background-color: #c2410c !important;
+}
+
+.dark .border-blue-100,
+.dark .border-blue-200,
+.dark .border-blue-200\/60,
+.dark .border-blue-300,
+.dark .border-blue-400\/30,
+.dark .border-blue-500,
+.dark .border-blue-500\/30,
+.dark .border-blue-600 {
+  border-color: rgba(234, 88, 12, 0.3) !important;
+}
+
+.dark .fill-blue-100,
+.dark .fill-blue-200,
+.dark .fill-blue-500,
+.dark .fill-blue-600 {
+  fill: #ea580c !important;
+}
+
+.dark .ring-blue-500\/30,
+.dark .ring-blue-500\/40,
+.dark .ring-blue-500 {
+  --tw-ring-color: rgba(234, 88, 12, 0.45) !important;
+}
+
+.dark .focus\:ring-blue-500\/20:focus,
+.dark .focus\:ring-blue-500\/30:focus,
+.dark .focus\:ring-blue-500:focus,
+.dark .focus\:border-blue-500:focus {
+  --tw-ring-color: rgba(234, 88, 12, 0.45) !important;
+  border-color: #ea580c !important;
+}
+
+.dark .from-blue-600 {
+  --tw-gradient-from: #ea580c var(--tw-gradient-from-position) !important;
+}
+.dark .to-indigo-600 {
+  --tw-gradient-to: #c2410c var(--tw-gradient-to-position) !important;
+}
+.dark .from-blue-500 {
+  --tw-gradient-from: #f97316 var(--tw-gradient-from-position) !important;
+}
+.dark .to-indigo-500 {
+  --tw-gradient-to: #ea580c var(--tw-gradient-to-position) !important;
+}
+
+/* Fallbacks for hardcoded background utilities in dark mode */
+.dark .bg-\[\#EEF2F6\],
+.dark .bg-\[\#f0f2f5\],
+.dark .bg-\[\#F8FAFC\] {
+  background-color: transparent !important;
 }
 
 /* ═══════════════════════════════════════════
@@ -420,6 +575,12 @@
 /* Text Gradient */
 .text-gradient {
   background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .text-gradient {
+  background: linear-gradient(135deg, #fed7aa, #ea580c, #9a3412);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

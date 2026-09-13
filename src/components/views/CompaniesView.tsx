@@ -37,17 +37,17 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
   }, [jobs]);
 
   return (
-    <div className="flex-1 flex flex-col p-6 overflow-y-auto custom-scrollbar bg-[#EEF2F6]">
+    <div className="flex-1 flex flex-col p-6 overflow-y-auto custom-scrollbar bg-transparent">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">
+          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
             Top Tech Companies & Unicorns
           </h2>
-          <p className="text-xs text-gray-500 font-medium mt-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
             Explore verified hiring partners, FAANG/MAANG organizations, and hyper-growth startups.
           </p>
         </div>
-        <span className="text-xs font-bold neu-pill px-4 py-2 text-blue-600">
+        <span className="text-xs font-bold neu-pill px-4 py-2 text-blue-600 dark:text-orange-400">
           {companies.length} Companies Hiring
         </span>
       </div>
@@ -66,19 +66,19 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <CompanyLogo company={c.company} logoUrl={c.logo} size="md" />
-                  <span className="text-[11px] font-bold neu-pill px-2.5 py-1 text-blue-600">
+                  <span className="text-[11px] font-bold neu-pill px-2.5 py-1 text-blue-600 dark:text-orange-400">
                     {c.count} {c.count === 1 ? "Role" : "Roles"}
                   </span>
                 </div>
 
-                <h3 className="font-bold text-gray-900 text-sm">{c.company}</h3>
-                <p className="text-xs text-gray-500 font-medium flex items-center gap-1 mt-1 truncate">
-                  <MapPin size={12} className="text-blue-500 shrink-0" />
+                <h3 className="font-bold text-gray-900 dark:text-white text-sm">{c.company}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium flex items-center gap-1 mt-1 truncate">
+                  <MapPin size={12} className="text-blue-500 dark:text-orange-400 shrink-0" />
                   <span className="truncate">{locList || "India"}</span>
                 </p>
               </div>
 
-              <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <div className="mt-5 pt-3 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
                 <button
                   onClick={() => onSelectCompany(c.company)}
                   className="neu-btn-primary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 group cursor-pointer"
@@ -92,7 +92,7 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   title="Official Career Portal"
-                  className="neu-icon-btn w-8 h-8 text-gray-400 hover:text-blue-600 transition-colors"
+                  className="neu-icon-btn w-8 h-8 text-gray-400 hover:text-blue-600 dark:hover:text-orange-400 transition-colors"
                 >
                   <ExternalLink size={13} />
                 </a>

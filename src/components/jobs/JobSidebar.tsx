@@ -7,6 +7,7 @@ import { Job, JOB_TYPES } from '@/backend/mockData';
 import { LiquidGlass } from '@/components/layout/LiquidGlass';
 import { CompanyLogo } from '@/components/jobs/CompanyLogo';
 import Image from 'next/image';
+import { BrandLogo } from '@/components/layout/BrandLogo';
 
 interface JobSidebarProps {
   jobs: Job[];
@@ -50,7 +51,7 @@ export const JobSidebar = ({ jobs, selectedJob, onJobSelect, isMobileMenuOpen, s
           <div className="p-6 pb-2 shrink-0">
             <div className="flex items-center gap-3 mb-6 px-1">
               <div className="flex items-center justify-center -ml-2">
-                <Image src="/logo.png" alt="CareerMap Logo" width={200} height={200} className="object-contain w-auto h-16 scale-[1.3]" priority />
+                <BrandLogo priority />
               </div>
               <div>
                 <h1 className="text-xl font-bold tracking-tight">CareerMap</h1>

@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { Bell, User, Menu } from "lucide-react";
+import { Bell, User } from "lucide-react";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 interface DashboardHeaderProps {
   title?: string;
@@ -23,16 +24,10 @@ export function DashboardHeader({
   onOpenResumeUpload
 }: DashboardHeaderProps) {
   return (
-    <header className="h-14 sm:h-16 px-4 sm:px-6 bg-[#EEF2F6]/95 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between shrink-0 z-10">
+    <header className="h-14 sm:h-16 px-4 sm:px-6 bg-[#EEF2F6]/95 dark:bg-black/95 backdrop-blur-md border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between shrink-0 z-10">
       {/* Title */}
       <div className="flex items-center gap-2 sm:gap-3">
-        <button 
-          onClick={onMenuToggle}
-          className="md:hidden neu-icon-btn w-8 h-8 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
-        >
-          <Menu className="w-4 h-4" />
-        </button>
-        <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 tracking-tight">
+        <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
           {title}
         </h2>
       </div>
@@ -42,15 +37,17 @@ export function DashboardHeader({
         {user && !hasResume && onOpenResumeUpload && (
           <button
             onClick={onOpenResumeUpload}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all cursor-pointer"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-orange-600 dark:to-amber-600 text-white rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition-all cursor-pointer"
           >
             <span>+ Upload Resume (PDF)</span>
           </button>
         )}
 
+        <ThemeToggle />
+
         <button 
           title="Notifications"
-          className="neu-icon-btn w-9 h-9 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
+          className="neu-icon-btn w-9 h-9 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-orange-400 transition-colors cursor-pointer"
         >
           <Bell className="w-4 h-4" />
         </button>
@@ -64,14 +61,14 @@ export function DashboardHeader({
               <img
                 src={user.photoURL}
                 alt="User Avatar"
-                className="w-8 h-8 rounded-full neu-card-sm border border-white"
+                className="w-8 h-8 rounded-full neu-card-sm border border-white dark:border-white/20"
               />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-md shadow-blue-500/30">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-orange-600 dark:to-amber-600 text-white flex items-center justify-center font-bold text-xs shadow-md shadow-blue-500/30 dark:shadow-orange-500/20">
                 {user.displayName ? user.displayName.slice(0, 2).toUpperCase() : (user.email ? user.email.slice(0, 2).toUpperCase() : "U")}
               </div>
             )}
-            <span className="text-xs font-bold text-gray-800 hidden sm:inline group-hover:text-blue-600 transition-colors">
+            <span className="text-xs font-bold text-gray-800 dark:text-gray-200 hidden sm:inline group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
               {user.displayName || "Explorer"}
             </span>
           </button>

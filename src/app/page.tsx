@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
 import Image from "next/image";
+import { BrandLogo } from "@/components/layout/BrandLogo";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { 
   Sparkles, 
   MapPin, 
@@ -36,44 +38,45 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#EEF2F6] flex flex-col relative overflow-hidden font-sans selection:bg-blue-200">
+    <div className="min-h-screen bg-[#EEF2F6] dark:bg-black text-gray-800 dark:text-gray-100 flex flex-col relative overflow-hidden font-sans selection:bg-orange-500/20">
       <AnimatedBackground />
 
       {/* 1. Neumorphic Navigation Bar with Centered Links */}
-      <header className="sticky top-0 z-40 w-full px-4 sm:px-6 py-3 sm:py-4 relative flex items-center justify-between border-b border-slate-200/80 bg-[#EEF2F6]/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 w-full px-4 sm:px-6 py-3 sm:py-4 relative flex items-center justify-between border-b border-slate-200/80 dark:border-white/10 bg-[#EEF2F6]/90 dark:bg-black/90 backdrop-blur-xl">
         {/* Left: Brand */}
         <Link href="/" className="flex items-center gap-2 sm:gap-3 group z-10">
           <div className="flex items-center justify-center group-hover:scale-105 transition-transform -ml-2">
-            <Image src="/logo.png" alt="CareerMap Logo" width={200} height={200} className="object-contain w-auto h-16 sm:h-20 scale-[1.3]" priority />
+            <BrandLogo className="object-contain w-auto h-16 sm:h-20 scale-[1.3]" priority />
           </div>
           <div className="flex flex-col">
-            <h1 className="font-extrabold text-gray-900 text-base sm:text-lg tracking-tight leading-none">
+            <h1 className="font-extrabold text-gray-900 dark:text-white text-base sm:text-lg tracking-tight leading-none">
               CareerMap
             </h1>
-            <span className="text-[8px] sm:text-[10px] font-bold text-blue-600 tracking-wider uppercase hidden sm:block">
+            <span className="text-[8px] sm:text-[10px] font-bold text-blue-600 dark:text-orange-400 tracking-wider uppercase hidden sm:block">
               Spatial Intelligence
             </span>
           </div>
         </Link>
 
         {/* Center: Perfectly Centered Pill Navigation */}
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 text-xs font-bold text-gray-700 neu-pill px-3 py-1.5 z-10">
-          <Link href="/dashboard?tab=overview" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 text-xs font-bold text-gray-700 dark:text-gray-200 neu-pill px-3 py-1.5 z-10">
+          <Link href="/dashboard?tab=overview" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
             Map Discovery
           </Link>
-          <Link href="/courses" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
+          <Link href="/courses" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
             Free Courses
           </Link>
-          <Link href="/dashboard?tab=companies" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
+          <Link href="/dashboard?tab=companies" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
             Companies
           </Link>
-          <Link href="/dashboard?tab=saved" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 transition-colors">
+          <Link href="/dashboard?tab=saved" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
             Saved Jobs
           </Link>
         </div>
 
-        {/* Right: Action Button */}
-        <div className="flex items-center z-10">
+        {/* Right: Action Button & Theme Toggle */}
+        <div className="flex items-center gap-2.5 z-10">
+          <ThemeToggle />
           {user ? (
             <Link
               href="/dashboard"

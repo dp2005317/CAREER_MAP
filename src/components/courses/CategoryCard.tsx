@@ -45,7 +45,7 @@ interface CategoryCardProps {
           style={{ background: `linear-gradient(135deg, ${category.color}30, transparent 60%)` }}
         />
   
-        <div className="relative rounded-2xl overflow-hidden bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.04)] group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] transition-all duration-400 p-4 flex flex-col gap-2.5">
+        <div className="relative rounded-2xl overflow-hidden bg-white/80 dark:bg-[#0c0c0e]/90 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.4)] group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] transition-all duration-400 p-4 flex flex-col gap-2.5">
           {/* Icon + Arrow */}
           <div className="flex items-center justify-between">
             <div
@@ -54,17 +54,17 @@ interface CategoryCardProps {
             >
               <Icon className="w-5 h-5" />
             </div>
-            <ArrowUpRight className="w-4 h-4 text-gray-300 group-hover:text-gray-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            <ArrowUpRight className="w-4 h-4 text-gray-300 dark:text-zinc-600 group-hover:text-gray-600 dark:group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </div>
 
         {/* Name + Count */}
         <div>
-          <h3 className="font-extrabold text-[12px] text-gray-900 leading-tight">{category.name}</h3>
-          <p className="text-[10px] text-gray-400 font-semibold mt-0.5">{category.courseCount} courses</p>
+          <h3 className="font-extrabold text-[12px] text-gray-900 dark:text-white leading-tight">{category.name}</h3>
+          <p className="text-[10px] text-gray-400 dark:text-zinc-500 font-semibold mt-0.5">{category.courseCount} courses</p>
         </div>
 
         {/* Progress bar */}
-        <div className="w-full h-1 rounded-full bg-gray-100 overflow-hidden">
+        <div className="w-full h-1 rounded-full bg-gray-100 dark:bg-zinc-800 overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-700 group-hover:w-full"
             style={{ backgroundColor: category.color, width: '55%' }}

@@ -49,15 +49,15 @@ export function RecommendationSection({ selectedCareer }: RecommendationSectionP
       {/* Glow */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-pink-600/20 rounded-[1.5rem] opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500" />
 
-      <div className="relative rounded-[1.4rem] overflow-hidden bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-6 sm:p-8">
+      <div className="relative rounded-[1.4rem] overflow-hidden bg-white/80 dark:bg-[#0c0c0e] backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] p-6 sm:p-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/30">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-extrabold text-base text-gray-900">AI Recommendations</h3>
-            <p className="text-[11px] text-gray-500 font-semibold mt-0.5">Personalized for {rec.title} career path</p>
+            <h3 className="font-extrabold text-base text-gray-900 dark:text-white">AI Recommendations</h3>
+            <p className="text-[11px] text-gray-500 dark:text-zinc-400 font-semibold mt-0.5">Personalized for {rec.title} career path</p>
           </div>
         </div>
 
@@ -75,26 +75,26 @@ export function RecommendationSection({ selectedCareer }: RecommendationSectionP
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/60 hover:bg-white/90 transition-all group/item no-underline border border-gray-100/50 hover:border-blue-200/50"
+                className="flex items-center gap-3 p-3.5 rounded-2xl bg-white/60 dark:bg-white/[0.03] hover:bg-white/90 dark:hover:bg-white/[0.06] transition-all group/item no-underline border border-gray-100/50 dark:border-white/10 hover:border-blue-200/50 dark:hover:border-orange-500/30"
               >
                 <CompanyLogoSvg company={course.company} size={40} />
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-bold text-gray-800 truncate group-hover/item:text-blue-600 transition-colors">
+                  <p className="text-[11px] font-bold text-gray-800 dark:text-zinc-200 truncate group-hover/item:text-blue-600 dark:group-hover/item:text-orange-400 transition-colors">
                     {course.title}
                   </p>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-[9px] text-gray-500 font-semibold">{course.company}</span>
-                    <span className="text-[9px] text-gray-300">•</span>
-                    <span className="text-[9px] text-gray-500 font-semibold">{course.duration}</span>
+                    <span className="text-[9px] text-gray-500 dark:text-zinc-400 font-semibold">{course.company}</span>
+                    <span className="text-[9px] text-gray-300 dark:text-zinc-600">•</span>
+                    <span className="text-[9px] text-gray-500 dark:text-zinc-400 font-semibold">{course.duration}</span>
                   </div>
                   {course.jobRoles.length > 0 && (
                     <div className="flex items-center gap-1 mt-1.5">
-                      <Briefcase className="w-2.5 h-2.5 text-blue-400" />
-                      <span className="text-[9px] text-blue-500 font-bold">{course.jobRoles[0]}</span>
+                      <Briefcase className="w-2.5 h-2.5 text-blue-400 dark:text-orange-400" />
+                      <span className="text-[9px] text-blue-500 dark:text-orange-400 font-bold">{course.jobRoles[0]}</span>
                     </div>
                   )}
                 </div>
-                <ArrowRight className="w-4 h-4 text-gray-300 group-hover/item:text-blue-500 group-hover/item:translate-x-1 shrink-0 transition-all" />
+                <ArrowRight className="w-4 h-4 text-gray-300 dark:text-zinc-500 group-hover/item:text-blue-500 dark:group-hover/item:text-orange-400 group-hover/item:translate-x-1 shrink-0 transition-all" />
               </motion.a>
             );
           })}

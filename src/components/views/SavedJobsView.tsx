@@ -22,12 +22,12 @@ export function SavedJobsView({
 }: SavedJobsViewProps) {
   if (!savedJobs || savedJobs.length === 0) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#EEF2F6]">
-        <div className="w-16 h-16 rounded-3xl neu-card flex items-center justify-center mb-4 text-blue-600">
+      <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-transparent">
+        <div className="w-16 h-16 rounded-3xl neu-card flex items-center justify-center mb-4 text-blue-600 dark:text-orange-400">
           <Bookmark size={28} className="stroke-[1.75]" />
         </div>
-        <h3 className="text-xl font-extrabold text-gray-900 mb-1">No Saved Jobs Yet</h3>
-        <p className="text-xs text-gray-500 max-w-sm mb-6 leading-relaxed">
+        <h3 className="text-xl font-extrabold text-gray-900 dark:text-white mb-1">No Saved Jobs Yet</h3>
+        <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mb-6 leading-relaxed">
           Bookmark jobs you're interested in while browsing the map to keep track of deadlines and apply when you're ready.
         </p>
         <button
@@ -42,19 +42,19 @@ export function SavedJobsView({
   }
 
   return (
-    <div className="flex-1 flex flex-col p-6 overflow-y-auto custom-scrollbar bg-[#EEF2F6]">
+    <div className="flex-1 flex flex-col p-6 overflow-y-auto custom-scrollbar bg-transparent">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">
+          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
             Saved Jobs ({savedJobs.length})
           </h2>
-          <p className="text-xs text-gray-500 font-medium mt-1">
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
             Your shortlisted positions ready for application.
           </p>
         </div>
         <button
           onClick={onGoToMap}
-          className="neu-btn px-4 py-2 text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1.5 cursor-pointer"
+          className="neu-btn px-4 py-2 text-xs font-bold text-blue-600 dark:text-orange-400 hover:text-blue-700 dark:hover:text-orange-300 flex items-center gap-1.5 cursor-pointer"
         >
           <span>Back to Map View</span>
           <ArrowRight size={13} />
@@ -74,9 +74,9 @@ export function SavedJobsView({
                 <div className="flex items-center gap-3">
                   <CompanyLogo company={job.company} logoUrl={job.logo} size="md" />
                   <div>
-                    <h4 className="font-bold text-gray-900 text-sm">{job.company}</h4>
-                    <p className="text-xs text-gray-400 font-medium flex items-center gap-1 mt-0.5">
-                      <MapPin size={11} className="text-blue-500" />
+                    <h4 className="font-bold text-gray-900 dark:text-white text-sm">{job.company}</h4>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 font-medium flex items-center gap-1 mt-0.5">
+                      <MapPin size={11} className="text-blue-500 dark:text-orange-400" />
                       {job.location}
                     </p>
                   </div>
@@ -91,16 +91,16 @@ export function SavedJobsView({
                 </button>
               </div>
 
-              <h3 className="font-bold text-gray-900 text-base mb-2 line-clamp-1">
+              <h3 className="font-bold text-gray-900 dark:text-white text-base mb-2 line-clamp-1">
                 {job.title}
               </h3>
 
-              <p className="text-xs text-gray-600 line-clamp-2 mb-4 leading-relaxed bg-slate-50 p-3 rounded-2xl border border-slate-100 shadow-inner">
+              <p className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2 mb-4 leading-relaxed bg-slate-50 dark:bg-white/[0.03] p-3 rounded-2xl border border-slate-100 dark:border-white/5 shadow-inner">
                 {job.description}
               </p>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex items-center gap-2">
+            <div className="pt-3 border-t border-slate-100 dark:border-white/5 flex items-center gap-2">
               <a
                 href={getExactJobApplyUrl(job)}
                 target="_blank"
@@ -113,7 +113,7 @@ export function SavedJobsView({
 
               <button
                 onClick={() => onOpenDetails(job)}
-                className="neu-btn px-4 py-2.5 text-xs font-bold text-gray-700 transition-all cursor-pointer"
+                className="neu-btn px-4 py-2.5 text-xs font-bold text-gray-700 dark:text-gray-200 transition-all cursor-pointer"
               >
                 Details
               </button>

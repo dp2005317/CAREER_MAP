@@ -1,0 +1,275 @@
+{
+  "lectureId": "dsa-lecture-01",
+  "lectureNumber": 1,
+  "lectureTitle": "Introduction to Programming",
+  "videoUrl": "https://youtube.com/watch?v=VIDEO_ID",
+  "questions": {
+    "fundamental": [
+      {
+        "id": "dsa-01-f-01",
+        "question": "What is a variable in programming?",
+        "options": [
+          "A fixed value that can never change",
+          "A named memory location used to store data",
+          "A programming language",
+          "A type of loop"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "easy",
+        "explanation": "A variable is a named storage location whose value can be accessed and, depending on its declaration, changed during program execution."
+      },
+      {
+        "id": "dsa-01-f-02",
+        "question": "Which of the following is primarily used to store whole numbers in C++?",
+        "options": [
+          "int",
+          "float",
+          "char",
+          "bool"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "easy",
+        "explanation": "The int data type is used to store integer values such as -10, 0, and 25."
+      },
+      {
+        "id": "dsa-01-f-03",
+        "question": "What is the purpose of a data type?",
+        "options": [
+          "To determine what kind of value a variable can store",
+          "To execute a program automatically",
+          "To create a loop",
+          "To terminate the compiler"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "easy",
+        "explanation": "A data type defines the kind of data a variable can hold and determines how that data is represented and operated on."
+      },
+      {
+        "id": "dsa-01-f-04",
+        "question": "What happens when an integer variable is assigned a new integer value?",
+        "options": [
+          "A new programming language is created",
+          "The variable's stored value is replaced",
+          "The program always terminates",
+          "The variable becomes a constant"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "medium",
+        "explanation": "Assignment stores the new value in the variable, replacing its previous value."
+      },
+      {
+        "id": "dsa-01-f-05",
+        "question": "Which statement best describes the difference between a variable and a constant?",
+        "options": [
+          "A variable can change while a constant cannot be reassigned",
+          "A constant can only store strings",
+          "Variables cannot store numbers",
+          "There is no difference"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "medium",
+        "explanation": "Variables are generally allowed to change during execution, while constants are intended to retain a fixed value."
+      },
+      {
+        "id": "dsa-01-f-06",
+        "question": "Why is choosing an appropriate data type important?",
+        "options": [
+          "It determines how data is represented and what operations are valid",
+          "It makes every program run in constant time",
+          "It removes the need for variables",
+          "It automatically fixes syntax errors"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "medium",
+        "explanation": "The data type affects representation, memory usage, valid operations, and the range or precision of values."
+      },
+      {
+        "id": "dsa-01-f-07",
+        "question": "A program needs to store whether a user is logged in or not. Which type is most appropriate?",
+        "options": [
+          "float",
+          "string",
+          "bool",
+          "char"
+        ],
+        "correctAnswer": 2,
+        "difficulty": "hard",
+        "explanation": "A boolean represents a logical state with two values: true or false."
+      },
+      {
+        "id": "dsa-01-f-08",
+        "question": "What is the main role of the compiler when executing a C++ program?",
+        "options": [
+          "It translates source code into a form that can be executed",
+          "It stores all user data permanently",
+          "It creates variables at runtime only",
+          "It replaces the operating system"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "hard",
+        "explanation": "A compiler translates source code into machine code or another executable representation that can be run."
+      },
+      {
+        "id": "dsa-01-f-09",
+        "question": "Why can using an inappropriate numeric data type cause unexpected results?",
+        "options": [
+          "Different numeric types have different ranges and representations",
+          "All numeric types behave identically",
+          "Numeric variables cannot store values",
+          "The compiler ignores numeric types"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "hard",
+        "explanation": "Numeric types differ in range, precision, representation, and memory requirements, which can affect calculations."
+      },
+      {
+        "id": "dsa-01-f-10",
+        "question": "During an interview, you are asked why strongly typed languages use explicit data types. Which answer is strongest?",
+        "options": [
+          "They allow the compiler to understand how values should be represented and operated on",
+          "They eliminate every possible runtime error",
+          "They guarantee that every algorithm is optimal",
+          "They make variables unnecessary"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "interview",
+        "explanation": "Data types provide information about the representation and permitted operations of values, enabling compile-time checking and predictable behavior."
+      }
+    ],
+
+    "coding": [
+      {
+        "id": "dsa-01-c-01",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "easy",
+        "question": "Write a C++ program that declares an integer variable, assigns it the value 25, and prints the value.",
+        "language": "cpp",
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your code here\n    return 0;\n}",
+        "expectedOutput": "25",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int value = 25;\n    cout << value;\n    return 0;\n}",
+        "explanation": "An integer variable named value is initialized with 25 and then printed using cout."
+      },
+      {
+        "id": "dsa-01-c-02",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "easy",
+        "question": "Write a program that stores a user's age in an integer variable and prints it.",
+        "language": "cpp",
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    // Write your code here\n    return 0;\n}",
+        "expectedOutput": "21",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int age = 21;\n    cout << age;\n    return 0;\n}",
+        "explanation": "The variable age stores an integer value and cout prints it."
+      },
+      {
+        "id": "dsa-01-c-03",
+        "type": "coding",
+        "subType": "output_prediction",
+        "difficulty": "medium",
+        "question": "What will be the output of the following program?",
+        "language": "cpp",
+        "code": "int x = 10;\nx = 20;\ncout << x;",
+        "options": [
+          "10",
+          "20",
+          "1020",
+          "Compilation error"
+        ],
+        "correctAnswer": 1,
+        "expectedOutput": "20",
+        "solution": "20",
+        "explanation": "The second assignment changes the value stored in x from 10 to 20."
+      },
+      {
+        "id": "dsa-01-c-04",
+        "type": "coding",
+        "subType": "output_prediction",
+        "difficulty": "medium",
+        "question": "What will this program print?",
+        "language": "cpp",
+        "code": "int a = 5;\nint b = 3;\nint sum = a + b;\ncout << sum;",
+        "options": [
+          "2",
+          "8",
+          "15",
+          "53"
+        ],
+        "correctAnswer": 1,
+        "expectedOutput": "8",
+        "solution": "8",
+        "explanation": "The expression a + b evaluates to 5 + 3, which is 8."
+      },
+      {
+        "id": "dsa-01-c-05",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "medium",
+        "question": "Write a program that stores two integers and prints their sum, difference, and product.",
+        "language": "cpp",
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 12;\n    int b = 4;\n\n    // Write your code here\n    return 0;\n}",
+        "expectedOutput": "16\n8\n48",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 12;\n    int b = 4;\n\n    cout << a + b << endl;\n    cout << a - b << endl;\n    cout << a * b << endl;\n\n    return 0;\n}",
+        "explanation": "The program performs three arithmetic operations using the two integer variables."
+      },
+      {
+        "id": "dsa-01-c-06",
+        "type": "coding",
+        "subType": "debugging",
+        "difficulty": "medium",
+        "question": "Find and fix the error in this program.",
+        "language": "cpp",
+        "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int age;\n    age = \"20\";\n    cout << age;\n    return 0;\n}",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int age;\n    age = 20;\n    cout << age;\n    return 0;\n}",
+        "explanation": "The variable age is declared as an integer, so it must receive an integer value rather than a string literal."
+      },
+      {
+        "id": "dsa-01-c-07",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "hard",
+        "question": "Write a program that converts a temperature from Celsius to Fahrenheit.",
+        "language": "cpp",
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double celsius = 25;\n\n    // Write your code here\n    return 0;\n}",
+        "expectedOutput": "77",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double celsius = 25;\n    double fahrenheit = (celsius * 9.0 / 5.0) + 32;\n    cout << fahrenheit;\n    return 0;\n}",
+        "explanation": "The Fahrenheit conversion formula is F = C × 9/5 + 32. A floating-point type is used to preserve decimal precision."
+      },
+      {
+        "id": "dsa-01-c-08",
+        "type": "coding",
+        "subType": "debugging",
+        "difficulty": "hard",
+        "question": "The following program should calculate the average of two numbers. Identify the problem and correct it.",
+        "language": "cpp",
+        "buggyCode": "int a = 5;\nint b = 2;\nint average = (a + b) / 2;\ncout << average;",
+        "solution": "double a = 5;\ndouble b = 2;\ndouble average = (a + b) / 2.0;\ncout << average;",
+        "explanation": "Using integer arithmetic can discard the fractional part. Floating-point arithmetic should be used when the result may contain decimals."
+      },
+      {
+        "id": "dsa-01-c-09",
+        "type": "coding",
+        "subType": "problem_solving",
+        "difficulty": "hard",
+        "question": "Given the price of an item and a discount percentage, calculate and print the final price.",
+        "language": "cpp",
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double price = 1000;\n    double discount = 15;\n\n    // Write your code here\n    return 0;\n}",
+        "expectedOutput": "850",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    double price = 1000;\n    double discount = 15;\n    double finalPrice = price - (price * discount / 100.0);\n\n    cout << finalPrice;\n    return 0;\n}",
+        "explanation": "First calculate the discount amount as price × discount / 100, then subtract it from the original price."
+      },
+      {
+        "id": "dsa-01-c-10",
+        "type": "coding",
+        "subType": "interview_challenge",
+        "difficulty": "interview",
+        "question": "Write a program that takes a three-digit number and calculates the sum of its digits using arithmetic operations.",
+        "language": "cpp",
+        "starterCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int number = 472;\n\n    // Write your code here\n    return 0;\n}",
+        "expectedOutput": "13",
+        "solution": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int number = 472;\n\n    int hundreds = number / 100;\n    int tens = (number / 10) % 10;\n    int ones = number % 10;\n\n    cout << hundreds + tens + ones;\n    return 0;\n}",
+        "explanation": "Integer division extracts the hundreds digit, while division and modulo operations extract the tens and ones digits."
+      }
+    ]
+  }
+}

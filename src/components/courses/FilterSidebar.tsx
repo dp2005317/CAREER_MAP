@@ -82,8 +82,8 @@ export function FilterSidebar({ filters, onFilterChange, isOpen, onClose }: Filt
           fixed md:relative inset-y-0 right-0 w-72 md:w-64 z-50
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"}
-          bg-[#EEF2F6]/95 backdrop-blur-xl md:bg-transparent md:backdrop-blur-none
-          border-l md:border-l-0 md:border-r border-slate-200/80
+          bg-[#EEF2F6]/95 dark:bg-black/95 backdrop-blur-xl md:bg-transparent md:dark:bg-transparent md:backdrop-blur-none
+          border-l md:border-l-0 md:border-r border-slate-200/80 dark:border-white/10
           overflow-y-auto custom-scrollbar
           flex flex-col gap-5 p-5 md:p-0 shrink-0
         `}
@@ -91,10 +91,10 @@ export function FilterSidebar({ filters, onFilterChange, isOpen, onClose }: Filt
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-blue-600" />
-            <h3 className="font-bold text-sm text-gray-900">Filters</h3>
+            <SlidersHorizontal className="w-4 h-4 text-blue-600 dark:text-orange-500" />
+            <h3 className="font-bold text-sm text-gray-900 dark:text-white">Filters</h3>
             {hasActiveFilters && (
-              <span className="w-5 h-5 rounded-full bg-blue-500 text-white text-[9px] font-bold flex items-center justify-center">
+              <span className="w-5 h-5 rounded-full bg-blue-500 dark:bg-orange-600 text-white text-[9px] font-bold flex items-center justify-center">
                 !
               </span>
             )}
@@ -103,14 +103,14 @@ export function FilterSidebar({ filters, onFilterChange, isOpen, onClose }: Filt
             {hasActiveFilters && (
               <button
                 onClick={clearAll}
-                className="text-[10px] font-bold text-blue-600 hover:text-blue-700 cursor-pointer"
+                className="text-[10px] font-bold text-blue-600 dark:text-orange-400 hover:text-blue-700 dark:hover:text-orange-300 cursor-pointer"
               >
                 Clear All
               </button>
             )}
             <button
               onClick={onClose}
-              className="md:hidden neu-icon-btn w-7 h-7 text-gray-500 cursor-pointer"
+              className="md:hidden neu-icon-btn w-7 h-7 text-gray-500 dark:text-zinc-400 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -247,14 +247,14 @@ export function FilterSidebar({ filters, onFilterChange, isOpen, onClose }: Filt
 
         {/* Toggles */}
         <div className="flex flex-col gap-2">
-          <label className="flex items-center justify-between neu-card-sm px-3 py-2.5 cursor-pointer group">
+          <label className="flex items-center justify-between neu-card-sm dark:bg-zinc-900/80 dark:border-white/10 px-3 py-2.5 cursor-pointer group">
             <div className="flex items-center gap-2">
               <Award className="w-3.5 h-3.5 text-emerald-500" />
-              <span className="text-[11px] font-bold text-gray-700">Certificate Available</span>
+              <span className="text-[11px] font-bold text-gray-700 dark:text-zinc-300">Certificate Available</span>
             </div>
             <div
               className={`w-9 h-5 rounded-full transition-all relative ${
-                filters.certificateOnly ? "bg-blue-500" : "bg-gray-300"
+                filters.certificateOnly ? "bg-blue-500 dark:bg-orange-500" : "bg-gray-300 dark:bg-zinc-700"
               }`}
               onClick={() => updateFilter("certificateOnly", !filters.certificateOnly)}
             >
@@ -266,14 +266,14 @@ export function FilterSidebar({ filters, onFilterChange, isOpen, onClose }: Filt
             </div>
           </label>
 
-          <label className="flex items-center justify-between neu-card-sm px-3 py-2.5 cursor-pointer group">
+          <label className="flex items-center justify-between neu-card-sm dark:bg-zinc-900/80 dark:border-white/10 px-3 py-2.5 cursor-pointer group">
             <div className="flex items-center gap-2">
-              <Filter className="w-3.5 h-3.5 text-blue-500" />
-              <span className="text-[11px] font-bold text-gray-700">Free Only</span>
+              <Filter className="w-3.5 h-3.5 text-blue-500 dark:text-orange-500" />
+              <span className="text-[11px] font-bold text-gray-700 dark:text-zinc-300">Free Only</span>
             </div>
             <div
               className={`w-9 h-5 rounded-full transition-all relative ${
-                filters.freeOnly ? "bg-blue-500" : "bg-gray-300"
+                filters.freeOnly ? "bg-blue-500 dark:bg-orange-500" : "bg-gray-300 dark:bg-zinc-700"
               }`}
               onClick={() => updateFilter("freeOnly", !filters.freeOnly)}
             >

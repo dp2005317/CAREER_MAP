@@ -119,10 +119,10 @@ export function CertificateModal({ isOpen, onClose, certificate }: CertificateMo
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col my-auto border border-amber-200/50"
+          className="relative w-full max-w-4xl bg-white dark:bg-[#0c0c0e] rounded-3xl shadow-2xl overflow-hidden flex flex-col my-auto border border-amber-200/50 dark:border-white/10"
         >
           {/* Top Modal Controls */}
-          <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
+          <div className="p-4 bg-slate-900 dark:bg-black text-white flex items-center justify-between border-b dark:border-white/10">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
                 <Award className="w-4 h-4" />
@@ -173,7 +173,7 @@ export function CertificateModal({ isOpen, onClose, certificate }: CertificateMo
           </div>
 
           {/* Luxury Printable Certificate Card */}
-          <div className="p-4 sm:p-8 bg-slate-100/60 overflow-x-auto flex justify-center">
+          <div className="p-4 sm:p-8 bg-slate-100/60 dark:bg-black/95 overflow-x-auto flex justify-center">
             <div
               id="printable-certificate"
               ref={certRef}

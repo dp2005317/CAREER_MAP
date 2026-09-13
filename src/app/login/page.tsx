@@ -8,6 +8,8 @@ import { useAuth } from "@/database/authContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { BrandLogo } from "@/components/layout/BrandLogo";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -109,31 +111,35 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#f0f2f5] flex flex-col justify-center relative overflow-hidden font-sans">
+    <div className="min-h-[100dvh] bg-[#f0f2f5] dark:bg-black text-gray-800 dark:text-gray-100 flex flex-col justify-center relative overflow-hidden font-sans selection:bg-orange-500/20">
       <AnimatedBackground />
       
-      {/* Brand Header */}
+      {/* Brand Header & Theme Toggle */}
       <div className="absolute top-6 left-6 z-10">
         <Link href="/">
-          <LiquidGlass className="px-5 py-2.5 rounded-full flex items-center gap-2 cursor-pointer hover:bg-white/50 transition-colors">
-            <Image src="/logo.png" alt="CareerMap AI Logo" width={160} height={160} className="object-contain w-auto h-10 scale-[1.2]" priority />
-            <span className="text-base font-bold tracking-tight text-gray-900">CareerMap AI</span>
+          <LiquidGlass className="px-5 py-2.5 rounded-full flex items-center gap-2 cursor-pointer hover:bg-white/50 dark:hover:bg-white/10 transition-colors">
+            <BrandLogo width={160} height={160} className="object-contain w-auto h-10 scale-[1.2]" priority />
+            <span className="text-base font-bold tracking-tight text-gray-900 dark:text-white">CareerMap AI</span>
           </LiquidGlass>
         </Link>
       </div>
 
+      <div className="absolute top-6 right-6 z-10">
+        <ThemeToggle />
+      </div>
+
       <main className="flex-1 flex flex-col items-center justify-center px-4 pt-28 pb-12 z-10 overflow-y-auto">
-        <LiquidGlass className="w-full max-w-md p-6 sm:p-8 rounded-[2rem] flex flex-col items-center text-center shadow-xl border border-white/60">
+        <LiquidGlass className="w-full max-w-md p-6 sm:p-8 rounded-[2rem] flex flex-col items-center text-center shadow-xl border border-white/60 dark:border-white/10">
           
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-blue-600 text-[11px] font-bold mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-orange-500/10 border border-blue-200/60 dark:border-orange-500/20 text-blue-600 dark:text-orange-400 text-[11px] font-bold mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI-Powered Career Intelligence</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 mb-1">
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-gray-900 dark:text-white mb-1">
             Welcome
           </h2>
-          <p className="text-xs sm:text-sm text-gray-500 mb-6 font-medium">
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6 font-medium">
             Sign in to unlock personalized jobs and tailored courses
           </p>
 

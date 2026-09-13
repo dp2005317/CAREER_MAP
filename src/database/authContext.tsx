@@ -56,6 +56,7 @@ export interface UserCertificate {
 
 export interface CourseProgressRecord {
   completedModules: string[];
+  completedLectures?: string[];
   progressPercent: number;
   lastAccessedAt: string;
 }
@@ -76,8 +77,10 @@ interface AuthContextType {
   logout: () => Promise<void>;
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
   toggleModuleComplete: (courseId: string, moduleId: string, totalModules: number) => Promise<{ completed: boolean; percent: number }>;
+  toggleLectureComplete: (courseId: string, lectureId: string, totalLectures: number) => Promise<{ completed: boolean; percent: number }>;
   claimCertificate: (courseId: string, courseTitle: string, company: string, skills: string[]) => Promise<UserCertificate>;
   isModuleCompleted: (courseId: string, moduleId: string) => boolean;
+  isLectureCompleted: (courseId: string, lectureId: string) => boolean;
   getCourseProgress: (courseId: string) => number;
 }
 
@@ -482,6 +485,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { completed: !exists, percent };
   };
 
+  const toggleLectureComplete = async (courseId: string, lectureId: string, totalLectures: number) => {
+    const current = courseProgress[courseId] || {
+      completedModules: [],
+      completedLectures: [],
+      progressPercent: 0,
+      lastAccessedAt: new Date().toISOString()
+    };
+
+    const currentLectures = current.completedLectures || [];
+    const exists = currentLectures.includes(lectureId);
+    const newLectures = exists
+      ? currentLectures.filter(id => id !== lectureId)
+      : [...currentLectures, lectureId];
+
+    const safeTotal = Math.max(totalLectures, 1);
+    const percent = Math.min(100, Math.round((newLectures.length / safeTotal) * 100));
+
+    const updatedRecord: CourseProgressRecord = {
+      ...current,
+      completedLectures: newLectures,
+      progressPercent: percent,
+      lastAccessedAt: new Date().toISOString()
+    };
+
+    const nextProgress: CourseProgressMap = {
+      ...courseProgress,
+      [courseId]: updatedRecord
+    };
+
+    setCourseProgress(nextProgress);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(nextProgress));
+    }
+
+    if (user?.uid) {
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, sanitizeForFirestore({ courseProgress: nextProgress }), { merge: true });
+      } catch (e) {
+        console.warn("Progress sync to Firestore failed", e);
+      }
+    }
+
+    return { completed: !exists, percent };
+  };
+
   const claimCertificate = async (
     courseId: string, 
     courseTitle: string, 
@@ -527,6 +576,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!courseProgress[courseId]?.completedModules?.includes(moduleId);
   }, [courseProgress]);
 
+  const isLectureCompleted = useCallback((courseId: string, lectureId: string): boolean => {
+    return !!courseProgress[courseId]?.completedLectures?.includes(lectureId);
+  }, [courseProgress]);
+
   const getCourseProgress = useCallback((courseId: string): number => {
     return courseProgress[courseId]?.progressPercent || 0;
   }, [courseProgress]);
@@ -547,8 +600,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logout,
         updateProfile,
         toggleModuleComplete,
+        toggleLectureComplete,
         claimCertificate,
         isModuleCompleted,
+        isLectureCompleted,
         getCourseProgress
       }}
     >

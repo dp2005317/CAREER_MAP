@@ -51,7 +51,7 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
         style={{ background: `linear-gradient(135deg, ${path.color}40, transparent 60%)` }}
       />
 
-      <div className="relative rounded-[1.4rem] overflow-hidden bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.06)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all duration-500 transform-gpu">
+      <div className="relative rounded-[1.4rem] overflow-hidden bg-white/80 dark:bg-[#0c0c0e] backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] dark:group-hover:border-orange-500/30 transition-all duration-500 transform-gpu">
         {/* Gradient header */}
         <div className={`bg-gradient-to-r ${path.gradient} p-6 text-white relative overflow-hidden`}>
           {/* Animated shine effect */}
@@ -77,35 +77,35 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
         <div className="p-5 flex flex-col gap-3">
           {/* Stats */}
           <div className="grid grid-cols-3 gap-2">
-            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-blue-50/50 border border-blue-100/50">
-              <Clock className="w-3.5 h-3.5 text-blue-500" />
-              <span className="text-[10px] font-black text-gray-700">{path.estimatedTime}</span>
+            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-blue-50/50 dark:bg-white/[0.04] border border-blue-100/50 dark:border-white/10">
+              <Clock className="w-3.5 h-3.5 text-blue-500 dark:text-orange-400" />
+              <span className="text-[10px] font-black text-gray-700 dark:text-zinc-200">{path.estimatedTime}</span>
             </div>
-            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-purple-50/50 border border-purple-100/50">
-              <BarChart3 className="w-3.5 h-3.5 text-purple-500" />
-              <span className="text-[10px] font-black text-gray-700">{path.courseCount} courses</span>
+            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-purple-50/50 dark:bg-white/[0.04] border border-purple-100/50 dark:border-white/10">
+              <BarChart3 className="w-3.5 h-3.5 text-purple-500 dark:text-orange-400" />
+              <span className="text-[10px] font-black text-gray-700 dark:text-zinc-200">{path.courseCount} courses</span>
             </div>
-            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-emerald-50/50 border border-emerald-100/50">
-              <Zap className="w-3.5 h-3.5 text-emerald-500" />
-              <span className="text-[10px] font-black text-gray-700 truncate">{path.careerOutcome.split("/")[0].trim()}</span>
+            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-emerald-50/50 dark:bg-white/[0.04] border border-emerald-100/50 dark:border-white/10">
+              <Zap className="w-3.5 h-3.5 text-emerald-500 dark:text-orange-400" />
+              <span className="text-[10px] font-black text-gray-700 dark:text-zinc-200 truncate">{path.careerOutcome.split("/")[0].trim()}</span>
             </div>
           </div>
 
           {/* Career Outcome */}
-          <div className="p-3 rounded-xl bg-gradient-to-r from-gray-50/80 to-gray-100/50 border border-gray-200/50 text-center">
-            <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Career Outcome</p>
-            <p className="text-[12px] font-black text-gray-800">{path.careerOutcome}</p>
+          <div className="p-3 rounded-xl bg-gradient-to-r from-gray-50/80 to-gray-100/50 dark:from-white/[0.04] dark:to-white/[0.02] border border-gray-200/50 dark:border-white/10 text-center">
+            <p className="text-[8px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-0.5">Career Outcome</p>
+            <p className="text-[12px] font-black text-gray-800 dark:text-white">{path.careerOutcome}</p>
           </div>
 
           {/* Job roles */}
           <div>
-            <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Get hired as</p>
+            <p className="text-[8px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-1.5">Get hired as</p>
             <div className="flex flex-wrap gap-1">
               {path.jobRoles.map((role) => (
                 <Link
                   key={role}
                   href={`/dashboard?tab=jobs`}
-                  className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors no-underline border border-blue-100/50"
+                  className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-lg bg-blue-50 dark:bg-orange-500/10 text-blue-600 dark:text-orange-400 hover:bg-blue-100 dark:hover:bg-orange-500/20 transition-colors no-underline border border-blue-100/50 dark:border-orange-500/20"
                 >
                   <Briefcase className="w-2.5 h-2.5" />
                   {role}
@@ -116,11 +116,11 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
 
           {/* Start with */}
           <div>
-            <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest mb-1.5">Start with</p>
+            <p className="text-[8px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-1.5">Start with</p>
             <div className="flex flex-col gap-1.5">
               {path.playlists.slice(0, 3).map((pid, i) => (
-                <div key={i} className="flex items-center gap-2 text-[11px] text-gray-600 font-semibold">
-                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: path.color }} />
+                <div key={i} className="flex items-center gap-2 text-[11px] text-gray-600 dark:text-zinc-300 font-semibold">
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-orange-500" />
                   <span className="truncate">
                     {pid.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
                   </span>

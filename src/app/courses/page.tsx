@@ -39,8 +39,10 @@ import { SearchBar } from "@/components/courses/SearchBar";
 import { FilterSidebar } from "@/components/courses/FilterSidebar";
 import { RecommendationSection } from "@/components/courses/RecommendationSection";
 import { CompanyLogoSvg } from "@/components/courses/CompanyLogoSvg";
-import { companies, categories, playlists, learningPaths, resources } from "@/data/data";
-import { LearningFilters, Playlist } from "@/data/types";
+import { companies, categories, learningPaths, resources } from "@/data/data";
+import { getAllCourses } from "@/lib/courseData";
+import { Course } from "@/data/types";
+import { LearningFilters } from "@/data/types";
 import { useAuth, UserCertificate } from "@/database/authContext";
 import { getRecommendedCourses, calculateCourseMatch } from "@/backend/recommendations";
 import { CertificateModal } from "@/components/courses/CertificateModal";
@@ -63,6 +65,18 @@ export default function FreeCoursesPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCareer, setSelectedCareer] = useState("data-science");
+  
+  const [playlists, setPlaylists] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  React.useEffect(() => {
+    async function load() {
+      const data = await getAllCourses();
+      setPlaylists(data);
+      setLoading(false);
+    }
+    load();
+  }, []);
 
   // Layout State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -93,19 +107,19 @@ export default function FreeCoursesPage() {
   const matchMap = useMemo(() => {
     const map = new Map<string, { matchScore: number; recommendationReason: string }>();
     playlists.forEach((p) => {
-      const match = calculateCourseMatch(p, profile?.skills, profile?.targetRole);
-      map.set(p.id, {
+      const match = calculateCourseMatch(p as any, profile?.skills, profile?.targetRole);
+      map.set(p.courseId, {
         matchScore: match.matchScore,
         recommendationReason: match.recommendationReason,
       });
     });
     return map;
-  }, [profile]);
+  }, [profile, playlists]);
 
   // Enrolled / In-progress courses
   const enrolledCourses = useMemo(() => {
-    return playlists.filter((p) => (courseProgress[p.id]?.progressPercent || 0) > 0);
-  }, [courseProgress]);
+    return playlists.filter((p) => (courseProgress[p.courseId]?.progressPercent || 0) > 0);
+  }, [courseProgress, playlists]);
 
   // Filtered & sorted playlists
   const filteredPlaylists = useMemo(() => {
@@ -117,8 +131,8 @@ export default function FreeCoursesPage() {
           p.company.toLowerCase().includes(q) ||
           p.category.toLowerCase().includes(q) ||
           p.skills.some((s) => s.toLowerCase().includes(q)) ||
-          p.instructor.toLowerCase().includes(q) ||
-          p.jobRoles.some((r) => r.toLowerCase().includes(q));
+          p.instructor?.toLowerCase().includes(q) ||
+          p.jobRoles?.some((r) => r.toLowerCase().includes(q));
         if (!match) return false;
       }
       if (filters.company && p.company !== filters.company) return false;
@@ -138,19 +152,19 @@ export default function FreeCoursesPage() {
       return true;
     });
 
-    if (activeTab === "recommended" && profile?.skills?.length) {
+      if (activeTab === "recommended" && profile?.skills?.length) {
       list = [...list].sort((a, b) => {
-        const scoreA = matchMap.get(a.id)?.matchScore || 0;
-        const scoreB = matchMap.get(b.id)?.matchScore || 0;
+        const scoreA = matchMap.get(a.courseId)?.matchScore || 0;
+        const scoreB = matchMap.get(b.courseId)?.matchScore || 0;
         return scoreB - scoreA;
       });
     }
 
     return list;
-  }, [effectiveSearch, filters, activeTab, profile, matchMap]);
+  }, [effectiveSearch, filters, activeTab, profile, matchMap, playlists]);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#EEF2F6] text-gray-800 antialiased font-sans">
+    <div className="flex h-screen w-screen overflow-hidden antialiased font-sans bg-transparent">
       <AppSidebar
         activeTab="courses"
         isOpen={isMobileMenuOpen}
@@ -175,7 +189,7 @@ export default function FreeCoursesPage() {
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-8 custom-scrollbar">
         
         {/* Personalized Resume Hero Banner */}
-        <section className="relative z-10 shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 shadow-xl border border-slate-800">
+        <section className="relative z-10 shrink-0 rounded-3xl overflow-hidden bg-gradient-to-br from-black via-orange-950/30 to-black text-white p-6 sm:p-10 shadow-xl border border-white/5">
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold mb-3">
@@ -215,7 +229,7 @@ export default function FreeCoursesPage() {
               ) : (
                 <button
                   onClick={() => setIsOnboardingOpen(true)}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-orange-500 dark:to-amber-600 hover:from-blue-600 hover:to-indigo-700 dark:hover:from-orange-600 dark:hover:to-amber-700 text-white font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-blue-500/25 dark:shadow-orange-500/30 transition-all cursor-pointer"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Upload PDF Resume for Instant Skill Matching</span>
@@ -248,14 +262,14 @@ export default function FreeCoursesPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-4 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? "bg-slate-900 text-white shadow-md shadow-slate-900/20"
-                    : "bg-white text-gray-600 hover:text-gray-900 border border-gray-200/80 hover:border-gray-300"
+                    ? "bg-slate-900 dark:bg-orange-600 text-white shadow-md shadow-slate-900/20 dark:shadow-orange-600/30"
+                    : "bg-white dark:bg-[#0c0c0e] text-gray-600 dark:text-zinc-300 hover:text-gray-900 dark:hover:text-white border border-gray-200/80 dark:border-white/10 hover:border-gray-300 dark:hover:border-zinc-700"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-amber-400" : "text-gray-500"}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-amber-400 dark:text-white" : "text-gray-500 dark:text-zinc-400"}`} />
                 <span>{tab.label}</span>
                 {tab.id === "mylearning" && enrolledCourses.length > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-blue-500 text-white text-[10px] font-black">
+                  <span className="px-1.5 py-0.2 rounded-full bg-blue-500 dark:bg-orange-500 text-white text-[10px] font-black">
                     {enrolledCourses.length}
                   </span>
                 )}
@@ -270,7 +284,7 @@ export default function FreeCoursesPage() {
             {/* Earned Certificates Section */}
             {certificates.length > 0 && (
               <div className="flex flex-col gap-3">
-                <h3 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                <h3 className="text-base font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
                   <Award className="w-5 h-5 text-amber-500" />
                   <span>Your Official Certificates of Completion ({certificates.length})</span>
                 </h3>
@@ -278,17 +292,17 @@ export default function FreeCoursesPage() {
                   {certificates.map((cert) => (
                     <div
                       key={cert.id}
-                      className="p-5 rounded-2xl bg-white border border-amber-200 shadow-md shadow-amber-500/5 flex flex-col justify-between"
+                      className="p-5 rounded-2xl bg-white dark:bg-[#0c0c0e] border border-amber-200 dark:border-amber-500/20 shadow-md shadow-amber-500/5 flex flex-col justify-between"
                     >
                       <div>
-                        <div className="flex items-center justify-between text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-2">
+                        <div className="flex items-center justify-between text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">
                           <span>{cert.company}</span>
                           <span className="font-mono">ID: {cert.credentialId.slice(0, 12)}</span>
                         </div>
-                        <h4 className="font-black text-sm text-gray-900 line-clamp-2">
+                        <h4 className="font-black text-sm text-gray-900 dark:text-white line-clamp-2">
                           {cert.courseTitle}
                         </h4>
-                        <p className="text-xs text-gray-500 mt-1">Issued to {cert.recipientName} on {cert.issuedAt}</p>
+                        <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1">Issued to {cert.recipientName} on {cert.issuedAt}</p>
                       </div>
 
                       <button
@@ -306,8 +320,8 @@ export default function FreeCoursesPage() {
 
             {/* In-Progress Courses */}
             <div className="flex flex-col gap-3">
-              <h3 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-blue-600" />
+              <h3 className="text-base font-extrabold text-gray-900 dark:text-white flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-blue-600 dark:text-orange-500" />
                 <span>Courses In Progress ({enrolledCourses.length})</span>
               </h3>
 
@@ -315,24 +329,24 @@ export default function FreeCoursesPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                   {enrolledCourses.map((course, index) => (
                     <CourseCard
-                      key={course.id}
+                      key={course.courseId}
                       course={course}
                       index={index}
-                      onOpenClassroom={(c) => router.push(`/courses/${c.id}`)}
-                      progress={getCourseProgress(course.id)}
-                      matchScore={matchMap.get(course.id)?.matchScore}
-                      matchReason={matchMap.get(course.id)?.recommendationReason}
+                      onOpenClassroom={(c) => router.push(`/courses/${c.courseId}`)}
+                      progress={getCourseProgress(course.courseId)}
+                      matchScore={matchMap.get(course.courseId)?.matchScore}
+                      matchReason={matchMap.get(course.courseId)?.recommendationReason}
                     />
                   ))}
                 </div>
               ) : (
-                <div className="p-12 text-center bg-white rounded-3xl border border-gray-200/80">
-                  <GraduationCap className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <h4 className="font-extrabold text-base text-gray-900">No courses started yet</h4>
-                  <p className="text-xs text-gray-500 mt-1 mb-4">Click "Start Learning" on any playlist to track progress and earn certificates.</p>
+                <div className="p-12 text-center bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10">
+                  <GraduationCap className="w-12 h-12 text-gray-400 dark:text-zinc-600 mx-auto mb-3" />
+                  <h4 className="font-extrabold text-base text-gray-900 dark:text-white">No courses started yet</h4>
+                  <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 mb-4">Click "Start Learning" on any playlist to track progress and earn certificates.</p>
                   <button
                     onClick={() => setActiveTab("all")}
-                    className="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold cursor-pointer"
+                    className="px-5 py-2.5 bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all"
                   >
                     Browse All Courses
                   </button>
@@ -374,7 +388,7 @@ export default function FreeCoursesPage() {
                 </div>
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="md:hidden p-3 rounded-2xl bg-white border border-gray-200 text-gray-700 hover:text-blue-600 flex items-center gap-2 text-xs font-bold shadow-xs cursor-pointer"
+                  className="md:hidden p-3 rounded-2xl bg-white dark:bg-[#0c0c0e] border border-gray-200 dark:border-white/10 text-gray-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-orange-400 flex items-center gap-2 text-xs font-bold shadow-xs cursor-pointer"
                 >
                   <SlidersHorizontal className="w-4 h-4" />
                   <span>Filters</span>
@@ -386,27 +400,27 @@ export default function FreeCoursesPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                   {filteredPlaylists.map((course, index) => (
                     <CourseCard
-                      key={course.id}
+                      key={course.courseId}
                       course={course}
                       index={index}
-                      onOpenClassroom={(c) => router.push(`/courses/${c.id}`)}
-                      progress={getCourseProgress(course.id)}
-                      matchScore={matchMap.get(course.id)?.matchScore}
-                      matchReason={matchMap.get(course.id)?.recommendationReason}
+                      onOpenClassroom={(c) => router.push(`/courses/${c.courseId}`)}
+                      progress={getCourseProgress(course.courseId)}
+                      matchScore={matchMap.get(course.courseId)?.matchScore}
+                      matchReason={matchMap.get(course.courseId)?.recommendationReason}
                     />
                   ))}
                 </div>
               ) : (
-                <div className="p-12 text-center bg-white rounded-3xl border border-gray-200/80">
-                  <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                  <h4 className="font-extrabold text-base text-gray-900">No courses match your filters</h4>
-                  <p className="text-xs text-gray-500 mt-1 mb-4">Try clearing some search terms or filters.</p>
+                <div className="p-12 text-center bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10">
+                  <BookOpen className="w-12 h-12 text-gray-400 dark:text-zinc-600 mx-auto mb-3" />
+                  <h4 className="font-extrabold text-base text-gray-900 dark:text-white">No courses match your filters</h4>
+                  <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 mb-4">Try clearing some search terms or filters.</p>
                   <button
                     onClick={() => {
                       setSearchQuery("");
                       setFilters({ search: "", company: "", category: "", difficulty: "", duration: "", certificateOnly: false, freeOnly: false, language: "" });
                     }}
-                    className="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold cursor-pointer"
+                    className="px-5 py-2.5 bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all"
                   >
                     Reset Filters
                   </button>

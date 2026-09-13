@@ -1,0 +1,274 @@
+{
+  "lectureId": "ml-lecture-01",
+  "lectureNumber": 1,
+  "lectureTitle": "Introduction to Machine Learning",
+  "videoUrl": "https://www.youtube.com/embed/P6kPdW0-NFM",
+  "questions": {
+    "fundamental": [
+      {
+        "id": "ml-01-f-01",
+        "question": "What is the primary goal of Machine Learning?",
+        "options": [
+          "To explicitly program a computer to perform tasks",
+          "To enable computers to learn and improve from experience without being explicitly programmed",
+          "To build websites automatically",
+          "To replace human programmers entirely"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "easy",
+        "explanation": "Machine learning focuses on the development of computer programs that can access data and use it to learn for themselves."
+      },
+      {
+        "id": "ml-01-f-02",
+        "question": "Which of the following is an example of Supervised Learning?",
+        "options": [
+          "Clustering customers based on buying habits",
+          "Predicting house prices based on historical labeled data",
+          "An agent learning to play chess through trial and error",
+          "Finding anomalies in network traffic"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "easy",
+        "explanation": "Supervised learning involves training a model on a labeled dataset, such as historical house prices."
+      },
+      {
+        "id": "ml-01-f-03",
+        "question": "What is Unsupervised Learning?",
+        "options": [
+          "Learning from data without human supervision or labeled outcomes",
+          "Learning with explicit input-output pairs",
+          "Learning through rewards and penalties",
+          "A type of learning that doesn't use data"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "easy",
+        "explanation": "Unsupervised learning finds hidden patterns or intrinsic structures in data without labeled outcomes."
+      },
+      {
+        "id": "ml-01-f-04",
+        "question": "What does a Classification model do?",
+        "options": [
+          "Predicts a continuous numeric value",
+          "Predicts a discrete class label or category",
+          "Groups unlabelled data into clusters",
+          "Generates new images"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "medium",
+        "explanation": "Classification is a supervised learning task where the goal is to predict categorical class labels."
+      },
+      {
+        "id": "ml-01-f-05",
+        "question": "What is the difference between Classification and Regression?",
+        "options": [
+          "Classification predicts discrete labels; Regression predicts continuous values",
+          "Classification predicts continuous values; Regression predicts discrete labels",
+          "Classification is unsupervised; Regression is supervised",
+          "There is no difference"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "medium",
+        "explanation": "Regression models predict a continuous numerical quantity, while classification models predict discrete categories."
+      },
+      {
+        "id": "ml-01-f-06",
+        "question": "Which Python library is most commonly used for data manipulation and analysis in ML?",
+        "options": [
+          "Matplotlib",
+          "Scikit-Learn",
+          "Pandas",
+          "Flask"
+        ],
+        "correctAnswer": 2,
+        "difficulty": "medium",
+        "explanation": "Pandas provides data structures like DataFrames which are essential for data manipulation."
+      },
+      {
+        "id": "ml-01-f-07",
+        "question": "What is the purpose of splitting data into training and testing sets?",
+        "options": [
+          "To make the dataset smaller and faster to process",
+          "To evaluate the model's performance on unseen data",
+          "To train two different models at the same time",
+          "To eliminate outliers"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "hard",
+        "explanation": "The test set acts as a proxy for new, unseen data, allowing us to evaluate how well the model generalizes."
+      },
+      {
+        "id": "ml-01-f-08",
+        "question": "What is Overfitting?",
+        "options": [
+          "When a model performs well on training data but poorly on test data",
+          "When a model performs poorly on both training and test data",
+          "When a model predicts perfectly on all data",
+          "When the dataset is too large"
+        ],
+        "correctAnswer": 0,
+        "difficulty": "hard",
+        "explanation": "Overfitting occurs when a model learns the training data's noise and details too well, failing to generalize."
+      },
+      {
+        "id": "ml-01-f-09",
+        "question": "What is a 'feature' in machine learning?",
+        "options": [
+          "The output variable we are trying to predict",
+          "An individual measurable property or characteristic of a phenomenon being observed",
+          "A special function in Python",
+          "The algorithm used to train the model"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "hard",
+        "explanation": "Features are the independent variables or inputs used by the model to make predictions."
+      },
+      {
+        "id": "ml-01-f-10",
+        "question": "In the context of machine learning, what does 'bias-variance tradeoff' refer to?",
+        "options": [
+          "The tradeoff between training time and prediction time",
+          "The balance between a model's complexity (variance) and its assumptions (bias) to minimize total error",
+          "The choice between using Python or R",
+          "The tradeoff between supervised and unsupervised learning"
+        ],
+        "correctAnswer": 1,
+        "difficulty": "interview",
+        "explanation": "It's the conflict in trying to simultaneously minimize two sources of error: bias (error from erroneous assumptions) and variance (error from sensitivity to small fluctuations in the training set)."
+      }
+    ],
+    "coding": [
+      {
+        "id": "ml-01-c-01",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "easy",
+        "question": "Write a Python script that prints 'Hello, Machine Learning!'.",
+        "language": "python",
+        "starterCode": "# Write your code here",
+        "expectedOutput": "Hello, Machine Learning!",
+        "solution": "print('Hello, Machine Learning!')",
+        "explanation": "The print() function outputs text to the console."
+      },
+      {
+        "id": "ml-01-c-02",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "easy",
+        "question": "Define a Python function named `predict` that takes a number `x` and returns `x * 2` (a simple mock model). Print the result of `predict(5)`.",
+        "language": "python",
+        "starterCode": "# Write your code here",
+        "expectedOutput": "10",
+        "solution": "def predict(x):\n    return x * 2\n\nprint(predict(5))",
+        "explanation": "Functions are defined using the def keyword. The function multiplies the input by 2."
+      },
+      {
+        "id": "ml-01-c-03",
+        "type": "coding",
+        "subType": "output_prediction",
+        "difficulty": "medium",
+        "question": "What will be the output of this Python code representing a mock dataset?",
+        "language": "python",
+        "code": "data = [1, 2, 3, 4, 5]\nprint(len(data))",
+        "options": [
+          "1",
+          "4",
+          "5",
+          "Error"
+        ],
+        "correctAnswer": 2,
+        "expectedOutput": "5",
+        "solution": "5",
+        "explanation": "The len() function returns the number of items in a list."
+      },
+      {
+        "id": "ml-01-c-04",
+        "type": "coding",
+        "subType": "output_prediction",
+        "difficulty": "medium",
+        "question": "What will this code output?",
+        "language": "python",
+        "code": "weights = [0.5, -0.2, 0.1]\nprint(weights[1])",
+        "options": [
+          "0.5",
+          "-0.2",
+          "0.1",
+          "1"
+        ],
+        "correctAnswer": 1,
+        "expectedOutput": "-0.2",
+        "solution": "-0.2",
+        "explanation": "Python lists are 0-indexed, so index 1 refers to the second element."
+      },
+      {
+        "id": "ml-01-c-05",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "medium",
+        "question": "Calculate the Mean Absolute Error (MAE) for the given actual and predicted values: actual = 10, predicted = 12. Print the MAE.",
+        "language": "python",
+        "starterCode": "actual = 10\npredicted = 12\n\n# Write your code here",
+        "expectedOutput": "2",
+        "solution": "actual = 10\npredicted = 12\nmae = abs(actual - predicted)\nprint(mae)",
+        "explanation": "Mean Absolute Error is the absolute difference between the actual and predicted values."
+      },
+      {
+        "id": "ml-01-c-06",
+        "type": "coding",
+        "subType": "debugging",
+        "difficulty": "medium",
+        "question": "Fix the error in this Python function calculating mean squared error.",
+        "language": "python",
+        "buggyCode": "def mse(y_true, y_pred):\n    error = y_true - y_pred\n    return error ^ 2\n\nprint(mse(10, 8))",
+        "solution": "def mse(y_true, y_pred):\n    error = y_true - y_pred\n    return error ** 2\n\nprint(mse(10, 8))",
+        "explanation": "In Python, the exponentiation operator is **. The ^ operator is bitwise XOR."
+      },
+      {
+        "id": "ml-01-c-07",
+        "type": "coding",
+        "subType": "implementation",
+        "difficulty": "hard",
+        "question": "Write a Python function `normalize(value, min_val, max_val)` that performs Min-Max scaling. Apply it to `value=5`, `min=0`, `max=10` and print the result.",
+        "language": "python",
+        "starterCode": "# Write your code here",
+        "expectedOutput": "0.5",
+        "solution": "def normalize(value, min_val, max_val):\n    return (value - min_val) / (max_val - min_val)\n\nprint(normalize(5, 0, 10))",
+        "explanation": "Min-Max scaling formula is (X - X_min) / (X_max - X_min)."
+      },
+      {
+        "id": "ml-01-c-08",
+        "type": "coding",
+        "subType": "debugging",
+        "difficulty": "hard",
+        "question": "This code tries to implement a step function (activation function). Find and correct the bug.",
+        "language": "python",
+        "buggyCode": "def step_function(x):\n    if x > 0\n        return 1\n    else:\n        return 0\n\nprint(step_function(-5))",
+        "solution": "def step_function(x):\n    if x > 0:\n        return 1\n    else:\n        return 0\n\nprint(step_function(-5))",
+        "explanation": "Missing colon (:) after the if condition in Python."
+      },
+      {
+        "id": "ml-01-c-09",
+        "type": "coding",
+        "subType": "problem_solving",
+        "difficulty": "hard",
+        "question": "Write a script that takes a list of features `[1, 2, 3]` and weights `[0.5, 0.5, 0.5]`, calculates their dot product, and prints the result.",
+        "language": "python",
+        "starterCode": "features = [1, 2, 3]\nweights = [0.5, 0.5, 0.5]\n\n# Write your code here",
+        "expectedOutput": "3.0",
+        "solution": "features = [1, 2, 3]\nweights = [0.5, 0.5, 0.5]\n\ndot_product = sum([f * w for f, w in zip(features, weights)])\nprint(dot_product)",
+        "explanation": "The dot product is the sum of the products of the corresponding entries of the two sequences."
+      },
+      {
+        "id": "ml-01-c-10",
+        "type": "coding",
+        "subType": "interview_challenge",
+        "difficulty": "interview",
+        "question": "Implement a simple linear regression prediction formula `y = m*x + b`. Given `m = 2.5`, `b = 10`, print the predicted `y` for `x = 4`.",
+        "language": "python",
+        "starterCode": "m = 2.5\nb = 10\nx = 4\n\n# Write your code here",
+        "expectedOutput": "20.0",
+        "solution": "m = 2.5\nb = 10\nx = 4\ny = m * x + b\nprint(y)",
+        "explanation": "Applying the equation of a line to make a prediction based on slope (m) and intercept (b)."
+      }
+    ]
+  }
+}

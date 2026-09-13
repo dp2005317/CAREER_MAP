@@ -48,29 +48,29 @@ export function CompanyCard({ company, index }: CompanyCardProps) {
         style={{ background: `linear-gradient(135deg, ${company.color}40, transparent 60%)` }}
       />
 
-      <div className="relative rounded-[1.3rem] overflow-hidden bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.06)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all duration-500 p-5 flex flex-col gap-3.5 transform-gpu">
+      <div className="relative rounded-[1.3rem] overflow-hidden bg-white/80 dark:bg-[#0c0c0e]/90 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all duration-500 p-5 flex flex-col gap-3.5 transform-gpu">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
               <CompanyLogoSvg company={company.name} size={48} />
               <div
-                className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white flex items-center justify-center"
+                className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white dark:border-zinc-900 flex items-center justify-center"
                 style={{ backgroundColor: company.color }}
               >
                 <span className="text-[6px] text-white font-black">{company.courseCount}</span>
               </div>
             </div>
             <div>
-              <h3 className="font-extrabold text-sm text-gray-900 tracking-tight">{company.name}</h3>
-              <p className="text-[10px] font-semibold text-gray-400 mt-0.5">{company.courseCount} Free Playlists</p>
+              <h3 className="font-extrabold text-sm text-gray-900 dark:text-white tracking-tight">{company.name}</h3>
+              <p className="text-[10px] font-semibold text-gray-400 dark:text-zinc-500 mt-0.5">{company.courseCount} Free Playlists</p>
             </div>
           </div>
           <a
             href={company.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 rounded-xl bg-gray-100/80 flex items-center justify-center text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all group/btn"
+            className="w-8 h-8 rounded-xl bg-gray-100/80 dark:bg-zinc-800 flex items-center justify-center text-gray-400 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-orange-400 hover:bg-blue-50 dark:hover:bg-zinc-700 transition-all group/btn"
             title="Visit Official Site"
           >
             <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
@@ -82,20 +82,20 @@ export function CompanyCard({ company, index }: CompanyCardProps) {
           {company.skills.slice(0, 4).map((skill) => (
             <span
               key={skill}
-              className="text-[9px] font-bold px-2.5 py-1 rounded-lg border border-gray-200/60 bg-gray-50/50 text-gray-600"
+              className="text-[9px] font-bold px-2.5 py-1 rounded-lg border border-gray-200/60 dark:border-zinc-700/60 bg-gray-50/50 dark:bg-zinc-800/60 text-gray-600 dark:text-zinc-300"
             >
               {skill}
             </span>
           ))}
           {company.skills.length > 4 && (
-            <span className="text-[9px] font-bold px-2 py-1 rounded-lg bg-gray-100 text-gray-400">
+            <span className="text-[9px] font-bold px-2 py-1 rounded-lg bg-gray-100 dark:bg-zinc-800 text-gray-400 dark:text-zinc-500">
               +{company.skills.length - 4}
             </span>
           )}
         </div>
 
         {/* Description */}
-        <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-2">{company.description}</p>
+        <p className="text-[11px] text-gray-500 dark:text-zinc-400 leading-relaxed line-clamp-2">{company.description}</p>
 
         {/* Actions */}
         <div className="flex items-center gap-2 mt-auto pt-2">
@@ -109,9 +109,9 @@ export function CompanyCard({ company, index }: CompanyCardProps) {
           </a>
           <Link
             href={`/dashboard?tab=jobs&company=${encodeURIComponent(company.name)}`}
-            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 text-[10px] font-black text-gray-700 bg-gray-100/80 rounded-xl hover:bg-gray-200/80 transition-all no-underline border border-gray-200/50"
+            className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 text-[10px] font-black text-gray-700 dark:text-zinc-200 bg-gray-100/80 dark:bg-zinc-800 rounded-xl hover:bg-gray-200/80 dark:hover:bg-zinc-700 transition-all no-underline border border-gray-200/50 dark:border-zinc-700"
           >
-            <Briefcase className="w-3 h-3 text-blue-500" />
+            <Briefcase className="w-3 h-3 text-blue-500 dark:text-orange-400" />
             <span>{company.jobCount && company.jobCount > 0 ? `${company.jobCount} Jobs` : "Explore Jobs"}</span>
           </Link>
         </div>
