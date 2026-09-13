@@ -77,7 +77,7 @@ export function ProfileSettings() {
       
       {/* Sidebar Navigation */}
       <div className="w-full md:w-64 shrink-0 flex flex-col gap-2">
-        <div className="p-5 bg-white rounded-3xl border border-gray-200/80 shadow-sm flex flex-col gap-2">
+        <div className="p-5 bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col gap-2">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -87,11 +87,11 @@ export function ProfileSettings() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all text-sm font-bold cursor-pointer ${
                   isActive 
-                    ? "bg-blue-50 text-blue-700 shadow-xs border border-blue-100" 
-                    : "bg-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900 border border-transparent"
+                    ? "bg-blue-50 dark:bg-orange-500/10 text-blue-700 dark:text-orange-400 shadow-xs border border-blue-100 dark:border-orange-500/20" 
+                    : "bg-transparent text-gray-600 dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:text-gray-900 dark:hover:text-white border border-transparent"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? "text-blue-600" : "text-gray-400"}`} />
+                <Icon className={`w-4 h-4 ${isActive ? "text-blue-600 dark:text-orange-400" : "text-gray-400 dark:text-zinc-500"}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -101,10 +101,10 @@ export function ProfileSettings() {
 
       {/* Main Form Area */}
       <div className="flex-1 min-w-0">
-        <div className="bg-white rounded-3xl border border-gray-200/80 shadow-sm overflow-hidden flex flex-col">
+        <div className="bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col">
           
-          <div className="p-6 sm:p-8 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="text-xl font-black text-gray-900">
+          <div className="p-6 sm:p-8 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
+            <h2 className="text-xl font-black text-gray-900 dark:text-white">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
             <button
@@ -113,7 +113,7 @@ export function ProfileSettings() {
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all cursor-pointer ${
                 showSuccess 
                   ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/20" 
-                  : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-blue-500/20"
+                  : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-orange-600 dark:to-orange-500 dark:hover:from-orange-500 dark:hover:to-orange-600 text-white shadow-md shadow-blue-500/20 dark:shadow-orange-600/25"
               }`}
             >
               {isSaving ? (
@@ -132,36 +132,36 @@ export function ProfileSettings() {
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-6">
                 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Display Name</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Display Name</label>
                   <input
                     type="text"
                     value={formData.displayName}
                     onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-semibold text-gray-900"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] focus:bg-white dark:focus:bg-black/60 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 focus:border-blue-500 dark:focus:border-orange-500 outline-none transition-all font-semibold text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500"
                     placeholder="E.g. Jane Doe"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Email Address (Read Only)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Email Address (Read Only)</label>
                   <input
                     type="email"
                     value={profile?.email || user?.email || ""}
                     disabled
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 outline-none font-semibold cursor-not-allowed"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/[0.02] text-gray-500 dark:text-zinc-500 outline-none font-semibold cursor-not-allowed"
                   />
-                  <p className="text-[11px] text-gray-400 font-medium">Your email is managed by your authentication provider (Google/GitHub).</p>
+                  <p className="text-[11px] text-gray-400 dark:text-zinc-500 font-medium">Your email is managed by your authentication provider (Google/GitHub).</p>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Preferred Location</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Preferred Location</label>
                   <div className="relative">
-                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-zinc-500" />
                     <input
                       type="text"
                       value={formData.preferredLocation || ""}
                       onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
-                      className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-semibold text-gray-900"
+                      className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] focus:bg-white dark:focus:bg-black/60 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 focus:border-blue-500 dark:focus:border-orange-500 outline-none transition-all font-semibold text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500"
                       placeholder="E.g. San Francisco, CA or Remote"
                     />
                   </div>
@@ -175,27 +175,27 @@ export function ProfileSettings() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Target Role</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Target Role</label>
                     <input
                       type="text"
                       value={formData.targetRole || ""}
                       onChange={(e) => setFormData({ ...formData, targetRole: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-semibold text-gray-900"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] focus:bg-white dark:focus:bg-black/60 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 focus:border-blue-500 dark:focus:border-orange-500 outline-none transition-all font-semibold text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500"
                       placeholder="E.g. Frontend Developer"
                     />
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Experience Level</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Experience Level</label>
                     <select
                       value={formData.experienceLevel || "Entry Level"}
                       onChange={(e) => setFormData({ ...formData, experienceLevel: e.target.value as UserProfile["experienceLevel"] })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-semibold text-gray-900 appearance-none"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-[#121215] focus:bg-white dark:focus:bg-[#18181b] focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 focus:border-blue-500 dark:focus:border-orange-500 outline-none transition-all font-semibold text-gray-900 dark:text-white appearance-none"
                     >
-                      <option value="Student">Student / Still Learning</option>
-                      <option value="Entry Level">Entry Level (0-2 years)</option>
-                      <option value="Mid Level">Mid Level (2-5 years)</option>
-                      <option value="Senior">Senior (5+ years)</option>
+                      <option value="Student" className="dark:bg-zinc-900 dark:text-white">Student / Still Learning</option>
+                      <option value="Entry Level" className="dark:bg-zinc-900 dark:text-white">Entry Level (0-2 years)</option>
+                      <option value="Mid Level" className="dark:bg-zinc-900 dark:text-white">Mid Level (2-5 years)</option>
+                      <option value="Senior" className="dark:bg-zinc-900 dark:text-white">Senior (5+ years)</option>
                     </select>
                   </div>
                 </div>
@@ -207,16 +207,16 @@ export function ProfileSettings() {
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-6">
                 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Skills (Press Enter to add)</label>
-                  <div className="p-4 rounded-2xl border border-gray-200 bg-gray-50 flex flex-col gap-4 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all">
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Skills (Press Enter to add)</label>
+                  <div className="p-4 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] flex flex-col gap-4 focus-within:border-blue-500 dark:focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-orange-500/20 transition-all">
                     
                     <div className="flex flex-wrap gap-2">
                       {formData.skills?.map((skill) => (
-                        <div key={skill} className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-bold text-gray-700 shadow-sm">
+                        <div key={skill} className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-white/[0.06] border border-gray-200 dark:border-white/10 rounded-lg text-sm font-bold text-gray-700 dark:text-zinc-200 shadow-sm">
                           <span>{skill}</span>
                           <button
                             onClick={() => handleRemoveSkill(skill)}
-                            className="p-0.5 rounded-full hover:bg-gray-100 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                            className="p-0.5 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer"
                           >
                             <X className="w-3 h-3" />
                           </button>
@@ -225,26 +225,26 @@ export function ProfileSettings() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <Plus className="w-4 h-4 text-gray-400" />
+                      <Plus className="w-4 h-4 text-gray-400 dark:text-zinc-500" />
                       <input
                         type="text"
                         value={newSkill}
                         onChange={(e) => setNewSkill(e.target.value)}
                         onKeyDown={handleAddSkill}
                         placeholder="Add a skill..."
-                        className="flex-1 bg-transparent border-none outline-none text-sm font-semibold text-gray-900 placeholder:text-gray-400"
+                        className="flex-1 bg-transparent border-none outline-none text-sm font-semibold text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500"
                       />
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500">Resume Summary / Bio</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Resume Summary / Bio</label>
                   <textarea
                     value={formData.resumeSummary || ""}
                     onChange={(e) => setFormData({ ...formData, resumeSummary: e.target.value })}
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all font-semibold text-gray-900 leading-relaxed custom-scrollbar"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] focus:bg-white dark:focus:bg-black/60 focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 focus:border-blue-500 dark:focus:border-orange-500 outline-none transition-all font-semibold text-gray-900 dark:text-white leading-relaxed custom-scrollbar placeholder:text-gray-400 dark:placeholder:text-zinc-500"
                     placeholder="A brief overview of your background, extracted from your resume or GitHub profile."
                   />
                 </div>

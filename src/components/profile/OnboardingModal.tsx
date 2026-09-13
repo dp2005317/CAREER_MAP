@@ -158,23 +158,23 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-2xl bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 p-6 sm:p-8 overflow-hidden font-sans my-8"
+          className="relative w-full max-w-2xl bg-white/95 dark:bg-[#0c0c0e] backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/60 dark:border-white/10 p-6 sm:p-8 overflow-hidden font-sans my-8"
         >
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition-colors cursor-pointer"
+            className="absolute top-5 right-5 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
 
           {!user ? (
             <div className="flex flex-col items-center text-center gap-4 py-8">
-              <div className="w-16 h-16 rounded-3xl bg-blue-100 text-blue-600 flex items-center justify-center mb-2">
+              <div className="w-16 h-16 rounded-3xl bg-blue-100 dark:bg-orange-500/10 text-blue-600 dark:text-orange-400 flex items-center justify-center mb-2">
                 <FileText className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-black text-gray-900">Sign in to Upload Resume</h3>
-              <p className="text-sm text-gray-500 max-w-sm mb-4">
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white">Sign in to Upload Resume</h3>
+              <p className="text-sm text-gray-500 dark:text-zinc-400 max-w-sm mb-4">
                 You need to be logged in to build your profile, upload your resume, and get personalized AI recommendations.
               </p>
               <button
@@ -182,7 +182,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
                   onClose();
                   router.push("/login");
                 }}
-                className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-md cursor-pointer"
+                className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-orange-600 dark:hover:bg-orange-500 text-white font-bold transition-all shadow-md cursor-pointer"
               >
                 Sign In Now
               </button>
@@ -191,14 +191,14 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
             <>
               {/* Header */}
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-orange-600 dark:to-amber-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30 dark:shadow-orange-500/30">
                   <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
+                  <h3 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white tracking-tight">
                     {step === "upload" ? "Complete Your Profile & Resume" : "Review Extracted Skills"}
                   </h3>
-                  <p className="text-xs text-gray-500 font-medium">
+                  <p className="text-xs text-gray-500 dark:text-zinc-400 font-medium">
                     {step === "upload" 
                       ? "Upload your resume in PDF to automatically match top jobs & tailored courses"
                       : "We extracted these skills from your resume. Fine-tune them below."}
@@ -216,8 +216,8 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
                 onClick={() => fileInputRef.current?.click()}
                 className={`relative border-2 border-dashed rounded-3xl p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
                   isDragging
-                    ? "border-blue-500 bg-blue-50/70 scale-[1.01]"
-                    : "border-gray-200 hover:border-blue-400 bg-gray-50/50 hover:bg-blue-50/20"
+                    ? "border-blue-500 dark:border-orange-500 bg-blue-50/70 dark:bg-orange-500/10 scale-[1.01]"
+                    : "border-gray-200 dark:border-white/10 hover:border-blue-400 dark:hover:border-orange-500/50 bg-gray-50/50 dark:bg-white/[0.02] hover:bg-blue-50/20 dark:hover:bg-white/[0.04]"
                 }`}
               >
                 <input
@@ -230,20 +230,20 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
 
                 {isAnalyzing ? (
                   <div className="flex flex-col items-center gap-3">
-                    <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-                    <p className="text-sm font-bold text-gray-800">Analyzing resume with AI...</p>
-                    <p className="text-xs text-gray-400">Extracting tech skills, frameworks, and job matches</p>
+                    <Loader2 className="w-10 h-10 text-blue-600 dark:text-orange-400 animate-spin" />
+                    <p className="text-sm font-bold text-gray-800 dark:text-zinc-200">Analyzing resume with AI...</p>
+                    <p className="text-xs text-gray-400 dark:text-zinc-500">Extracting tech skills, frameworks, and job matches</p>
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-16 h-16 rounded-2xl bg-blue-100/60 text-blue-600 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-2xl bg-blue-100/60 dark:bg-orange-500/10 text-blue-600 dark:text-orange-400 flex items-center justify-center">
                       <UploadCloud className="w-8 h-8" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-gray-800">
-                        Click or drag & drop your <span className="text-blue-600">Resume (PDF)</span>
+                      <p className="text-sm font-bold text-gray-800 dark:text-zinc-100">
+                        Click or drag & drop your <span className="text-blue-600 dark:text-orange-400">Resume (PDF)</span>
                       </p>
-                      <p className="text-xs text-gray-400 mt-1">Supports standard PDF or Text files (max 10MB)</p>
+                      <p className="text-xs text-gray-400 dark:text-zinc-500 mt-1">Supports standard PDF or Text files (max 10MB)</p>
                     </div>
                   </div>
                 )}
@@ -257,7 +257,7 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
                     setSkills(["React", "JavaScript", "TypeScript", "Python", "SQL"]);
                     setStep("review");
                   }}
-                  className="text-xs font-bold text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+                  className="text-xs font-bold text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Skip upload & enter skills manually →
                 </button>
@@ -267,22 +267,22 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
             <div className="flex flex-col gap-6">
               {/* Resume Analyzed Banner */}
               {fileName && (
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-bold">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <div className="flex items-center gap-3 p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span className="truncate">Resume analyzed: {fileName}</span>
                 </div>
               )}
 
               {/* Extracted Skills Chips */}
               <div>
-                <label className="text-xs font-black uppercase tracking-wider text-gray-700 block mb-2">
+                <label className="text-xs font-black uppercase tracking-wider text-gray-700 dark:text-zinc-300 block mb-2">
                   Detected Skills ({skills.length})
                 </label>
-                <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-3 bg-gray-50/80 rounded-2xl border border-gray-200/80">
+                <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-3 bg-gray-50/80 dark:bg-white/[0.02] rounded-2xl border border-gray-200/80 dark:border-white/10 custom-scrollbar">
                   {skills.map((skill) => (
                     <span
                       key={skill}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white text-blue-700 border border-blue-200/60 rounded-xl text-xs font-bold shadow-xs"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-white/[0.06] text-blue-700 dark:text-orange-400 border border-blue-200/60 dark:border-orange-500/30 rounded-xl text-xs font-bold shadow-xs"
                     >
                       {skill}
                       <button
@@ -296,19 +296,19 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
                   ))}
 
                   {/* Add skill inline */}
-                  <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border border-gray-200 rounded-xl">
+                  <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-white dark:bg-white/[0.05] border border-gray-200 dark:border-white/10 rounded-xl">
                     <input
                       type="text"
                       placeholder="+ Add skill"
                       value={newSkillInput}
                       onChange={(e) => setNewSkillInput(e.target.value)}
                       onKeyDown={handleAddSkill}
-                      className="text-xs font-semibold outline-none w-20 py-1"
+                      className="text-xs font-semibold outline-none w-20 py-1 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-zinc-500 bg-transparent"
                     />
                     <button
                       type="button"
                       onClick={handleAddSkill}
-                      className="text-blue-600 hover:text-blue-800 cursor-pointer"
+                      className="text-blue-600 dark:text-orange-400 hover:text-blue-800 cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
                     </button>
@@ -319,40 +319,40 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
               {/* Target Role & Experience */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-gray-700 block mb-2">
+                  <label className="text-xs font-black uppercase tracking-wider text-gray-700 dark:text-zinc-300 block mb-2">
                     Target Role
                   </label>
                   <select
                     value={targetRole}
                     onChange={(e) => setTargetRole(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-[#121215] border border-gray-200 dark:border-white/10 rounded-2xl text-xs font-bold text-gray-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20"
                   >
                     {POPULAR_ROLES.map((r) => (
-                      <option key={r} value={r}>{r}</option>
+                      <option key={r} value={r} className="dark:bg-zinc-900 dark:text-white">{r}</option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-gray-700 block mb-2">
+                  <label className="text-xs font-black uppercase tracking-wider text-gray-700 dark:text-zinc-300 block mb-2">
                     Experience Level
                   </label>
                   <select
                     value={experienceLevel}
                     onChange={(e) => setExperienceLevel(e.target.value as any)}
-                    className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full px-3.5 py-2.5 bg-gray-50 dark:bg-[#121215] border border-gray-200 dark:border-white/10 rounded-2xl text-xs font-bold text-gray-800 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20"
                   >
-                    <option value="Student">Student / Intern</option>
-                    <option value="Entry Level">Entry Level (0 - 2 yrs)</option>
-                    <option value="Mid Level">Mid Level (2 - 5 yrs)</option>
-                    <option value="Senior">Senior Level (5+ yrs)</option>
+                    <option value="Student" className="dark:bg-zinc-900 dark:text-white">Student / Intern</option>
+                    <option value="Entry Level" className="dark:bg-zinc-900 dark:text-white">Entry Level (0 - 2 yrs)</option>
+                    <option value="Mid Level" className="dark:bg-zinc-900 dark:text-white">Mid Level (2 - 5 yrs)</option>
+                    <option value="Senior" className="dark:bg-zinc-900 dark:text-white">Senior Level (5+ yrs)</option>
                   </select>
                 </div>
               </div>
 
               {/* Preferred Location */}
               <div>
-                <label className="text-xs font-black uppercase tracking-wider text-gray-700 block mb-2">
+                <label className="text-xs font-black uppercase tracking-wider text-gray-700 dark:text-zinc-300 block mb-2">
                   Preferred Location
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -363,8 +363,8 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
                       onClick={() => setLocation(loc)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         location === loc
-                          ? "bg-blue-600 text-white shadow-sm shadow-blue-500/30"
-                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                          ? "bg-blue-600 dark:bg-orange-600 text-white shadow-sm shadow-blue-500/30 dark:shadow-orange-600/30"
+                          : "bg-gray-100 dark:bg-white/[0.05] text-gray-600 dark:text-zinc-400 hover:bg-gray-200 dark:hover:bg-white/[0.1] border border-transparent dark:border-white/10"
                       }`}
                     >
                       {loc}
@@ -374,18 +374,18 @@ export function OnboardingModal({ isOpen, onClose, onComplete }: OnboardingModal
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+              <div className="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setStep("upload")}
-                  className="px-4 py-2.5 text-xs font-bold text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+                  className="px-4 py-2.5 text-xs font-bold text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   ← Re-upload Resume
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveProfile}
-                  className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs sm:text-sm font-black rounded-2xl shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-orange-600 dark:to-orange-500 dark:hover:from-orange-500 dark:hover:to-orange-600 text-white text-xs sm:text-sm font-black rounded-2xl shadow-lg shadow-blue-500/25 dark:shadow-orange-600/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
                   <span>Save Profile & Discover Matches</span>
                   <ArrowRight className="w-4 h-4" />
