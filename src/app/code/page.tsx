@@ -34,6 +34,7 @@ export default function CodePlaygroundPage() {
   const [code, setCode] = useState(DEFAULT_CODE.python);
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [isError, setIsError] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
 
   // Auth redirect
@@ -53,6 +54,7 @@ export default function CodePlaygroundPage() {
     if (!code.trim()) return;
     
     setIsRunning(true);
+    setIsError(false);
     setOutput("Executing...\n");
     
     try {
@@ -71,12 +73,15 @@ export default function CodePlaygroundPage() {
       const data = await response.json();
       
       if (!response.ok) {
-        setOutput(`Error: ${data.error || 'Failed to execute code'}`);
+        setOutput(`Error:\n${data.error || 'Failed to execute code'}`);
+        setIsError(true);
       } else {
         setOutput(data.output || "Code executed successfully (no output).");
+        setIsError(false);
       }
     } catch (error: any) {
-      setOutput(`Execution failed: ${error.message || 'Unknown error'}`);
+      setOutput(`Execution failed:\n${error.message || 'Unknown error'}`);
+      setIsError(true);
     } finally {
       setIsRunning(false);
     }
@@ -204,7 +209,7 @@ export default function CodePlaygroundPage() {
                   {isRunning && <span className="flex items-center gap-1.5 text-[10px] font-bold text-blue-500"><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span> Executing remotely...</span>}
                 </div>
                 <div className="flex-1 overflow-auto p-4 custom-scrollbar">
-                  <pre className="font-mono text-[13px] text-gray-800 dark:text-gray-300 whitespace-pre-wrap break-words">
+                  <pre className={`font-mono text-[13px] whitespace-pre-wrap break-words ${isError ? 'text-red-500' : 'text-gray-800 dark:text-gray-300'}`}>
                     {output || <span className="text-gray-400 italic">No output yet. Click 'Run Code' to execute.</span>}
                   </pre>
                 </div>
