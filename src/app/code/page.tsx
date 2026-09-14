@@ -26,7 +26,7 @@ const DEFAULT_CODE: Record<string, string> = {
 
 export default function CodePlaygroundPage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const [activeTab, setActiveTab] = useState("code");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -38,10 +38,10 @@ export default function CodePlaygroundPage() {
 
   // Auth redirect
   useEffect(() => {
-    if (user === null) {
+    if (!isLoading && user === null) {
       router.push("/login?redirect=/code");
     }
-  }, [user, router]);
+  }, [user, isLoading, router]);
 
   const handleLanguageChange = (langId: string) => {
     setLanguage(langId);
@@ -81,6 +81,14 @@ export default function CodePlaygroundPage() {
       setIsRunning(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full h-screen items-center justify-center bg-[#EEF2F6] dark:bg-[#0c0c0e]">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+      </div>
+    );
+  }
 
   if (user === null) return null; // Will redirect
 
