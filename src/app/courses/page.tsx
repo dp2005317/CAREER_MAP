@@ -58,7 +58,7 @@ const tabs = [
   { id: "paths", label: "Career Paths", icon: Target },
 ];
 
-export default function FreeCoursesPage() {
+export default function CoursesPage() {
   const router = useRouter();
   const { user, profile, courseProgress, certificates, getCourseProgress } = useAuth();
 
@@ -180,7 +180,7 @@ export default function FreeCoursesPage() {
       />
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
         <DashboardHeader
-          title="Free Certification Courses"
+          title="Certification Courses"
           user={user || profile}
           hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

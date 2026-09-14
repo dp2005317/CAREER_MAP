@@ -64,7 +64,7 @@ export default function Home() {
             Map Discovery
           </Link>
           <Link href="/courses" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
-            Free Courses
+            Courses
           </Link>
           <Link href="/dashboard?tab=companies" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
             Companies
