@@ -24,22 +24,35 @@ export async function POST(req: Request) {
     }
 
     // Try calling the public Judge0 CE API
-    // Note: In production, you should use your own Judge0 instance or authenticated RapidAPI key
-    const response = await axios.post('https://ce.judge0.com/submissions?base64_encoded=false&wait=true', {
-      source_code: code,
+    const response = await axios.post('https://ce.judge0.com/submissions?base64_encoded=true&wait=true', {
+      source_code: Buffer.from(code).toString('base64'),
       language_id: languageId,
-      stdin: input || ""
+      stdin: input ? Buffer.from(input).toString('base64') : ""
     });
 
     const data = response.data;
+    
+    // Helper to decode base64 safely
+    const decodeBase64 = (str: string | null | undefined) => {
+      if (!str) return null;
+      try {
+        return Buffer.from(str, 'base64').toString('utf-8');
+      } catch (e) {
+        return str;
+      }
+    };
 
-    if (data.stderr || data.compile_output) {
+    const stderr = decodeBase64(data.stderr);
+    const compileOutput = decodeBase64(data.compile_output);
+    const stdout = decodeBase64(data.stdout);
+
+    if (stderr || compileOutput) {
       return NextResponse.json({ 
-        error: data.stderr || data.compile_output 
+        error: stderr || compileOutput 
       }, { status: 400 });
     }
 
-    return NextResponse.json({ output: data.stdout || "" });
+    return NextResponse.json({ output: stdout || "" });
   } catch (error: any) {
     console.error("Execution error:", error?.response?.data || error.message);
     
