@@ -6,7 +6,7 @@ import { useAuth } from "@/database/authContext";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import Editor from "@monaco-editor/react";
-import { Play, Loader2, Code2, MonitorX } from "lucide-react";
+import { Play, Loader2, Code2, MonitorX, Keyboard, Terminal, FileCode2 } from "lucide-react";
 
 const SUPPORTED_LANGUAGES = [
   { id: "python", name: "Python 3" },
@@ -130,14 +130,14 @@ export default function CodePlaygroundPage() {
         {/* Desktop Layout */}
         <div className="hidden md:flex flex-col h-full w-full p-4 gap-4">
           {/* Header */}
-          <div className="flex items-center justify-between shrink-0 glass-dark rounded-2xl p-4 shadow-sm border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0c0c0e]">
+          <div className="flex items-center justify-between shrink-0 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl rounded-2xl p-4 shadow-sm border border-white/60 dark:border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center border border-blue-100 dark:border-blue-900/30">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 text-white flex items-center justify-center shadow-md shadow-orange-500/20">
                 <Code2 className="w-5 h-5" />
               </div>
               <div>
                 <h1 className="font-black text-xl leading-none mb-1 text-gray-900 dark:text-white">Code Playground</h1>
-                <p className="text-xs font-semibold text-gray-500">Practice algorithms and test logic directly in your browser.</p>
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">Practice algorithms and test logic directly in your browser.</p>
               </div>
             </div>
 
@@ -145,17 +145,17 @@ export default function CodePlaygroundPage() {
               <select 
                 value={language}
                 onChange={(e) => handleLanguageChange(e.target.value)}
-                className="neu-btn px-4 py-2.5 outline-none font-bold text-sm bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-gray-800 dark:text-gray-200"
+                className="px-4 py-2.5 rounded-xl outline-none font-semibold text-sm bg-white/60 dark:bg-zinc-800/60 backdrop-blur-xl border border-white/40 dark:border-white/10 text-gray-800 dark:text-gray-200 shadow-sm transition-all focus:ring-2 focus:ring-orange-500 cursor-pointer"
               >
                 {SUPPORTED_LANGUAGES.map(l => (
-                  <option key={l.id} value={l.id}>{l.name}</option>
+                  <option key={l.id} value={l.id} className="bg-white dark:bg-zinc-800">{l.name}</option>
                 ))}
               </select>
 
               <button
                 onClick={handleRunCode}
                 disabled={isRunning}
-                className={`neu-btn-primary px-6 py-2.5 font-bold flex items-center gap-2 ${isRunning ? 'opacity-70 cursor-wait' : ''}`}
+                className={`neu-btn-primary px-6 py-2.5 font-bold flex items-center gap-2 ${isRunning ? 'opacity-70 cursor-wait' : 'hover:scale-105'}`}
               >
                 {isRunning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
                 <span>{isRunning ? 'Running...' : 'Run Code'}</span>
@@ -166,51 +166,64 @@ export default function CodePlaygroundPage() {
           {/* Workspace (Editor + Output) */}
           <div className="flex-1 flex gap-4 min-h-0">
             {/* Editor Container */}
-            <div className="flex-[2] rounded-2xl overflow-hidden border border-slate-200/80 dark:border-white/10 shadow-sm relative group bg-white dark:bg-[#1e1e1e]">
-              <Editor
-                height="100%"
-                language={language === 'c' || language === 'cpp' ? 'cpp' : language}
-                value={code}
-                onChange={(val) => setCode(val || "")}
-                theme="vs-dark"
-                options={{
-                  minimap: { enabled: false },
-                  fontSize: 14,
-                  wordWrap: "on",
-                  padding: { top: 16 },
-                  scrollBeyondLastLine: false,
-                  smoothScrolling: true,
-                  cursorBlinking: "smooth",
-                  cursorSmoothCaretAnimation: "on",
-                  formatOnPaste: true,
-                }}
-              />
+            <div className="flex-[2] rounded-2xl overflow-hidden border border-slate-200/60 dark:border-white/5 shadow-md flex flex-col bg-white dark:bg-[#1e1e1e]">
+              <div className="h-10 shrink-0 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-[#18181b] flex items-center px-4 gap-2">
+                <FileCode2 className="w-4 h-4 text-orange-500" />
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400 font-mono">
+                  main.{language === 'python' ? 'py' : language === 'javascript' ? 'js' : language === 'java' ? 'java' : language === 'cpp' ? 'cpp' : 'c'}
+                </span>
+              </div>
+              <div className="flex-1 relative group">
+                <Editor
+                  height="100%"
+                  language={language === 'c' || language === 'cpp' ? 'cpp' : language}
+                  value={code}
+                  onChange={(val) => setCode(val || "")}
+                  theme="vs-dark"
+                  options={{
+                    minimap: { enabled: false },
+                    fontSize: 14,
+                    wordWrap: "on",
+                    padding: { top: 16 },
+                    scrollBeyondLastLine: false,
+                    smoothScrolling: true,
+                    cursorBlinking: "smooth",
+                    cursorSmoothCaretAnimation: "on",
+                    formatOnPaste: true,
+                    fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+                  }}
+                />
+              </div>
             </div>
 
             {/* I/O Container */}
             <div className="flex-1 flex flex-col gap-4 min-h-0">
               {/* StdIn */}
-              <div className="h-[30%] shrink-0 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm bg-white dark:bg-[#121212] overflow-hidden flex flex-col">
-                <div className="px-4 py-2 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-[#18181b]">
-                  <h3 className="font-bold text-xs text-gray-500 uppercase tracking-wider">Custom Input (stdin)</h3>
+              <div className="h-[35%] shrink-0 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-md bg-white dark:bg-[#121212] overflow-hidden flex flex-col">
+                <div className="h-10 shrink-0 px-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-[#18181b] flex items-center gap-2">
+                  <Keyboard className="w-4 h-4 text-gray-400" />
+                  <h3 className="font-semibold text-xs text-gray-600 dark:text-gray-300 tracking-wide">Custom Input</h3>
                 </div>
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Enter inputs here..."
-                  className="flex-1 w-full bg-transparent p-4 outline-none resize-none font-mono text-sm text-gray-800 dark:text-gray-300"
+                  placeholder="Enter stdin here..."
+                  className="flex-1 w-full bg-transparent p-4 outline-none resize-none font-mono text-[13px] text-gray-800 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-gray-600"
                 />
               </div>
 
               {/* StdOut */}
-              <div className="flex-1 rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm bg-white dark:bg-[#080808] overflow-hidden flex flex-col min-h-0">
-                <div className="px-4 py-2 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-[#18181b] flex items-center justify-between">
-                  <h3 className="font-bold text-xs text-gray-500 uppercase tracking-wider">Output (stdout)</h3>
-                  {isRunning && <span className="flex items-center gap-1.5 text-[10px] font-bold text-blue-500"><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span> Executing remotely...</span>}
+              <div className="flex-1 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-md bg-white dark:bg-[#0a0a0a] overflow-hidden flex flex-col min-h-0">
+                <div className="h-10 shrink-0 px-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-[#18181b] flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Terminal className="w-4 h-4 text-gray-400" />
+                    <h3 className="font-semibold text-xs text-gray-600 dark:text-gray-300 tracking-wide">Terminal Output</h3>
+                  </div>
+                  {isRunning && <span className="flex items-center gap-1.5 text-[10px] font-bold text-orange-500"><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span></span> Executing...</span>}
                 </div>
                 <div className="flex-1 overflow-auto p-4 custom-scrollbar">
-                  <pre className={`font-mono text-[13px] whitespace-pre-wrap break-words ${isError ? 'text-red-500' : 'text-gray-800 dark:text-gray-300'}`}>
-                    {output || <span className="text-gray-400 italic">No output yet. Click 'Run Code' to execute.</span>}
+                  <pre className={`font-mono text-[13px] leading-relaxed whitespace-pre-wrap break-words ${isError ? 'text-red-500' : 'text-gray-800 dark:text-gray-300'}`}>
+                    {output || <span className="text-gray-400 dark:text-gray-600 italic">No output yet. Click 'Run Code' to execute.</span>}
                   </pre>
                 </div>
               </div>
