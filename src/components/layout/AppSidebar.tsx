@@ -53,7 +53,6 @@ export function AppSidebar({
     { id: "jobs", label: "All Jobs", icon: Briefcase },
     { id: "code", label: "Code Playground", icon: Code2, hasChevron: true, external: true },
     { id: "courses", label: "Courses", icon: GraduationCap, hasChevron: true, external: true },
-    { id: "free-courses", label: "Free Courses", icon: Sparkles, isSubItem: true, external: true },
   ];
 
   return (
