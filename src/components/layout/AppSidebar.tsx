@@ -46,13 +46,13 @@ export function AppSidebar({
 
   const navItems = [
     { id: "overview", label: "Dashboard", icon: LayoutDashboard, hasChevron: true },
+    { id: "courses", label: "Courses", icon: GraduationCap, hasChevron: true, external: true },
     { id: "search", label: "Search", icon: Search },
     { id: "saved", label: "Saved Jobs", icon: Bookmark, hasChevron: true },
     { id: "map", label: "Map View", icon: MapIcon, hasChevron: true },
     { id: "companies", label: "Companies", icon: Building2, hasChevron: true },
     { id: "jobs", label: "All Jobs", icon: Briefcase },
     { id: "code", label: "Code Playground", icon: Code2, hasChevron: true, external: true },
-    { id: "courses", label: "Courses", icon: GraduationCap, hasChevron: true, external: true },
   ];
 
   return (
