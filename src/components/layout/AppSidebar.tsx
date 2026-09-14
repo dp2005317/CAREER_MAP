@@ -50,12 +50,13 @@ export function AppSidebar({
     { id: "map", label: "Map View", icon: MapIcon, hasChevron: true },
     { id: "companies", label: "Companies", icon: Building2, hasChevron: true },
     { id: "jobs", label: "All Jobs", icon: Briefcase },
-    { id: "courses", label: "Free Courses", icon: GraduationCap, hasChevron: true, external: true },
+    { id: "courses", label: "Courses", icon: GraduationCap, hasChevron: true, external: true },
+    { id: "free-courses", label: "Free Courses", icon: Sparkles, isSubItem: true, external: true },
   ];
 
   return (
     <>
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - Kept for structure but unused since sidebar is hidden on mobile */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden"
@@ -63,7 +64,7 @@ export function AppSidebar({
         />
       )}
       
-      <aside className={`fixed inset-y-0 left-0 transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-50 w-64 h-screen bg-[#EEF2F6] dark:bg-black border-r border-slate-200/80 dark:border-white/10 flex flex-col justify-between p-4 shrink-0 select-none`}>
+      <aside className={`hidden md:flex flex-col justify-between relative transition-transform duration-300 ease-in-out z-50 w-64 h-screen bg-[#EEF2F6] dark:bg-black border-r border-slate-200/80 dark:border-white/10 p-4 shrink-0 select-none`}>
         <div className="flex flex-col gap-6">
         {/* Logo / Brand */}
         <Link href="/" className="flex items-center gap-3 px-2 pt-2 group">
@@ -98,6 +99,7 @@ export function AppSidebar({
             const isActive = activeTab === item.id;
             const Icon = item.icon;
             const isExternal = (item as any).external;
+            const isSubItem = (item as any).isSubItem;
             
             if (isExternal) {
               return (
@@ -105,13 +107,15 @@ export function AppSidebar({
                   key={item.id}
                   href="/courses"
                   className={`flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer no-underline ${
+                    isSubItem ? "ml-6 py-2 px-3 text-[11px] bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5" : ""
+                  } ${
                     isActive
                       ? "neu-btn-primary"
                       : "neu-btn text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-blue-600 dark:text-orange-400"}`} />
+                    <Icon className={`${isSubItem ? "w-3 h-3" : "w-4 h-4"} ${isActive ? "text-white" : "text-blue-600 dark:text-orange-400"}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.hasChevron && (
@@ -126,13 +130,15 @@ export function AppSidebar({
                 key={item.id}
                 onClick={() => handleTabClick(item.id)}
                 className={`flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+                  isSubItem ? "ml-6 py-2 px-3 text-[11px] bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5" : ""
+                } ${
                   isActive
                     ? "neu-btn-primary"
                     : "neu-btn text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-blue-600 dark:text-orange-400"}`} />
+                  <Icon className={`${isSubItem ? "w-3 h-3" : "w-4 h-4"} ${isActive ? "text-white" : "text-blue-600 dark:text-orange-400"}`} />
                   <span>{item.label}</span>
                 </div>
                 {item.hasChevron && (

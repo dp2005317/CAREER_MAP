@@ -15,6 +15,7 @@ import { CertificateModal } from "@/components/courses/CertificateModal";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
+import { MobileDock } from "@/components/layout/MobileDock";
 
 export default function CourseClassroomPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -91,7 +92,18 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#EEF2F6] dark:bg-black text-gray-800 dark:text-zinc-100 antialiased font-sans">
-      <AppSidebar activeTab="courses" isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+      <AppSidebar 
+        activeTab="courses" 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+        onTabChange={(tab) => {
+          if (tab === "courses") {
+            router.push("/courses");
+            return;
+          }
+          router.push(`/dashboard?tab=${tab}`);
+        }}
+      />
       
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
         <DashboardHeader
@@ -102,7 +114,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
           onOpenProfileDrawer={() => setIsProfileDrawerOpen(true)}
         />
         
-        <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 flex flex-col gap-6 custom-scrollbar">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-[96px] md:pb-6 flex flex-col gap-6 custom-scrollbar">
           
           {/* Header & Controls */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#0c0c0e] p-4 rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-sm shrink-0">
@@ -244,6 +256,18 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
           setCreatedCert(cert);
           setShowCertModal(true);
         }}
+      />
+
+      <MobileDock
+        activeTab="courses"
+        onTabChange={(tab) => {
+          if (tab === "courses") {
+            router.push("/courses");
+            return;
+          }
+          router.push(`/dashboard?tab=${tab}`);
+        }}
+        onOpenProfile={() => setIsProfileDrawerOpen(true)}
       />
     </div>
   );

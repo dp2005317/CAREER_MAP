@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, use, useMemo } from "react";
+import React, { useState, useEffect, use, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { 
   ArrowLeft, 
@@ -26,6 +26,9 @@ import { Course, Lecture } from "@/data/types";
 import { AssessmentEngine } from "@/components/courses/assessment/AssessmentEngine";
 import { useAuth } from "@/database/authContext";
 import confetti from "canvas-confetti";
+import { MobileDock } from "@/components/layout/MobileDock";
+import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
+import { AppSidebar } from "@/components/layout/AppSidebar";
 
 export default function LecturePage({ params }: { params: Promise<{ id: string, lectureId: string }> }) {
   const { id, lectureId } = use(params);
@@ -47,6 +50,8 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<"overview" | "assessment">("overview");
   const [completionBanner, setCompletionBanner] = useState(false);
+  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -92,6 +97,37 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
   const progressPercent = allLectures.length > 0 
     ? Math.round((completedCount / allLectures.length) * 100) 
     : 0;
+
+  // Auto-rotate to landscape when going fullscreen on mobile
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (document.fullscreenElement) {
+        // We entered fullscreen
+        if (screen.orientation && (screen.orientation as any).lock) {
+          (screen.orientation as any).lock("landscape").catch(() => {
+            // Ignore errors (e.g. if not supported or on desktop)
+          });
+        }
+      } else {
+        // We exited fullscreen
+        if (screen.orientation && screen.orientation.unlock) {
+          try {
+            screen.orientation.unlock();
+          } catch (e) {
+            // Ignore
+          }
+        }
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   // Toggle complete for current lecture
   const handleToggleCurrentComplete = async () => {
@@ -171,8 +207,22 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-black text-gray-800 dark:text-zinc-100 flex flex-col font-sans">
-      {/* Top Navbar */}
+    <div className="flex h-screen w-screen overflow-hidden bg-[#F8FAFC] dark:bg-black text-gray-800 dark:text-zinc-100 antialiased font-sans">
+      <AppSidebar 
+        activeTab="courses" 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+        onTabChange={(tab) => {
+          if (tab === "courses") {
+            router.push("/courses");
+            return;
+          }
+          router.push(`/dashboard?tab=${tab}`);
+        }}
+      />
+      
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-y-auto relative pb-[96px] md:pb-0 custom-scrollbar">
+        {/* Top Navbar */}
       <header className="sticky top-0 z-30 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-200/80 dark:border-white/10 px-4 lg:px-8 py-3 shrink-0 shadow-xs">
         <div className="max-w-[1720px] w-full mx-auto flex items-center justify-between gap-3">
           
@@ -203,7 +253,9 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
 
           {/* Right: Progress & Primary Controls */}
           <div className="flex items-center gap-2.5 shrink-0">
-            {/* Progress Pill */}
+            {/* Wrapper to hide redundant buttons on mobile */}
+            <div className="hidden md:flex items-center gap-2.5">
+              {/* Progress Pill */}
             <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800">
               <div className="w-20 bg-slate-200 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                 <div 
@@ -267,6 +319,7 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
               <span className="hidden md:inline">Next</span>
               <ChevronRight className="w-4 h-4" />
             </button>
+            </div>
 
             {/* Toggle Curriculum Sidebar */}
             <button
@@ -649,6 +702,25 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
             </div>
           </aside>
         )}
+      </div>
+
+      <UserProfileDrawer
+        isOpen={isProfileDrawerOpen}
+        onClose={() => setIsProfileDrawerOpen(false)}
+        onOpenResumeUpload={() => {}}
+      />
+
+      <MobileDock
+        activeTab="courses"
+        onTabChange={(tab) => {
+          if (tab === "courses") {
+            router.push("/courses");
+            return;
+          }
+          router.push(`/dashboard?tab=${tab}`);
+        }}
+        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+      />
       </div>
     </div>
   );

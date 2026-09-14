@@ -80,7 +80,7 @@ export const InteractiveMap = ({
         mapStyle={
           isDark 
             ? "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-            : "mapbox://styles/mapbox/light-v11"
+            : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         }
         style={{ width: "100%", height: "100%" }}
         minZoom={3}

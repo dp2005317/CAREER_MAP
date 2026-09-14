@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Job, generateJobsNearCoordinates } from "@/backend/mockData";
 import { AppSidebar } from "@/components/layout/AppSidebar";
+import { MobileDock } from "@/components/layout/MobileDock";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { InteractiveMap } from "@/components/maps/InteractiveMap";
 import { JobCardRow } from "@/components/jobs/JobCardRow";
@@ -274,7 +275,6 @@ export default function DashboardPage() {
         onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
         {/* Header */}
         <DashboardHeader
@@ -304,10 +304,11 @@ export default function DashboardPage() {
         )}
 
         {/* Tab 1: Map View */}
+        {/* Main Scrollable Area */}
         {activeTab === "map" && (
-          <main className="flex-1 flex flex-col min-h-0 relative p-3 sm:p-4 gap-3 sm:gap-4 overflow-hidden">
-            {/* Top Area: Map View */}
-            <div className="flex-1 min-h-0 relative rounded-3xl overflow-hidden">
+          <main className="flex-1 flex flex-col min-h-0 relative overflow-hidden">
+            {/* Top Area: Full Bleed Map View */}
+            <div className="absolute inset-0">
               <InteractiveMap
                 jobs={filteredJobs}
                 selectedJob={selectedJob}
@@ -322,18 +323,20 @@ export default function DashboardPage() {
               />
             </div>
 
-            {/* Bottom Area: Job Card Row */}
-            <div className="h-auto shrink-0 z-10">
-              <JobCardRow
-                jobs={filteredJobs}
-                selectedJob={selectedJob}
-                onJobSelect={handleJobSelect}
-                onOpenDetails={handleOpenDetails}
-                savedJobIds={savedJobIds}
-                onToggleSave={handleToggleSave}
-                userSkills={profile?.skills}
-                targetRole={profile?.targetRole}
-              />
+            {/* Bottom Area: Job Card Row Floating */}
+            <div className="absolute bottom-0 inset-x-0 p-3 sm:p-4 pb-[96px] md:pb-4 z-10 pointer-events-none flex flex-col justify-end">
+              <div className="pointer-events-auto max-w-full">
+                <JobCardRow
+                  jobs={filteredJobs}
+                  selectedJob={selectedJob}
+                  onJobSelect={handleJobSelect}
+                  onOpenDetails={handleOpenDetails}
+                  savedJobIds={savedJobIds}
+                  onToggleSave={handleToggleSave}
+                  userSkills={profile?.skills}
+                  targetRole={profile?.targetRole}
+                />
+              </div>
             </div>
           </main>
         )}
@@ -412,6 +415,27 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Mobile Dock */}
+      <MobileDock
+        activeTab={activeTab}
+        onTabChange={(tab) => {
+          if (tab === "courses") {
+            router.push("/courses");
+            return;
+          }
+          if (!user && tab !== "map") {
+            router.push("/login?redirect=/dashboard");
+            return;
+          }
+          if (tab !== "map" && tab !== "overview" && !profile?.skills?.length && !profile?.resumeName) {
+            setIsOnboardingOpen(true);
+            return;
+          }
+          setActiveTab(tab);
+        }}
+        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+      />
     </div>
   );
 }

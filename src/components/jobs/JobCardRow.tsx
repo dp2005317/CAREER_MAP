@@ -75,10 +75,10 @@ export function JobCardRow({
                 <div className="flex items-center gap-2.5 min-w-0">
                   <CompanyLogo company={job.company} logoUrl={job.logo} size="sm" />
                   <div className="min-w-0">
-                    <h4 className="font-bold text-gray-900 text-xs truncate">
+                    <h4 className="font-bold text-gray-900 dark:text-white text-xs truncate">
                       {job.company}
                     </h4>
-                    <span className="text-[10px] font-medium text-gray-400 block truncate">
+                    <span className="text-[10px] font-medium text-gray-400 dark:text-gray-400 block truncate">
                       {job.location.split(",")[0]}
                     </span>
                   </div>
@@ -123,7 +123,7 @@ export function JobCardRow({
               {/* Body: Title & Meta Info */}
               <div className="mb-3">
                 <div className="flex items-center justify-between gap-2 mb-1">
-                  <h3 className="font-bold text-gray-900 text-sm line-clamp-1 group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
                     {job.title}
                   </h3>
                   {userSkills && userSkills.length > 0 && (() => {
