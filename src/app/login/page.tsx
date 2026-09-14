@@ -117,9 +117,9 @@ export default function LoginPage() {
       {/* Brand Header & Theme Toggle */}
       <div className="absolute top-6 left-6 z-10">
         <Link href="/">
-          <LiquidGlass className="px-5 py-2.5 rounded-full flex items-center gap-2 cursor-pointer hover:bg-white/50 dark:hover:bg-white/10 transition-colors">
-            <BrandLogo width={160} height={160} className="object-contain w-auto h-10 scale-[1.2]" priority />
-            <span className="text-base font-bold tracking-tight text-gray-900 dark:text-white">CareerMap AI</span>
+          <LiquidGlass className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full flex items-center gap-2 cursor-pointer hover:bg-white/50 dark:hover:bg-white/10 transition-colors">
+            <BrandLogo width={160} height={160} className="object-contain w-auto h-8 sm:h-10 scale-[1.2]" priority />
+            <span className="text-sm sm:text-base font-bold tracking-tight text-gray-900 dark:text-white">CareerMap AI</span>
           </LiquidGlass>
         </Link>
       </div>
@@ -159,7 +159,7 @@ export default function LoginPage() {
             <button 
               onClick={handleGoogleLogin}
               disabled={isLoading}
-              className="w-full bg-white text-gray-900 font-bold py-2.5 px-4 border border-gray-200/90 rounded-2xl shadow-sm hover:shadow-md hover:bg-gray-50 transition-all flex items-center justify-center gap-3 text-xs sm:text-sm cursor-pointer disabled:opacity-50"
+              className="w-full bg-white dark:bg-[#18181b] text-gray-900 dark:text-white font-bold py-2.5 px-4 border border-gray-200/90 dark:border-white/10 rounded-2xl shadow-sm hover:shadow-md hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all flex items-center justify-center gap-3 text-xs sm:text-sm cursor-pointer disabled:opacity-50"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -182,14 +182,14 @@ export default function LoginPage() {
           </div>
 
           {/* Guest / Demo Option */}
-          <div className="w-full mt-4 pt-4 border-t border-gray-100 flex flex-col items-center gap-2">
+          <div className="w-full mt-4 pt-4 border-t border-gray-200 dark:border-white/10 flex flex-col items-center gap-2">
             <button
               type="button"
               onClick={handleGuestLogin}
               disabled={isLoading}
-              className="text-xs font-bold text-gray-600 hover:text-blue-600 flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Compass className="w-3.5 h-3.5 text-blue-500" />
+              <Compass className="w-3.5 h-3.5 text-blue-500 dark:text-orange-400" />
               <span>Explore as Guest without signing up</span>
             </button>
           </div>
