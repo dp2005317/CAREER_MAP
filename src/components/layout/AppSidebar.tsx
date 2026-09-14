@@ -12,7 +12,8 @@ import {
   Sparkles,
   Compass,
   GraduationCap,
-  LayoutDashboard
+  LayoutDashboard,
+  Code2
 } from "lucide-react";
 import Image from "next/image";
 import { BrandLogo } from "@/components/layout/BrandLogo";
@@ -50,6 +51,7 @@ export function AppSidebar({
     { id: "map", label: "Map View", icon: MapIcon, hasChevron: true },
     { id: "companies", label: "Companies", icon: Building2, hasChevron: true },
     { id: "jobs", label: "All Jobs", icon: Briefcase },
+    { id: "code", label: "Code Playground", icon: Code2, hasChevron: true, external: true },
     { id: "courses", label: "Courses", icon: GraduationCap, hasChevron: true, external: true },
     { id: "free-courses", label: "Free Courses", icon: Sparkles, isSubItem: true, external: true },
   ];
@@ -102,10 +104,11 @@ export function AppSidebar({
             const isSubItem = (item as any).isSubItem;
             
             if (isExternal) {
+              const href = item.id === "code" ? "/code" : "/courses";
               return (
                 <a
                   key={item.id}
-                  href="/courses"
+                  href={href}
                   className={`flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer no-underline ${
                     isSubItem ? "ml-6 py-2 px-3 text-[11px] bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5" : ""
                   } ${
