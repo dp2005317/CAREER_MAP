@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
-import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
 import { ProfileSettings } from "@/components/profile/ProfileSettings";
+import { OnboardingModal } from "@/components/profile/OnboardingModal";
 import { useAuth } from "@/database/authContext";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const { user, profile } = useAuth();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#EEF2F6] dark:bg-black text-gray-800 dark:text-zinc-100 antialiased font-sans">
@@ -35,7 +35,7 @@ export default function ProfilePage() {
           user={user || profile}
           hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          onOpenProfileDrawer={() => setIsProfileDrawerOpen(true)}
+          onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 sm:py-8 pb-[96px] md:pb-8 flex flex-col custom-scrollbar">
           <div className="max-w-6xl mx-auto w-full mb-8">
@@ -43,15 +43,15 @@ export default function ProfilePage() {
             <p className="text-sm text-gray-500 dark:text-zinc-400 font-medium">Manage your professional identity, career goals, and resume details.</p>
           </div>
           
-          <ProfileSettings />
+          <ProfileSettings onOpenResumeUpload={() => setIsOnboardingOpen(true)} />
           
         </main>
       </div>
 
-      <UserProfileDrawer
-        isOpen={isProfileDrawerOpen}
-        onClose={() => setIsProfileDrawerOpen(false)}
-        onOpenResumeUpload={() => {}}
+      <OnboardingModal 
+        isOpen={isOnboardingOpen} 
+        onClose={() => setIsOnboardingOpen(false)} 
+        onComplete={() => setIsOnboardingOpen(false)} 
       />
 
       {/* Mobile Dock */}
@@ -64,7 +64,7 @@ export default function ProfilePage() {
           }
           router.push(`/dashboard?tab=${tab}`);
         }}
-        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+        onOpenProfile={() => router.push("/profile")}
       />
     </div>
   );

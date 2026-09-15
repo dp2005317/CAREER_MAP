@@ -11,7 +11,6 @@ interface DashboardHeaderProps {
   user?: any;
   hasResume?: boolean;
   onMenuToggle?: () => void;
-  onOpenProfileDrawer?: () => void;
   onOpenResumeUpload?: () => void;
 }
 
@@ -20,7 +19,6 @@ export function DashboardHeader({
   user,
   hasResume = false,
   onMenuToggle,
-  onOpenProfileDrawer,
   onOpenResumeUpload
 }: DashboardHeaderProps) {
   return (
@@ -53,8 +51,8 @@ export function DashboardHeader({
         </button>
 
         {user ? (
-          <button
-            onClick={onOpenProfileDrawer}
+          <Link
+            href="/profile"
             className="flex items-center gap-2.5 pl-2 hover:opacity-90 transition-opacity cursor-pointer group"
           >
             {user.photoURL ? (
@@ -71,7 +69,7 @@ export function DashboardHeader({
             <span className="text-xs font-bold text-gray-800 dark:text-gray-200 hidden sm:inline group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
               {user.displayName || "Explorer"}
             </span>
-          </button>
+          </Link>
         ) : (
           <Link
             href="/login"

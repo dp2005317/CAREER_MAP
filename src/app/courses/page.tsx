@@ -30,7 +30,6 @@ import {
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
-import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
 import { CompanyCard } from "@/components/courses/CompanyCard";
 import { CourseCard } from "@/components/courses/CourseCard";
 import { CategoryCard } from "@/components/courses/CategoryCard";
@@ -81,7 +80,6 @@ export default function CoursesPage() {
 
   // Layout State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
 
   // Modals
   const [viewingCert, setViewingCert] = useState<UserCertificate | null>(null);
@@ -184,7 +182,6 @@ export default function CoursesPage() {
           user={user || profile}
           hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          onOpenProfileDrawer={() => setIsProfileDrawerOpen(true)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 pb-[96px] md:pb-8 flex flex-col gap-8 custom-scrollbar relative">
@@ -203,7 +200,7 @@ export default function CoursesPage() {
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white text-[10px] sm:text-xs font-bold mb-4 sm:mb-6 shadow-sm"
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full liquid-glass text-white text-[10px] sm:text-xs font-bold mb-4 sm:mb-6 shadow-sm"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span className="tracking-wide">Competitor-Grade Free Curriculum</span>
@@ -277,12 +274,12 @@ export default function CoursesPage() {
               transition={{ delay: 0.2, type: "spring" }}
               className="grid grid-cols-2 gap-3 sm:gap-4 shrink-0 w-full md:w-auto"
             >
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group/card hover:border-white/20 transition-colors">
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] liquid-glass flex flex-col items-center justify-center relative overflow-hidden group/card transition-colors">
                 <div className="absolute inset-0 bg-blue-500/20 dark:bg-orange-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity blur-2xl" />
                 <p className="text-3xl sm:text-5xl font-black text-white relative z-10">{enrolledCourses.length}</p>
                 <p className="text-[10px] sm:text-xs text-slate-300 font-extrabold uppercase tracking-widest mt-1 sm:mt-2 relative z-10">Enrolled</p>
               </div>
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl border border-white/10 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group/card hover:border-white/20 transition-colors">
+              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] liquid-glass flex flex-col items-center justify-center relative overflow-hidden group/card transition-colors">
                 <div className="absolute inset-0 bg-amber-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity blur-2xl" />
                 <p className="text-3xl sm:text-5xl font-black text-amber-400 relative z-10">{certificates.length}</p>
                 <p className="text-[10px] sm:text-xs text-slate-300 font-extrabold uppercase tracking-widest mt-1 sm:mt-2 relative z-10">Certificates</p>
@@ -332,7 +329,7 @@ export default function CoursesPage() {
                   {certificates.map((cert) => (
                     <div
                       key={cert.id}
-                      className="p-5 rounded-2xl bg-white dark:bg-[#0c0c0e] border border-amber-200 dark:border-amber-500/20 shadow-md shadow-amber-500/5 flex flex-col justify-between"
+                      className="p-5 rounded-2xl liquid-glass flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center justify-between text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2">
@@ -488,17 +485,6 @@ export default function CoursesPage() {
         onComplete={() => setActiveTab("recommended")}
       />
 
-      {/* User Profile Drawer */}
-      <UserProfileDrawer
-        isOpen={isProfileDrawerOpen}
-        onClose={() => setIsProfileDrawerOpen(false)}
-        onOpenResumeUpload={() => {
-          setIsProfileDrawerOpen(false);
-          setIsOnboardingOpen(true);
-        }}
-        onViewCertificate={(cert) => setViewingCert(cert)}
-      />
-
       {/* Mobile Dock */}
       <MobileDock
         activeTab="courses"
@@ -506,7 +492,7 @@ export default function CoursesPage() {
           if (tab === "courses") return;
           router.push(`/dashboard?tab=${tab}`);
         }}
-        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+        onOpenProfile={() => router.push("/profile")}
       />
     </div>
   );

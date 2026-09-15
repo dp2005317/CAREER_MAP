@@ -59,7 +59,7 @@ export default function Home() {
         </Link>
 
         {/* Center: Perfectly Centered Pill Navigation */}
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 text-xs font-bold text-gray-700 dark:text-gray-200 neu-pill px-3 py-1.5 z-10">
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-1 text-xs font-bold text-gray-700 dark:text-gray-200 liquid-glass px-3 py-1.5 rounded-full z-10">
           <Link href="/dashboard?tab=overview" className="px-3.5 py-1.5 rounded-full hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
             Map Discovery
           </Link>
@@ -159,7 +159,7 @@ export default function Home() {
               <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-400" />
               <span className="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-zinc-400 ml-2">Live Spatial Engine</span>
             </div>
-            <span className="text-[10px] sm:text-xs font-bold text-blue-600 dark:text-orange-400 neu-pill px-2.5 sm:px-3 py-1 flex items-center gap-1.5 w-fit">
+            <span className="text-[10px] sm:text-xs font-bold text-blue-600 dark:text-orange-400 liquid-glass rounded-full px-2.5 sm:px-3 py-1 flex items-center gap-1.5 w-fit">
               <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-500 dark:bg-orange-500 animate-pulse" />
               128+ Verified Opportunities
             </span>
@@ -271,9 +271,17 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="w-full border-t border-slate-200/80 dark:border-white/10 bg-[#EEF2F6]/90 dark:bg-black/90 backdrop-blur-md py-6 px-4 sm:px-6 text-center text-[10px] sm:text-xs text-gray-400 dark:text-zinc-500 font-medium z-10 flex flex-col sm:flex-row items-center justify-between max-w-6xl mx-auto gap-3 sm:gap-0">
+      <footer className="w-full border-t border-slate-200/80 dark:border-white/10 liquid-glass backdrop-blur-md py-6 px-4 sm:px-6 text-center text-[10px] sm:text-xs text-gray-400 dark:text-zinc-500 font-medium z-10 flex flex-col sm:flex-row items-center justify-between max-w-6xl mx-auto gap-3 sm:gap-0">
         <p>© 2026 CareerMap AI. Built for tech talent in India.</p>
         <div className="flex items-center gap-3 sm:gap-4">
+          <Link href="/terms" className="hover:text-gray-600 dark:hover:text-zinc-300">
+            Terms & Conditions
+          </Link>
+          <span>•</span>
+          <Link href="/privacy" className="hover:text-gray-600 dark:hover:text-zinc-300">
+            Privacy Policy
+          </Link>
+          <span>•</span>
           <Link href="/dashboard?tab=overview" className="text-blue-600 dark:text-orange-400 font-bold hover:underline">
             Launch App
           </Link>

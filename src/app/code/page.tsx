@@ -6,7 +6,7 @@ import { useAuth } from "@/database/authContext";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import Editor from "@monaco-editor/react";
-import { Play, Loader2, Code2, MonitorX, Keyboard, Terminal, FileCode2 } from "lucide-react";
+import { Play, Loader2, Code2, MonitorX, Keyboard, Terminal, FileCode2, Copy, Check, Trash2 } from "lucide-react";
 
 const SUPPORTED_LANGUAGES = [
   { id: "python", name: "Python 3" },
@@ -36,6 +36,8 @@ export default function CodePlaygroundPage() {
   const [output, setOutput] = useState("");
   const [isError, setIsError] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [activeConsoleTab, setActiveConsoleTab] = useState<"output" | "input">("output");
+  const [copied, setCopied] = useState(false);
 
   // Auth redirect
   useEffect(() => {
@@ -50,9 +52,17 @@ export default function CodePlaygroundPage() {
     setOutput("");
   };
 
+  const handleCopyOutput = async () => {
+    if (!output) return;
+    await navigator.clipboard.writeText(output);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const handleRunCode = async () => {
     if (!code.trim()) return;
     
+    setActiveConsoleTab("output");
     setIsRunning(true);
     setIsError(false);
     setOutput("Executing...\n");
@@ -196,36 +206,125 @@ export default function CodePlaygroundPage() {
               </div>
             </div>
 
-            {/* I/O Container */}
-            <div className="flex-1 flex flex-col gap-4 min-h-0">
-              {/* StdIn */}
-              <div className="h-[35%] shrink-0 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-md bg-white dark:bg-[#121212] overflow-hidden flex flex-col">
-                <div className="h-10 shrink-0 px-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-[#18181b] flex items-center gap-2">
-                  <Keyboard className="w-4 h-4 text-gray-400" />
-                  <h3 className="font-semibold text-xs text-gray-600 dark:text-gray-300 tracking-wide">Custom Input</h3>
+            {/* Consolidated I/O Container (Input and Output in the same place) */}
+            <div className="flex-1 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-md bg-white dark:bg-[#0c0c0e] overflow-hidden flex flex-col min-h-0">
+              {/* Console Tab Header */}
+              <div className="h-11 shrink-0 px-3 border-b border-slate-100 dark:border-white/5 bg-slate-50/70 dark:bg-[#141416] flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1 bg-slate-200/60 dark:bg-white/[0.06] p-0.5 rounded-xl">
+                  <button
+                    type="button"
+                    onClick={() => setActiveConsoleTab("output")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeConsoleTab === "output"
+                        ? "bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm"
+                        : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                  >
+                    <Terminal className="w-3.5 h-3.5 text-orange-500" />
+                    <span>Terminal Output</span>
+                    {isRunning && (
+                      <span className="relative flex h-2 w-2 ml-0.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                      </span>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveConsoleTab("input")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeConsoleTab === "input"
+                        ? "bg-white dark:bg-zinc-800 text-gray-900 dark:text-white shadow-sm"
+                        : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                  >
+                    <Keyboard className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400" />
+                    <span>Custom Input</span>
+                    {input.trim().length > 0 && (
+                      <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20">
+                        active
+                      </span>
+                    )}
+                  </button>
                 </div>
-                <textarea
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Enter stdin here..."
-                  className="flex-1 w-full bg-transparent p-4 outline-none resize-none font-mono text-[13px] text-gray-800 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-gray-600"
-                />
+
+                <div className="flex items-center gap-1">
+                  {activeConsoleTab === "output" && output && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={handleCopyOutput}
+                        title="Copy output"
+                        className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                      >
+                        {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setOutput("")}
+                        title="Clear output"
+                        className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </>
+                  )}
+
+                  {activeConsoleTab === "input" && input && (
+                    <button
+                      type="button"
+                      onClick={() => setInput("")}
+                      title="Clear stdin"
+                      className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
               </div>
 
-              {/* StdOut */}
-              <div className="flex-1 rounded-2xl border border-slate-200/60 dark:border-white/5 shadow-md bg-white dark:bg-[#0a0a0a] overflow-hidden flex flex-col min-h-0">
-                <div className="h-10 shrink-0 px-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-[#18181b] flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-gray-400" />
-                    <h3 className="font-semibold text-xs text-gray-600 dark:text-gray-300 tracking-wide">Terminal Output</h3>
+              {/* Tab Content Area */}
+              <div className="flex-1 min-h-0 relative flex flex-col bg-[#fafafa] dark:bg-[#0a0a0a]">
+                {activeConsoleTab === "output" ? (
+                  <div className="flex-1 overflow-auto p-4 custom-scrollbar">
+                    {input.trim().length > 0 && (
+                      <div className="mb-3 flex items-center justify-between text-[11px] font-mono text-gray-500 dark:text-zinc-400 bg-slate-100/70 dark:bg-white/[0.03] px-3 py-1.5 rounded-lg border border-slate-200/50 dark:border-white/5">
+                        <span>Using custom stdin input</span>
+                        <button
+                          type="button"
+                          onClick={() => setActiveConsoleTab("input")}
+                          className="text-orange-500 hover:underline font-sans font-semibold text-[11px]"
+                        >
+                          View / Edit stdin
+                        </button>
+                      </div>
+                    )}
+                    <pre className={`font-mono text-[13px] leading-relaxed whitespace-pre-wrap break-words ${isError ? 'text-red-500' : 'text-gray-800 dark:text-gray-300'}`}>
+                      {output || <span className="text-gray-400 dark:text-gray-600 italic">No output yet. Click 'Run Code' to execute.</span>}
+                    </pre>
                   </div>
-                  {isRunning && <span className="flex items-center gap-1.5 text-[10px] font-bold text-orange-500"><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span></span> Executing...</span>}
-                </div>
-                <div className="flex-1 overflow-auto p-4 custom-scrollbar">
-                  <pre className={`font-mono text-[13px] leading-relaxed whitespace-pre-wrap break-words ${isError ? 'text-red-500' : 'text-gray-800 dark:text-gray-300'}`}>
-                    {output || <span className="text-gray-400 dark:text-gray-600 italic">No output yet. Click 'Run Code' to execute.</span>}
-                  </pre>
-                </div>
+                ) : (
+                  <div className="flex-1 flex flex-col p-4 min-h-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-semibold text-gray-600 dark:text-gray-400">
+                        Standard Input (stdin)
+                      </span>
+                      <span className="text-[10px] text-gray-400 dark:text-gray-500">
+                        Supplied to program upon Run
+                      </span>
+                    </div>
+                    <textarea
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="Enter values to feed into standard input (e.g. for input(), cin >>, or scanf)..."
+                      className="flex-1 w-full bg-white dark:bg-[#121214] p-3.5 rounded-xl border border-slate-200/80 dark:border-white/10 outline-none resize-none font-mono text-[13px] text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-600 focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-inner"
+                    />
+                    <p className="mt-2 text-[11px] text-gray-400 dark:text-gray-500 shrink-0">
+                      Separate multiple input lines with newlines. When you click <strong className="text-gray-600 dark:text-gray-300 font-semibold">Run Code</strong>, this input is sent and you are switched to Output automatically.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

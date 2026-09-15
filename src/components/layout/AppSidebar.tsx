@@ -13,7 +13,8 @@ import {
   Compass,
   GraduationCap,
   LayoutDashboard,
-  Code2
+  Code2,
+  User as UserIcon
 } from "lucide-react";
 import Image from "next/image";
 import { BrandLogo } from "@/components/layout/BrandLogo";
@@ -55,6 +56,10 @@ export function AppSidebar({
     { id: "code", label: "Code Playground", icon: Code2, hasChevron: true, external: true },
   ];
 
+  const bottomNavItems = [
+    { id: "profile", label: "My Profile", icon: UserIcon, hasChevron: true, external: true }
+  ];
+
   return (
     <>
       {/* Mobile Overlay - Kept for structure but unused since sidebar is hidden on mobile */}
@@ -65,7 +70,7 @@ export function AppSidebar({
         />
       )}
       
-      <aside className={`hidden md:flex flex-col justify-between relative transition-transform duration-300 ease-in-out z-50 w-64 h-screen bg-[#EEF2F6] dark:bg-black border-r border-slate-200/80 dark:border-white/10 p-4 shrink-0 select-none`}>
+      <aside className={`hidden md:flex flex-col justify-between relative transition-transform duration-300 ease-in-out z-50 w-64 h-screen liquid-glass border-r border-slate-200/80 dark:border-white/10 p-4 shrink-0 select-none`}>
         <div className="flex flex-col gap-6">
         {/* Logo / Brand */}
         <Link href="/" className="flex items-center gap-3 px-2 pt-2 group">
@@ -152,13 +157,43 @@ export function AppSidebar({
         </nav>
       </div>
 
-      {/* Footer Info */}
-      <div className="pt-4 border-t border-slate-200/60 dark:border-white/10 flex flex-col gap-1.5 text-[11px] text-gray-400 dark:text-gray-500 font-medium px-2">
-        <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400 font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
-          <span>AI Intelligence Active</span>
+      {/* Footer / Bottom Actions */}
+      <div className="flex flex-col gap-4 mt-auto pt-6">
+        <nav className="flex flex-col gap-2.5">
+          {bottomNavItems.map((item) => {
+            const isActive = activeTab === item.id;
+            const Icon = item.icon;
+            const href = item.id === "profile" ? "/profile" : "#";
+            return (
+              <a
+                key={item.id}
+                href={href}
+                className={`flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all cursor-pointer no-underline ${
+                  isActive
+                    ? "liquid-glass shadow-lg border-blue-500/30 text-blue-600 dark:text-orange-400"
+                    : "liquid-glass text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:border-white/60"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Icon className={`w-4 h-4 ${isActive ? "text-blue-600 dark:text-orange-400" : "text-gray-500 dark:text-gray-400"}`} />
+                  <span>{item.label}</span>
+                </div>
+                {item.hasChevron && (
+                  <ChevronRight className={`w-3.5 h-3.5 ${isActive ? "text-blue-600/80 dark:text-orange-400/80" : "text-gray-400"}`} />
+                )}
+              </a>
+            );
+          })}
+        </nav>
+        
+        {/* Footer Info */}
+        <div className="pt-4 border-t border-slate-200/60 dark:border-white/10 flex flex-col gap-1.5 text-[11px] text-gray-400 dark:text-gray-500 font-medium px-2">
+          <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400 font-bold">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
+            <span>AI Intelligence Active</span>
+          </div>
+          <p>© 2026 CareerMap AI</p>
         </div>
-        <p>© 2026 CareerMap AI</p>
       </div>
     </aside>
     </>

@@ -27,7 +27,6 @@ import { AssessmentEngine } from "@/components/courses/assessment/AssessmentEngi
 import { useAuth } from "@/database/authContext";
 import confetti from "canvas-confetti";
 import { MobileDock } from "@/components/layout/MobileDock";
-import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 
 export default function LecturePage({ params }: { params: Promise<{ id: string, lectureId: string }> }) {
@@ -50,7 +49,6 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState<"overview" | "assessment">("overview");
   const [completionBanner, setCompletionBanner] = useState(false);
-  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -704,12 +702,6 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
         )}
       </div>
 
-      <UserProfileDrawer
-        isOpen={isProfileDrawerOpen}
-        onClose={() => setIsProfileDrawerOpen(false)}
-        onOpenResumeUpload={() => {}}
-      />
-
       <MobileDock
         activeTab="courses"
         onTabChange={(tab) => {
@@ -719,7 +711,7 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
           }
           router.push(`/dashboard?tab=${tab}`);
         }}
-        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+        onOpenProfile={() => router.push("/profile")}
       />
       </div>
     </div>

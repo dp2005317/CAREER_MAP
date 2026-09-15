@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
   User, Briefcase, Award, MapPin, 
-  Settings, Save, CheckCircle2, X, Plus
+  Settings, Save, CheckCircle2, X, Plus, FileText, UploadCloud
 } from "lucide-react";
 import { useAuth, UserProfile } from "@/database/authContext";
 
@@ -14,7 +14,7 @@ const tabs = [
   { id: "resume", label: "Resume & Skills", icon: Award },
 ];
 
-export function ProfileSettings() {
+export function ProfileSettings({ onOpenResumeUpload }: { onOpenResumeUpload?: () => void }) {
   const { user, profile, updateProfile } = useAuth();
   
   const [activeTab, setActiveTab] = useState("general");
@@ -77,7 +77,7 @@ export function ProfileSettings() {
       
       {/* Sidebar Navigation */}
       <div className="w-full md:w-64 shrink-0 flex flex-col gap-2">
-        <div className="p-5 bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] flex flex-col gap-2">
+        <div className="p-5 liquid-glass rounded-3xl flex flex-col gap-2">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -101,7 +101,7 @@ export function ProfileSettings() {
 
       {/* Main Form Area */}
       <div className="flex-1 min-w-0">
-        <div className="bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col">
+        <div className="liquid-glass rounded-3xl overflow-hidden flex flex-col">
           
           <div className="p-6 sm:p-8 border-b border-gray-100 dark:border-white/10 flex items-center justify-between">
             <h2 className="text-xl font-black text-gray-900 dark:text-white">
@@ -206,6 +206,48 @@ export function ProfileSettings() {
             {activeTab === "resume" && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-6">
                 
+                {/* Resume Upload Section */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Uploaded Resume</label>
+                  </div>
+                  
+                  <div className="p-4 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] flex flex-col sm:flex-row items-center justify-between gap-4">
+                    {profile?.resumeName ? (
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center border border-emerald-200 dark:border-emerald-800/40 shrink-0">
+                          <FileText className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white truncate max-w-[200px] sm:max-w-xs">{profile.resumeName}</span>
+                          <span className="text-xs font-medium text-gray-500 dark:text-zinc-400">Parsed and analyzed</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-white/10 flex items-center justify-center border border-gray-200 dark:border-white/10 shrink-0">
+                          <FileText className="w-5 h-5 text-gray-400 dark:text-zinc-500" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-gray-900 dark:text-white">No resume uploaded</span>
+                          <span className="text-xs font-medium text-gray-500 dark:text-zinc-400">Upload to extract skills & projects</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (onOpenResumeUpload) onOpenResumeUpload();
+                      }}
+                      className="w-full sm:w-auto px-4 py-2 bg-blue-50 hover:bg-blue-100 dark:bg-orange-500/10 dark:hover:bg-orange-500/20 text-blue-700 dark:text-orange-400 rounded-xl text-sm font-bold border border-blue-200/60 dark:border-orange-500/20 transition-colors flex items-center justify-center gap-2"
+                    >
+                      <UploadCloud className="w-4 h-4" />
+                      <span>{profile?.resumeName ? "Update PDF" : "Upload PDF"}</span>
+                    </button>
+                  </div>
+                </div>
+
                 <div className="flex flex-col gap-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-zinc-400">Skills (Press Enter to add)</label>
                   <div className="p-4 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] flex flex-col gap-4 focus-within:border-blue-500 dark:focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-orange-500/20 transition-all">

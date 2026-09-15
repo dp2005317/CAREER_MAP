@@ -15,7 +15,6 @@ import { StudentDashboardView } from "@/components/views/StudentDashboardView";
 import { useRouter } from "next/navigation";
 import { useAuth, UserCertificate } from "@/database/authContext";
 import { OnboardingModal } from "@/components/profile/OnboardingModal";
-import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
 import { CertificateModal } from "@/components/courses/CertificateModal";
 import { calculateJobMatch } from "@/backend/recommendations";
 
@@ -35,7 +34,6 @@ export default function DashboardPage() {
 
   // Modals
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
-  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
   const [viewingCertificate, setViewingCertificate] = useState<UserCertificate | null>(null);
 
   // Read query params on initial load
@@ -283,7 +281,6 @@ export default function DashboardPage() {
           user={user || profile}
           hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          onOpenProfileDrawer={() => setIsProfileDrawerOpen(true)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
 
@@ -297,7 +294,7 @@ export default function DashboardPage() {
             courseProgress={courseProgress}
             onGoToSavedJobs={() => setActiveTab("saved")}
             onGoToCourses={() => router.push("/courses")}
-            onOpenProfile={() => setIsProfileDrawerOpen(true)}
+            onOpenProfile={() => router.push("/profile")}
             onOpenJob={handleOpenDetails}
             onOpenCertificate={setViewingCertificate}
           />
@@ -384,17 +381,6 @@ export default function DashboardPage() {
         }}
       />
 
-      {/* User Profile Drawer */}
-      <UserProfileDrawer
-        isOpen={isProfileDrawerOpen}
-        onClose={() => setIsProfileDrawerOpen(false)}
-        onOpenResumeUpload={() => {
-          setIsProfileDrawerOpen(false);
-          setIsOnboardingOpen(true);
-        }}
-        onViewCertificate={(cert) => setViewingCertificate(cert)}
-      />
-
       {/* Certificate Modal */}
       {viewingCertificate && (
         <CertificateModal
@@ -434,7 +420,7 @@ export default function DashboardPage() {
           }
           setActiveTab(tab);
         }}
-        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+        onOpenProfile={() => router.push("/profile")}
       />
     </div>
   );

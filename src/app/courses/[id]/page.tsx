@@ -14,7 +14,6 @@ import { useAuth, UserCertificate } from "@/database/authContext";
 import { CertificateModal } from "@/components/courses/CertificateModal";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
-import { UserProfileDrawer } from "@/components/profile/UserProfileDrawer";
 import { MobileDock } from "@/components/layout/MobileDock";
 
 export default function CourseClassroomPage({ params }: { params: Promise<{ id: string }> }) {
@@ -43,7 +42,6 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
   } = useAuth();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
 
   const modules = course?.modules || [];
   const [showCertModal, setShowCertModal] = useState(false);
@@ -111,7 +109,6 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
           user={user || profile}
           hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          onOpenProfileDrawer={() => setIsProfileDrawerOpen(true)}
         />
         
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-[96px] md:pb-6 flex flex-col gap-6 custom-scrollbar">
@@ -248,16 +245,6 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
         <CertificateModal isOpen={showCertModal} onClose={() => setShowCertModal(false)} certificate={createdCert} />
       )}
 
-      <UserProfileDrawer
-        isOpen={isProfileDrawerOpen}
-        onClose={() => setIsProfileDrawerOpen(false)}
-        onOpenResumeUpload={() => {}}
-        onViewCertificate={(cert) => {
-          setCreatedCert(cert);
-          setShowCertModal(true);
-        }}
-      />
-
       <MobileDock
         activeTab="courses"
         onTabChange={(tab) => {
@@ -267,7 +254,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
           }
           router.push(`/dashboard?tab=${tab}`);
         }}
-        onOpenProfile={() => setIsProfileDrawerOpen(true)}
+        onOpenProfile={() => router.push("/profile")}
       />
     </div>
   );
