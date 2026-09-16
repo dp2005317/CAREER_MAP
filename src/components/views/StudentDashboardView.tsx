@@ -418,8 +418,8 @@ export function StudentDashboardView({
   };
 
   return (
-    <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar bg-[#FAF8F5] dark:bg-black text-gray-900 dark:text-white transition-colors">
-      <div className="max-w-[1400px] mx-auto space-y-7">
+    <main className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 pb-32 md:pb-8 custom-scrollbar bg-[#FAF8F5] dark:bg-black text-gray-900 dark:text-white transition-colors">
+      <div className="max-w-[1400px] mx-auto space-y-5 sm:space-y-7">
         
         {/* TOP GREETING & SEARCH HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -440,10 +440,10 @@ export function StudentDashboardView({
               )}
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+              <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                 Welcome back, {profile?.displayName || user?.displayName || "Learner"}!
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium mt-0.5">
                 Here is your live roadmap progress and daily career milestones.
               </p>
             </div>
@@ -477,36 +477,37 @@ export function StudentDashboardView({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           
           {/* CARD 1: Real-Time Learning Progress */}
-          <div className="bg-white dark:bg-[#151518] rounded-[28px] p-6 sm:p-8 border border-slate-200/70 dark:border-white/10 shadow-sm flex flex-col justify-between">
+          <div className="bg-white dark:bg-[#151518] rounded-2xl sm:rounded-[28px] p-4 sm:p-6 lg:p-8 border border-slate-200/70 dark:border-white/10 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <div>
+              {/* Card Header: Title + Real-Time Badge + View Details Button */}
+              <div className="flex flex-col gap-2.5 mb-4">
+                <div className="flex items-center justify-between gap-2 flex-wrap">
                   <div className="flex items-center gap-2">
-                    <h2 className="text-xl font-extrabold text-gray-900 dark:text-white">
+                    <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight whitespace-nowrap">
                       Learning Progress
                     </h2>
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30 whitespace-nowrap shrink-0 shadow-2xs">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                       Real-Time
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
-                    Calculated accurately from your completed lessons and credentials.
-                  </p>
+                  
+                  {/* View Details Button */}
+                  <button
+                    onClick={() => setIsProgressModalOpen(true)}
+                    className="px-3 py-1.5 rounded-full text-xs font-extrabold text-blue-600 dark:text-orange-400 bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-white/10 transition-colors border border-blue-200/50 dark:border-white/10 cursor-pointer flex items-center gap-1.5 shrink-0"
+                  >
+                    <Eye className="w-3.5 h-3.5" />
+                    <span>View Details</span>
+                  </button>
                 </div>
-                
-                {/* View Details Button */}
-                <button
-                  onClick={() => setIsProgressModalOpen(true)}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-extrabold text-blue-600 dark:text-orange-400 bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-white/10 transition-colors border border-blue-200/50 dark:border-white/10 cursor-pointer flex items-center gap-1 shrink-0"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>View Details</span>
-                </button>
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                  Calculated accurately from your completed lessons and credentials.
+                </p>
               </div>
 
               {/* Central Progress Visual with Metric Indicators */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 my-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5 my-4">
                 
                 {/* SVG Radial Gauge */}
                 <div className="flex items-center gap-4">
@@ -550,7 +551,7 @@ export function StudentDashboardView({
                     <p className="text-xs font-bold text-gray-500 dark:text-gray-400">
                       Completed Lessons
                     </p>
-                    <p className="text-lg font-black text-gray-900 dark:text-white">
+                    <p className="text-lg sm:text-xl font-black text-gray-900 dark:text-white">
                       {totalCompletedLessons} / {totalCourseLessons > 0 ? totalCourseLessons : "0"}
                     </p>
                     <p className="text-[11px] font-semibold text-gray-400 dark:text-gray-500">
@@ -560,7 +561,7 @@ export function StudentDashboardView({
                 </div>
 
                 {/* Badges / Metrics column */}
-                <div className="flex flex-col gap-2.5 sm:border-l sm:border-slate-100 dark:sm:border-white/5 sm:pl-6">
+                <div className="flex flex-col gap-2.5 pt-3 sm:pt-0 border-t sm:border-t-0 sm:border-l border-slate-100 dark:border-white/5 sm:pl-6">
                   
                   {/* Verified Certificates */}
                   <div className="flex items-center gap-2.5 text-xs">
@@ -613,12 +614,12 @@ export function StudentDashboardView({
 
             </div>
 
-            {/* In-Card Learning Progress Highlights (Courses & Certificates) */}
-            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-white/5 flex flex-col gap-2.5">
+            {/* In-Card Learning Progress Highlights (Structured Course Progress & Certificates) */}
+            <div className="mt-5 pt-4 border-t border-slate-100 dark:border-white/5 flex flex-col gap-3">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-extrabold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5 text-blue-600 dark:text-orange-500" />
-                  <span>Active Courses & Credentials:</span>
+                  <span>Active Courses & Credentials</span>
                 </span>
                 <button 
                   onClick={() => setIsProgressModalOpen(true)}
@@ -629,42 +630,63 @@ export function StudentDashboardView({
                 </button>
               </div>
               
-              {/* Compact course and certificate chips */}
-              <div className="flex flex-wrap items-center gap-2">
-                {activeEnrolledCourses.length > 0 ? (
-                  activeEnrolledCourses.slice(0, 3).map((c) => {
+              {/* Structured Course Progress Bars (No chopped or awkward chips) */}
+              {activeEnrolledCourses.length > 0 ? (
+                <div className="space-y-2">
+                  {activeEnrolledCourses.slice(0, 3).map((c) => {
                     const prog = courseProgress[c.courseId]?.progressPercent || 0;
                     return (
                       <Link
                         key={c.courseId}
                         href={`/courses/${c.courseId}`}
-                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-[11px] font-bold text-gray-700 dark:text-gray-200 hover:border-blue-500 dark:hover:border-orange-500 transition-colors"
+                        className="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200/70 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-orange-500/50 transition-all group"
                       >
-                        <span className="truncate max-w-[120px]">{c.title}</span>
-                        <span className="text-blue-600 dark:text-orange-400 font-extrabold">{prog}%</span>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2 mb-1.5">
+                            <span className="text-xs font-bold text-gray-800 dark:text-gray-200 truncate group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
+                              {c.title}
+                            </span>
+                            <span className="text-xs font-black text-blue-600 dark:text-orange-400 shrink-0">
+                              {prog}%
+                            </span>
+                          </div>
+                          <div className="w-full bg-slate-200/80 dark:bg-white/10 h-1.5 rounded-full overflow-hidden">
+                            <div
+                              className="bg-blue-600 dark:bg-orange-500 h-full rounded-full transition-all duration-500"
+                              style={{ width: `${prog}%` }}
+                            />
+                          </div>
+                        </div>
+                        <ChevronRight size={14} className="text-gray-400 dark:text-gray-500 shrink-0 group-hover:translate-x-0.5 transition-transform" />
                       </Link>
                     );
-                  })
-                ) : (
-                  <span className="text-xs text-gray-400 dark:text-gray-500 italic flex items-center gap-1.5">
-                    <span>No active course enrollments yet •</span>
-                    <button onClick={onGoToCourses} className="text-blue-600 dark:text-orange-400 font-bold hover:underline not-italic cursor-pointer">
-                      Browse Courses →
-                    </button>
-                  </span>
-                )}
-
-                {certificates.slice(0, 2).map((cert) => (
-                  <button
-                    key={cert.id}
-                    onClick={() => onOpenCertificate(cert)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-[11px] font-bold text-amber-800 dark:text-amber-400 hover:scale-105 transition-all cursor-pointer"
-                  >
-                    <Award size={13} className="text-amber-500" />
-                    <span className="truncate max-w-[110px]">{cert.courseTitle}</span>
+                  })}
+                </div>
+              ) : (
+                <span className="text-xs text-gray-400 dark:text-gray-500 italic flex items-center gap-1.5">
+                  <span>No active course enrollments yet •</span>
+                  <button onClick={onGoToCourses} className="text-blue-600 dark:text-orange-400 font-bold hover:underline not-italic cursor-pointer">
+                    Browse Courses →
                   </button>
-                ))}
-              </div>
+                </span>
+              )}
+
+              {/* Earned Certificates Row */}
+              {certificates.length > 0 && (
+                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pt-1">
+                  {certificates.map((cert) => (
+                    <button
+                      key={cert.id}
+                      onClick={() => onOpenCertificate(cert)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-xs font-bold text-amber-800 dark:text-amber-400 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer shrink-0"
+                    >
+                      <Award size={13} className="text-amber-500 shrink-0" />
+                      <span className="truncate max-w-[160px] sm:max-w-xs">{cert.courseTitle}</span>
+                      <span className="text-[10px] bg-amber-200/60 dark:bg-amber-500/20 px-1.5 py-0.2 rounded font-black text-amber-700 dark:text-amber-300">Verified</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -932,7 +954,7 @@ export function StudentDashboardView({
                 <Link 
                   key={c.courseId}
                   href={`/courses/${c.courseId}`}
-                  className="group bg-white dark:bg-[#151518] rounded-[28px] overflow-hidden border border-slate-200/70 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col"
+                  className="group bg-white dark:bg-[#151518] rounded-2xl sm:rounded-[28px] overflow-hidden border border-slate-200/70 dark:border-white/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col"
                 >
                   {/* Thumbnail Container */}
                   <div className="relative h-48 w-full overflow-hidden bg-slate-100 dark:bg-white/5">
@@ -979,7 +1001,7 @@ export function StudentDashboardView({
 
         {/* MY SAVED JOBS & APPLICATIONS (Quick Access) */}
         {savedJobs.length > 0 && (
-          <div className="bg-white dark:bg-[#151518] rounded-[28px] p-6 sm:p-8 border border-slate-200/70 dark:border-white/10 shadow-sm">
+          <div className="bg-white dark:bg-[#151518] rounded-2xl sm:rounded-[28px] p-4 sm:p-6 lg:p-8 border border-slate-200/70 dark:border-white/10 shadow-sm">
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2.5">
                 <Briefcase className="w-5 h-5 text-blue-600 dark:text-orange-400" />

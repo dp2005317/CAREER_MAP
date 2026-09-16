@@ -96,16 +96,16 @@ export function LearningProgressDetailModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-[28px] bg-[#FAF8F5] dark:bg-[#151518] text-gray-900 dark:text-white border border-slate-200/80 dark:border-white/10 shadow-2xl overflow-hidden z-10"
+            className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl sm:rounded-[28px] bg-[#FAF8F5] dark:bg-[#151518] text-gray-900 dark:text-white border border-slate-200/80 dark:border-white/10 shadow-2xl overflow-hidden z-10"
           >
             {/* Header */}
-            <div className="p-6 sm:p-8 border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between bg-white dark:bg-[#18181c] shrink-0">
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-orange-500/10 border border-blue-200/80 dark:border-orange-500/20 flex items-center justify-center text-blue-600 dark:text-orange-400">
+            <div className="p-4 sm:p-6 lg:p-8 border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between bg-white dark:bg-[#18181c] shrink-0 gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-blue-50 dark:bg-orange-500/10 border border-blue-200/80 dark:border-orange-500/20 flex items-center justify-center text-blue-600 dark:text-orange-400 shrink-0">
                   <GraduationCap className="w-6 h-6" />
                 </div>
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-black tracking-tight text-gray-900 dark:text-white">
+                <div className="min-w-0">
+                  <h2 className="text-base sm:text-2xl font-black tracking-tight text-gray-900 dark:text-white truncate">
                     Learning Progress & Credentials
                   </h2>
                   <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">
@@ -116,14 +116,14 @@ export function LearningProgressDetailModal({
 
               <button
                 onClick={onClose}
-                className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors cursor-pointer"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 flex items-center justify-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors cursor-pointer shrink-0"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
 
             {/* Sub-nav Tabs */}
-            <div className="flex items-center gap-2 px-6 sm:px-8 py-3 bg-white/50 dark:bg-white/[0.02] border-b border-slate-200/60 dark:border-white/5 overflow-x-auto shrink-0">
+            <div className="flex items-center gap-2 px-4 sm:px-8 py-3 bg-white/50 dark:bg-white/[0.02] border-b border-slate-200/60 dark:border-white/5 overflow-x-auto shrink-0 scrollbar-hide">
               {[
                 { id: "all", label: "Overview" },
                 { id: "courses", label: `Courses (${displayCourses.length})` },
@@ -145,7 +145,7 @@ export function LearningProgressDetailModal({
             </div>
 
             {/* Scrollable Content */}
-            <div className="p-6 sm:p-8 overflow-y-auto custom-scrollbar space-y-6 flex-1">
+            <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar space-y-5 sm:space-y-6 flex-1">
               
               {/* Quick Summary Metrics Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
