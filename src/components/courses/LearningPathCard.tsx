@@ -47,11 +47,11 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
       className="group relative"
     >
       <div
-        className="absolute -inset-0.5 rounded-[1.4rem] opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500"
+        className="absolute -inset-0.5 rounded-[28px] opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500"
         style={{ background: `linear-gradient(135deg, ${path.color}40, transparent 60%)` }}
       />
 
-      <div className="relative rounded-[1.4rem] overflow-hidden bg-white/80 dark:bg-[#0c0c0e] backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] dark:group-hover:border-orange-500/30 transition-all duration-500 transform-gpu">
+      <div className="relative rounded-[28px] overflow-hidden bg-white dark:bg-[#151518] border border-slate-200/80 dark:border-white/10 shadow-sm group-hover:shadow-md transition-all duration-300">
         {/* Gradient header */}
         <div className={`bg-gradient-to-r ${path.gradient} p-6 text-white relative overflow-hidden`}>
           {/* Animated shine effect */}
@@ -64,7 +64,7 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
               </div>
               <div>
                 <h3 className="font-extrabold text-base tracking-tight">{path.title}</h3>
-                <p className="text-white/70 text-[11px] font-semibold mt-0.5">{path.difficulty}</p>
+                <p className="text-white/80 text-[11px] font-semibold mt-0.5">{path.difficulty}</p>
               </div>
             </div>
             <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 group-hover:bg-white/30 transition-colors">
@@ -74,25 +74,25 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
         </div>
 
         {/* Content */}
-        <div className="p-5 flex flex-col gap-3">
+        <div className="p-5 flex flex-col gap-3.5">
           {/* Stats */}
           <div className="grid grid-cols-3 gap-2">
-            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-blue-50/50 dark:bg-white/[0.04] border border-blue-100/50 dark:border-white/10">
-              <Clock className="w-3.5 h-3.5 text-blue-500 dark:text-orange-400" />
+            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/10">
+              <Clock className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
               <span className="text-[10px] font-black text-gray-700 dark:text-zinc-200">{path.estimatedTime}</span>
             </div>
-            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-purple-50/50 dark:bg-white/[0.04] border border-purple-100/50 dark:border-white/10">
-              <BarChart3 className="w-3.5 h-3.5 text-purple-500 dark:text-orange-400" />
+            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/10">
+              <BarChart3 className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
               <span className="text-[10px] font-black text-gray-700 dark:text-zinc-200">{path.courseCount} courses</span>
             </div>
-            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-emerald-50/50 dark:bg-white/[0.04] border border-emerald-100/50 dark:border-white/10">
-              <Zap className="w-3.5 h-3.5 text-emerald-500 dark:text-orange-400" />
+            <div className="flex flex-col items-center gap-1.5 py-2 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/10">
+              <Zap className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
               <span className="text-[10px] font-black text-gray-700 dark:text-zinc-200 truncate">{path.careerOutcome.split("/")[0].trim()}</span>
             </div>
           </div>
 
           {/* Career Outcome */}
-          <div className="p-3 rounded-xl bg-gradient-to-r from-gray-50/80 to-gray-100/50 dark:from-white/[0.04] dark:to-white/[0.02] border border-gray-200/50 dark:border-white/10 text-center">
+          <div className="p-3 rounded-2xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/10 text-center">
             <p className="text-[8px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-0.5">Career Outcome</p>
             <p className="text-[12px] font-black text-gray-800 dark:text-white">{path.careerOutcome}</p>
           </div>
@@ -100,12 +100,12 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
           {/* Job roles */}
           <div>
             <p className="text-[8px] font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest mb-1.5">Get hired as</p>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {path.jobRoles.map((role) => (
                 <Link
                   key={role}
                   href={`/dashboard?tab=jobs`}
-                  className="inline-flex items-center gap-1 text-[9px] font-bold px-2 py-0.5 rounded-lg bg-blue-50 dark:bg-orange-500/10 text-blue-600 dark:text-orange-400 hover:bg-blue-100 dark:hover:bg-orange-500/20 transition-colors no-underline border border-blue-100/50 dark:border-orange-500/20"
+                  className="inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-1 rounded-full bg-blue-50 dark:bg-orange-500/10 text-blue-600 dark:text-orange-400 hover:bg-blue-100 dark:hover:bg-orange-500/20 transition-colors no-underline border border-blue-200/50 dark:border-orange-500/20"
                 >
                   <Briefcase className="w-2.5 h-2.5" />
                   {role}
@@ -120,7 +120,7 @@ export function LearningPathCard({ path, index }: LearningPathCardProps) {
             <div className="flex flex-col gap-1.5">
               {path.playlists.slice(0, 3).map((pid, i) => (
                 <div key={i} className="flex items-center gap-2 text-[11px] text-gray-600 dark:text-zinc-300 font-semibold">
-                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-orange-500" />
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-blue-600 dark:text-orange-500" />
                   <span className="truncate">
                     {pid.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}
                   </span>

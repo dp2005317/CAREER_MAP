@@ -9,7 +9,8 @@ import {
   MapPin, 
   ExternalLink, 
   Bookmark, 
-  MoreHorizontal
+  Building2,
+  ArrowRight
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -52,152 +53,148 @@ export function AllJobsView({
   }, [jobs, search, roleFilter]);
 
   return (
-    <div className="flex-1 flex flex-col p-6 overflow-y-auto custom-scrollbar bg-transparent">
-      {/* Header & Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            All Job Openings ({filtered.length})
-          </h2>
-          <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
-            Browse verified opportunities across India with direct 1-click ATS application links.
-          </p>
-        </div>
-
-        {/* Filter Controls */}
-        <div className="flex items-center gap-2.5 flex-wrap">
-          <div className="relative">
-            <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search title, company..."
-              className="pl-9 pr-3.5 py-2.5 bg-slate-100/90 dark:bg-white/5 text-xs font-semibold text-gray-800 dark:text-white rounded-2xl shadow-[inset_2px_2px_5px_rgba(163,177,198,0.4),inset_-2px_-2px_5px_rgba(255,255,255,0.9)] dark:shadow-none border border-white/60 dark:border-white/10 focus:ring-2 focus:ring-orange-500/30 outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
-            />
+    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-[#FAF8F5] dark:bg-black">
+      <div className="max-w-[1400px] mx-auto w-full space-y-6">
+        
+        {/* Header & Controls */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+              All Job Openings ({filtered.length})
+            </h2>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-1">
+              Browse verified opportunities across India with direct 1-click ATS application links.
+            </p>
           </div>
 
-          <div className="flex items-center gap-1.5 neu-pill p-1.5">
-            {["All", "Full Time", "Internship", "Remote"].map((r) => (
-              <button
-                key={r}
-                onClick={() => setRoleFilter(r)}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  roleFilter === r
-                    ? "neu-btn-primary"
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                }`}
-              >
-                {r === "All" ? "All Roles" : r}
-              </button>
-            ))}
+          {/* Filter Controls */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="relative w-full sm:w-64">
+              <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search title, company..."
+                className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-[#18181b] text-xs font-semibold text-gray-800 dark:text-white rounded-full border border-slate-200/80 dark:border-white/10 shadow-xs focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-orange-500/30 outline-none transition-all placeholder:text-gray-400"
+              />
+            </div>
+
+            <div className="flex items-center gap-1 bg-white dark:bg-[#18181b] p-1 rounded-full border border-slate-200/80 dark:border-white/10 shadow-xs">
+              {["All", "Full Time", "Internship", "Remote"].map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setRoleFilter(r)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                    roleFilter === r
+                      ? "bg-blue-600 dark:bg-orange-600 text-white shadow-xs"
+                      : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white"
+                  }`}
+                >
+                  {r === "All" ? "All Roles" : r}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Jobs Grid */}
-      {filtered.length === 0 ? (
-        <div className="flex-1 flex flex-col items-center justify-center p-12 neu-card text-center max-w-lg mx-auto">
-          <p className="font-bold text-gray-800 dark:text-white text-sm">No jobs match your criteria.</p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Try clearing search filters or search another query.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((job) => {
-            const isSaved = savedJobIds.has(job.id);
-            return (
-              <motion.div
-                key={job.id}
-                whileHover={{ y: -3 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => onOpenDetails(job)}
-                className="neu-card-sm p-5 flex flex-col justify-between cursor-pointer"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <CompanyLogo company={job.company} logoUrl={job.logo} size="sm" />
-                      <div className="min-w-0">
-                        <h4 className="font-bold text-gray-900 dark:text-white text-xs truncate">
-                          {job.company}
-                        </h4>
-                        <span className="text-[10px] font-medium text-gray-400 dark:text-gray-500 block truncate">
-                          {job.location.split(",")[0]}
-                        </span>
+        {/* Jobs Grid */}
+        {filtered.length === 0 ? (
+          <div className="flex-1 flex flex-col items-center justify-center p-12 bg-white dark:bg-[#151518] rounded-[28px] border border-slate-200/70 dark:border-white/10 text-center max-w-lg mx-auto shadow-sm">
+            <p className="font-bold text-gray-800 dark:text-white text-sm">No jobs match your criteria.</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Try clearing search filters or search another query.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((job) => {
+              const isSaved = savedJobIds.has(job.id);
+              return (
+                <motion.div
+                  key={job.id}
+                  whileHover={{ y: -3 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={() => onOpenDetails(job)}
+                  className="bg-white dark:bg-[#151518] rounded-[28px] p-6 border border-slate-200/70 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-blue-500/30 dark:hover:border-orange-500/30 transition-all flex flex-col justify-between cursor-pointer"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3 mb-4">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <CompanyLogo company={job.company} logoUrl={job.logo} size="md" />
+                        <div className="min-w-0">
+                          <h4 className="font-bold text-gray-900 dark:text-white text-sm truncate">
+                            {job.company}
+                          </h4>
+                          <span className="text-xs font-medium text-gray-400 dark:text-gray-500 flex items-center gap-1 mt-0.5 truncate">
+                            <MapPin size={11} className="text-blue-600 dark:text-orange-400" />
+                            {job.location.split(",")[0]}
+                          </span>
+                        </div>
                       </div>
+
+                      <button
+                        type="button"
+                        title={isSaved ? "Saved" : "Save Job"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onToggleSave(job.id);
+                        }}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                          isSaved
+                            ? "text-blue-600 dark:text-orange-400 bg-blue-50 dark:bg-orange-500/10 border border-blue-200 dark:border-orange-500/30"
+                            : "bg-slate-50 dark:bg-white/5 text-gray-400 hover:text-blue-600 dark:hover:text-orange-400"
+                        }`}
+                      >
+                        <Bookmark
+                          size={14}
+                          className={isSaved ? "fill-blue-600 dark:fill-orange-400 text-blue-600 dark:text-orange-400" : ""}
+                        />
+                      </button>
                     </div>
 
-                    <button
-                      type="button"
-                      title={isSaved ? "Saved" : "Save Job"}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onToggleSave(job.id);
-                      }}
-                      className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all cursor-pointer ${
-                        isSaved
-                          ? "neu-icon-btn text-blue-600 dark:text-orange-400 bg-blue-50/80 dark:bg-orange-500/10 ring-1 ring-blue-500/30 dark:ring-orange-500/30"
-                          : "neu-icon-btn text-gray-400 hover:text-blue-600 dark:hover:text-orange-400"
-                      }`}
+                    <h3 className="font-extrabold text-gray-900 dark:text-white text-base mb-2 line-clamp-1">
+                      {job.title}
+                    </h3>
+
+                    <p className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed mb-4 bg-slate-50 dark:bg-white/[0.02] p-3 rounded-2xl border border-slate-100 dark:border-white/5">
+                      {job.description}
+                    </p>
+
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded border border-emerald-200/60 dark:border-emerald-800/40">
+                        {formatSalaryBadge(job.salary)}
+                      </span>
+                      <span className="text-[10px] font-bold bg-slate-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 px-2.5 py-0.5 rounded-full">
+                        {job.type}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-2">
+                    <a
+                      href={getExactJobApplyUrl(job)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white text-xs font-bold py-2.5 px-4 rounded-xl text-center flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
                     >
-                      <Bookmark
-                        size={14}
-                        className={isSaved ? "fill-blue-600 dark:fill-orange-400 text-blue-600 dark:text-orange-400" : ""}
-                      />
+                      <span>1-Click Apply</span>
+                      <ExternalLink size={13} />
+                    </a>
+
+                    <button
+                      onClick={() => onOpenDetails(job)}
+                      className="bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-gray-800 dark:text-gray-200 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                    >
+                      View
                     </button>
                   </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
-                  <h3 className="font-bold text-gray-900 dark:text-white text-sm mb-1.5 line-clamp-1">
-                    {job.title}
-                  </h3>
-
-                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed mb-3">
-                    {job.description}
-                  </p>
-
-                  <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500">
-                    <span className="text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-100 dark:border-emerald-800/30 font-bold">
-                      {formatSalaryBadge(job.salary)}
-                    </span>
-                    <span className="text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/10 px-2 py-0.5 rounded-md font-medium">
-                      {job.type}
-                    </span>
-                    {job.distance !== undefined && job.distance < 99999 && (
-                      <span className="text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 px-2 py-0.5 rounded-md border border-purple-100 dark:border-purple-800/30 font-bold">
-                        {Math.round(job.distance)} km
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-white/5 flex items-center gap-2">
-                  <a
-                    href={getExactJobApplyUrl(job)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex-1 neu-btn-primary text-xs font-bold py-2 px-3 text-center flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <span>Apply Now</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onOpenDetails(job);
-                    }}
-                    className="px-3.5 py-2 neu-btn text-gray-700 dark:text-gray-200 text-xs font-bold transition-all cursor-pointer"
-                  >
-                    Details
-                  </button>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

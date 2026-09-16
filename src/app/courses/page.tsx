@@ -163,7 +163,7 @@ export default function CoursesPage() {
   }, [effectiveSearch, filters, activeTab, profile, matchMap, playlists]);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden antialiased font-sans bg-transparent">
+    <div className="flex h-screen w-screen overflow-hidden antialiased font-sans bg-[#FAF8F5] dark:bg-black">
       <AppSidebar
         activeTab="courses"
         isOpen={isMobileMenuOpen}
@@ -184,48 +184,41 @@ export default function CoursesPage() {
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 pb-[96px] md:pb-8 flex flex-col gap-8 custom-scrollbar relative">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-[96px] md:pb-8 flex flex-col gap-8 custom-scrollbar relative bg-[#FAF8F5] dark:bg-black">
         
-        {/* Personalized Resume Hero Banner */}
-        <section className="relative z-10 shrink-0 rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-[#0c0c0e] text-white shadow-2xl border border-white/10 group">
-          {/* Animated Background Mesh */}
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-0 right-0 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-blue-600/20 dark:bg-orange-600/20 rounded-full blur-[80px] md:blur-[120px] mix-blend-screen opacity-50 transform translate-x-1/3 -translate-y-1/4 transition-transform duration-1000 group-hover:scale-110" />
-            <div className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-indigo-600/20 dark:bg-amber-600/20 rounded-full blur-[60px] md:blur-[100px] mix-blend-screen opacity-50 transform -translate-x-1/4 translate-y-1/4" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-          </div>
-
-          <div className="relative z-10 p-5 sm:p-10 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-12">
+        {/* Personalized Resume Hero Banner (Dashboard aesthetic) */}
+        <section className="relative z-10 shrink-0 rounded-[28px] overflow-hidden bg-white dark:bg-[#151518] text-gray-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-white/10 group">
+          <div className="relative z-10 p-6 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-12">
             <div className="w-full max-w-2xl">
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full liquid-glass text-white text-[10px] sm:text-xs font-bold mb-4 sm:mb-6 shadow-sm"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-orange-500/10 border border-blue-200/60 dark:border-orange-500/20 text-blue-700 dark:text-orange-400 text-xs font-bold mb-4 shadow-2xs"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span className="tracking-wide">Competitor-Grade Free Curriculum</span>
+                <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400 shrink-0" />
+                <span className="tracking-wide">Industry-Standard Free Curriculums</span>
               </motion.div>
 
               <motion.h1 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-3 sm:mb-4 leading-[1.15]"
+                className="text-2xl sm:text-4xl font-black tracking-tight text-gray-900 dark:text-white mb-3 leading-[1.15]"
               >
                 {profile?.displayName
-                  ? <>Welcome, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 dark:from-orange-400 dark:to-amber-400">{profile.displayName}</span>!</>
-                  : <>Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 dark:from-orange-400 dark:to-amber-400">High-Demand</span> Tech Skills</>}
+                  ? <>Welcome, <span className="text-blue-600 dark:text-orange-500">{profile.displayName}</span>!</>
+                  : <>Master <span className="text-blue-600 dark:text-orange-500">High-Demand</span> Tech Skills</>}
               </motion.h1>
 
               <motion.p 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-xs sm:text-base text-slate-300/90 leading-relaxed font-medium mb-6 sm:mb-8 max-w-xl"
+                className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed font-medium mb-6 max-w-xl"
               >
                 {profile?.skills?.length
                   ? `Based on your resume, we matched ${filteredPlaylists.length} free certification courses aligned with your ${profile.targetRole || "career"} track. Study directly in our embedded theater & earn verifiable certificates.`
-                  : "Explore 100+ free official courses from Google, Meta, Microsoft, and IBM. Complete interactive lessons in-app and claim your verified Certificate of Completion."}
+                  : "Explore 100+ free official courses from leading engineering teams. Complete interactive lessons and claim your verified Certificate of Completion."}
               </motion.p>
 
               {/* Skills Chips or Upload CTA */}
@@ -235,30 +228,30 @@ export default function CoursesPage() {
                 transition={{ delay: 0.3 }}
               >
               {profile?.skills && profile.skills.length > 0 ? (
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 bg-black/40 backdrop-blur-sm border border-white/10 rounded-2xl p-3 sm:rounded-full sm:px-5 sm:py-2.5 w-full md:w-max overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 rounded-2xl p-3 sm:rounded-full sm:px-5 sm:py-2.5 w-full md:w-max overflow-hidden">
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider">Target:</span>
-                    <span className="text-[10px] sm:text-xs font-extrabold px-2.5 sm:px-3 py-1 rounded-full bg-blue-600/20 text-blue-400 dark:bg-orange-500/20 dark:text-orange-400 border border-blue-500/20 dark:border-orange-500/20">
+                    <span className="text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Target:</span>
+                    <span className="text-[10px] sm:text-xs font-extrabold px-2.5 sm:px-3 py-0.5 rounded-full bg-blue-50 dark:bg-orange-500/20 text-blue-700 dark:text-orange-400 border border-blue-200 dark:border-orange-500/20">
                       {profile.targetRole || "Software Engineer"}
                     </span>
                   </div>
-                  <div className="hidden sm:block w-px h-4 bg-white/20 shrink-0" />
+                  <div className="hidden sm:block w-px h-4 bg-slate-200 dark:bg-white/10 shrink-0" />
                   <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0">
-                    <span className="hidden sm:inline-block text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0">Skills:</span>
+                    <span className="hidden sm:inline-block text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider shrink-0">Skills:</span>
                     {profile.skills.slice(0, 3).map((s) => (
-                      <span key={s} className="text-[9px] sm:text-[11px] font-bold px-2 sm:px-2.5 py-1 rounded-full bg-white/5 text-slate-200 border border-white/10 whitespace-nowrap">
+                      <span key={s} className="text-[9px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white dark:bg-white/10 text-gray-800 dark:text-gray-200 border border-slate-200/80 dark:border-white/10 whitespace-nowrap">
                         {s}
                       </span>
                     ))}
                     {profile.skills.length > 3 && (
-                      <span className="text-[9px] sm:text-[11px] font-bold text-slate-400 whitespace-nowrap">+{profile.skills.length - 3}</span>
+                      <span className="text-[9px] sm:text-[11px] font-bold text-gray-500 dark:text-gray-400 whitespace-nowrap">+{profile.skills.length - 3}</span>
                     )}
                   </div>
                 </div>
               ) : (
                 <button
                   onClick={() => setIsOnboardingOpen(true)}
-                  className="w-full sm:w-auto justify-center px-6 py-3 rounded-xl sm:rounded-full bg-white text-black font-black text-sm flex items-center gap-2 hover:bg-slate-200 active:scale-95 transition-all shadow-xl shadow-white/10 cursor-pointer"
+                  className="w-full sm:w-auto justify-center px-6 py-3 rounded-full bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white font-black text-xs sm:text-sm flex items-center gap-2 active:scale-95 transition-all shadow-md cursor-pointer"
                 >
                   <FileText className="w-4 h-4" />
                   <span>Upload Resume for Match</span>
@@ -267,29 +260,27 @@ export default function CoursesPage() {
               </motion.div>
             </div>
 
-            {/* Quick Metrics Badge */}
+            {/* Quick Metrics Badge matching dashboard rounded-[28px] */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
-              className="grid grid-cols-2 gap-3 sm:gap-4 shrink-0 w-full md:w-auto"
+              className="grid grid-cols-2 gap-4 shrink-0 w-full md:w-auto"
             >
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] liquid-glass flex flex-col items-center justify-center relative overflow-hidden group/card transition-colors">
-                <div className="absolute inset-0 bg-blue-500/20 dark:bg-orange-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity blur-2xl" />
-                <p className="text-3xl sm:text-5xl font-black text-white relative z-10">{enrolledCourses.length}</p>
-                <p className="text-[10px] sm:text-xs text-slate-300 font-extrabold uppercase tracking-widest mt-1 sm:mt-2 relative z-10">Enrolled</p>
+              <div className="p-6 rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
+                <p className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{enrolledCourses.length}</p>
+                <p className="text-[10px] sm:text-xs text-blue-600 dark:text-orange-400 font-extrabold uppercase tracking-widest mt-1 relative z-10">Enrolled</p>
               </div>
-              <div className="p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] liquid-glass flex flex-col items-center justify-center relative overflow-hidden group/card transition-colors">
-                <div className="absolute inset-0 bg-amber-500/20 opacity-0 group-hover/card:opacity-100 transition-opacity blur-2xl" />
-                <p className="text-3xl sm:text-5xl font-black text-amber-400 relative z-10">{certificates.length}</p>
-                <p className="text-[10px] sm:text-xs text-slate-300 font-extrabold uppercase tracking-widest mt-1 sm:mt-2 relative z-10">Certificates</p>
+              <div className="p-6 rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
+                <p className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{certificates.length}</p>
+                <p className="text-[10px] sm:text-xs text-amber-500 font-extrabold uppercase tracking-widest mt-1 relative z-10">Certificates</p>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto py-4 custom-scrollbar shrink-0 relative z-20">
+        {/* Navigation Tabs (Dashboard styled pills: Light mode blue, Dark mode orange) */}
+        <div className="flex items-center gap-2 overflow-x-auto py-2 custom-scrollbar shrink-0 relative z-20">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -297,16 +288,16 @@ export default function CoursesPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2.5 rounded-2xl text-xs font-bold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? "bg-slate-900 dark:bg-orange-600 text-white shadow-md shadow-slate-900/20 dark:shadow-orange-600/30"
-                    : "bg-white dark:bg-[#0c0c0e] text-gray-600 dark:text-zinc-300 hover:text-gray-900 dark:hover:text-white border border-gray-200/80 dark:border-white/10 hover:border-gray-300 dark:hover:border-zinc-700"
+                    ? "bg-blue-600 dark:bg-orange-600 text-white shadow-md shadow-blue-600/25 dark:shadow-orange-600/30"
+                    : "bg-white dark:bg-[#151518] text-gray-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white border border-slate-200/80 dark:border-white/10"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-amber-400 dark:text-white" : "text-gray-500 dark:text-zinc-400"}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-white" : "text-gray-500 dark:text-zinc-400"}`} />
                 <span>{tab.label}</span>
                 {tab.id === "mylearning" && enrolledCourses.length > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-blue-500 dark:bg-orange-500 text-white text-[10px] font-black">
+                  <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-white text-[10px] font-black">
                     {enrolledCourses.length}
                   </span>
                 )}

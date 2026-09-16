@@ -1,15 +1,34 @@
 import React from 'react';
+import Image from 'next/image';
 
 export const AnimatedBackground = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none z-[-10]">
-    {/* Light mode blobs */}
-    <div className="dark:hidden absolute -top-[20%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-blue-300/40 mix-blend-multiply filter blur-[100px] animate-blob" />
-    <div className="dark:hidden absolute top-[20%] -right-[10%] w-[45vw] h-[45vw] rounded-full bg-purple-300/40 mix-blend-multiply filter blur-[120px] animate-blob animation-delay-2000" />
-    <div className="dark:hidden absolute -bottom-[20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-teal-200/40 mix-blend-multiply filter blur-[100px] animate-blob animation-delay-4000" />
+  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    {/* Light mode background */}
+    <div className="dark:hidden absolute inset-0 w-full h-full opacity-30 transition-opacity duration-500">
+      <Image
+        src="/images/light_mode_image.png"
+        alt="Background Light"
+        fill
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
+        quality={90}
+        priority
+      />
+      {/* Soft gradient fade so content is always crystal clear */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-white/60" />
+    </div>
 
-    {/* Dark mode flame orange / obsidian auras */}
-    <div className="hidden dark:block absolute -top-[20%] -left-[10%] w-[55vw] h-[55vw] rounded-full bg-orange-600/10 filter blur-[140px] animate-blob" />
-    <div className="hidden dark:block absolute top-[20%] -right-[10%] w-[50vw] h-[50vw] rounded-full bg-amber-600/10 filter blur-[150px] animate-blob animation-delay-2000" />
-    <div className="hidden dark:block absolute -bottom-[20%] left-[20%] w-[65vw] h-[65vw] rounded-full bg-orange-500/10 filter blur-[140px] animate-blob animation-delay-4000" />
+    {/* Dark mode background */}
+    <div className="hidden dark:block absolute inset-0 w-full h-full opacity-35 transition-opacity duration-500">
+      <Image
+        src="/images/dark_mode_background.png"
+        alt="Background Dark"
+        fill
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
+        quality={90}
+        priority
+      />
+      {/* Soft dark gradient fade */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+    </div>
   </div>
 );

@@ -5,7 +5,7 @@ import Map, { Marker, NavigationControl, GeolocateControl } from "react-map-gl/m
 import { Job } from "@/backend/mockData";
 import { motion } from "framer-motion";
 import { Search, SlidersHorizontal, MapPin } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface InteractiveMapProps {
   jobs: Job[];

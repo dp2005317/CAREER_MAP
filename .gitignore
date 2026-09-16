@@ -50,6 +50,7 @@ next-env.d.ts
 test_*.js
 test-*.js
 populate.js
+scratch/
 
 # Embedded repos
 Carrer_Map/

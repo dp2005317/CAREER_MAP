@@ -111,21 +111,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#f0f2f5] dark:bg-black text-gray-800 dark:text-gray-100 flex flex-col justify-center relative overflow-hidden font-sans selection:bg-orange-500/20">
+    <div className="min-h-[100dvh] bg-slate-50/50 dark:bg-black text-gray-800 dark:text-gray-100 flex flex-col justify-center relative overflow-hidden font-sans selection:bg-orange-500/20">
       <AnimatedBackground />
       
-      {/* Brand Header & Theme Toggle */}
-      <div className="absolute top-6 left-6 z-10">
+      {/* Brand Header */}
+      <div className="absolute top-6 left-6 z-50">
         <Link href="/">
-          <LiquidGlass className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full flex items-center gap-2 cursor-pointer hover:bg-white/50 dark:hover:bg-white/10 transition-colors">
+          <LiquidGlass className="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full flex items-center gap-2 cursor-pointer hover:bg-white/50 dark:hover:bg-white/10 transition-colors shadow-sm">
             <BrandLogo width={160} height={160} className="object-contain w-auto h-8 sm:h-10 scale-[1.2]" priority />
             <span className="text-sm sm:text-base font-bold tracking-tight text-gray-900 dark:text-white">CareerMap AI</span>
           </LiquidGlass>
         </Link>
       </div>
 
-      <div className="absolute top-6 right-6 z-10">
-        <ThemeToggle />
+      {/* Theme Toggle with high z-index */}
+      <div className="absolute top-6 right-6 z-50">
+        <div className="bg-white/80 dark:bg-black/60 backdrop-blur-md border border-slate-200/80 dark:border-white/10 rounded-full p-2 shadow-md hover:scale-105 transition-transform">
+          <ThemeToggle />
+        </div>
       </div>
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 pt-28 pb-12 z-10 overflow-y-auto">
