@@ -510,8 +510,8 @@ export function StudentDashboardView({
                 
                 {/* SVG Radial Gauge */}
                 <div className="flex items-center gap-4">
-                  <div className="relative w-32 h-32 flex items-center justify-center shrink-0">
-                    <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 160 160">
+                  <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center shrink-0">
+                    <svg className="w-24 h-24 sm:w-32 sm:h-32 transform -rotate-90" viewBox="0 0 160 160">
                       <circle
                         cx="80"
                         cy="80"
@@ -536,7 +536,7 @@ export function StudentDashboardView({
                     </svg>
 
                     <div className="absolute flex flex-col items-center justify-center text-center">
-                      <span className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+                      <span className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
                         {realtimePercent}%
                       </span>
                       <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
@@ -669,11 +669,11 @@ export function StudentDashboardView({
           </div>
 
           {/* CARD 2: User-Editable & AI-Generated Weekly Tasks */}
-          <div className="bg-white dark:bg-[#151518] rounded-[28px] p-6 sm:p-8 border border-slate-200/70 dark:border-white/10 shadow-sm flex flex-col justify-between">
+          <div className="bg-white dark:bg-[#151518] rounded-2xl sm:rounded-[28px] p-4 sm:p-6 lg:p-8 border border-slate-200/70 dark:border-white/10 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
                 <div className="flex items-center gap-2.5">
-                  <h2 className="text-xl font-extrabold text-gray-900 dark:text-white">
+                  <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white">
                     Weekly Tasks
                   </h2>
                   <span className="text-xs font-bold text-gray-500 dark:text-gray-400 bg-slate-100 dark:bg-white/5 px-2.5 py-0.5 rounded-full">
@@ -681,7 +681,7 @@ export function StudentDashboardView({
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <button 
                     onClick={handleGenerateAITasks}
                     disabled={isGeneratingAI}
@@ -745,7 +745,7 @@ export function StudentDashboardView({
                 activeTasks.map((task) => (
                   <div 
                     key={task.id}
-                    className="flex items-center justify-between p-3 rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group border border-slate-100 dark:border-white/5 hover:border-slate-200/80 dark:hover:border-white/10"
+                    className="flex items-start sm:items-center justify-between p-3 rounded-xl sm:rounded-2xl hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group border border-slate-100 dark:border-white/5 hover:border-slate-200/80 dark:hover:border-white/10 gap-2"
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       {/* Checkbox to Complete Task: Removes from active, moves to completed */}
@@ -766,7 +766,7 @@ export function StudentDashboardView({
                         className="flex flex-col min-w-0 flex-1 cursor-pointer pr-2"
                         title="Click to watch lecture video at the course section"
                       >
-                        <span className="text-xs sm:text-sm font-extrabold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-orange-500 transition-colors truncate">
+                        <span className="text-xs sm:text-sm font-extrabold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-orange-500 transition-colors">
                           {task.title}
                         </span>
                         <div className="flex items-center gap-2 mt-0.5">
@@ -784,7 +784,7 @@ export function StudentDashboardView({
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                       {/* Dedicated Watch Video Button: Navigates straight to course video */}
                       <button
                         onClick={(e) => {

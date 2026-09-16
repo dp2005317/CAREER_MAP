@@ -65,6 +65,7 @@ export default function CoursesPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedCareer, setSelectedCareer] = useState("data-science");
+  const [selectedCategory, setSelectedCategory] = useState("");
   
   const [playlists, setPlaylists] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -184,11 +185,11 @@ export default function CoursesPage() {
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-[96px] md:pb-8 flex flex-col gap-8 custom-scrollbar relative bg-[#FAF8F5] dark:bg-black">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8 pb-28 md:pb-8 flex flex-col gap-6 sm:gap-8 custom-scrollbar relative bg-[#FAF8F5] dark:bg-black">
         
         {/* Personalized Resume Hero Banner (Dashboard aesthetic) */}
-        <section className="relative z-10 shrink-0 rounded-[28px] overflow-hidden bg-white dark:bg-[#151518] text-gray-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-white/10 group">
-          <div className="relative z-10 p-6 sm:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-12">
+        <section className="relative z-10 shrink-0 rounded-2xl sm:rounded-[28px] overflow-hidden bg-white dark:bg-[#151518] text-gray-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-white/10 group">
+          <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-10">
             <div className="w-full max-w-2xl">
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
@@ -203,7 +204,7 @@ export default function CoursesPage() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-2xl sm:text-4xl font-black tracking-tight text-gray-900 dark:text-white mb-3 leading-[1.15]"
+                className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight text-gray-900 dark:text-white mb-3 leading-[1.15]"
               >
                 {profile?.displayName
                   ? <>Welcome, <span className="text-blue-600 dark:text-orange-500">{profile.displayName}</span>!</>
@@ -265,14 +266,14 @@ export default function CoursesPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
-              className="grid grid-cols-2 gap-4 shrink-0 w-full md:w-auto"
+              className="grid grid-cols-2 gap-3 sm:gap-4 shrink-0 w-full md:w-auto"
             >
-              <div className="p-6 rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
-                <p className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{enrolledCourses.length}</p>
+              <div className="p-3 sm:p-5 rounded-2xl sm:rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
+                <p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{enrolledCourses.length}</p>
                 <p className="text-[10px] sm:text-xs text-blue-600 dark:text-orange-400 font-extrabold uppercase tracking-widest mt-1 relative z-10">Enrolled</p>
               </div>
-              <div className="p-6 rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
-                <p className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{certificates.length}</p>
+              <div className="p-3 sm:p-5 rounded-2xl sm:rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
+                <p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{certificates.length}</p>
                 <p className="text-[10px] sm:text-xs text-amber-500 font-extrabold uppercase tracking-widest mt-1 relative z-10">Certificates</p>
               </div>
             </motion.div>
@@ -280,7 +281,7 @@ export default function CoursesPage() {
         </section>
 
         {/* Navigation Tabs (Dashboard styled pills: Light mode blue, Dark mode orange) */}
-        <div className="flex items-center gap-2 overflow-x-auto py-2 custom-scrollbar shrink-0 relative z-20">
+        <div className="flex items-center gap-2 overflow-x-auto py-2 custom-scrollbar shrink-0 relative z-20 -mx-3 px-3 sm:mx-0 sm:px-0 scrollbar-hide">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -395,8 +396,59 @@ export default function CoursesPage() {
 
         {/* Standard Course Catalog View */}
         {activeTab !== "mylearning" && activeTab !== "paths" && (
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            {/* Filter Sidebar */}
+          <div className="flex flex-col gap-4">
+            {/* Search Bar & Filter Button */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex-1 min-w-0">
+                <SearchBar
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                />
+              </div>
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="p-3 rounded-2xl bg-white dark:bg-[#151518] border border-slate-200/80 dark:border-white/10 text-gray-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-orange-400 flex items-center gap-2 text-xs font-bold shadow-xs cursor-pointer shrink-0 transition-colors"
+              >
+                <SlidersHorizontal className="w-4 h-4" />
+                <span className="hidden sm:inline">Filters</span>
+              </button>
+            </div>
+
+            {/* Horizontal Category Chip Bar */}
+            <div className="flex items-center gap-2 overflow-x-auto -mx-3 px-3 sm:mx-0 sm:px-0 py-1 scrollbar-hide">
+              <button
+                onClick={() => { setSelectedCategory(""); setFilters({ ...filters, category: "" }); }}
+                className={`px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all cursor-pointer border shrink-0 ${
+                  !selectedCategory
+                    ? "bg-blue-600 dark:bg-orange-600 text-white border-blue-600 dark:border-orange-600 shadow-md shadow-blue-600/20 dark:shadow-orange-600/25"
+                    : "bg-white dark:bg-[#151518] text-gray-700 dark:text-zinc-300 border-slate-200/80 dark:border-white/10 hover:border-blue-400 dark:hover:border-orange-500/50"
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>All Courses</span>
+                <span className="text-[10px] opacity-70">({playlists.length})</span>
+              </button>
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    const newCat = selectedCategory === cat.id ? "" : cat.id;
+                    setSelectedCategory(newCat);
+                    setFilters({ ...filters, category: newCat });
+                  }}
+                  className={`px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all cursor-pointer border shrink-0 ${
+                    selectedCategory === cat.id
+                      ? "bg-blue-600 dark:bg-orange-600 text-white border-blue-600 dark:border-orange-600 shadow-md shadow-blue-600/20 dark:shadow-orange-600/25"
+                      : "bg-white dark:bg-[#151518] text-gray-700 dark:text-zinc-300 border-slate-200/80 dark:border-white/10 hover:border-blue-400 dark:hover:border-orange-500/50"
+                  }`}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.name}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Filter Drawer (slide-over) */}
             <FilterSidebar
               filters={filters}
               onFilterChange={handleFilterChange}
@@ -404,57 +456,38 @@ export default function CoursesPage() {
               onClose={() => setShowFilters(false)}
             />
 
-            {/* Course Grid */}
-            <div className="flex-1 min-w-0 w-full flex flex-col gap-4">
-              {/* Search Bar & Mobile Filter Trigger */}
-              <div className="flex items-center gap-3">
-                <div className="flex-1">
-                  <SearchBar
-                    value={searchQuery}
-                    onChange={setSearchQuery}
+            {/* Courses Grid — cards capped at max-w-[420px] */}
+            {filteredPlaylists.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5">
+                {filteredPlaylists.map((course, index) => (
+                  <CourseCard
+                    key={course.courseId}
+                    course={course}
+                    index={index}
+                    onOpenClassroom={(c) => router.push(`/courses/${c.courseId}`)}
+                    progress={getCourseProgress(course.courseId)}
+                    matchScore={matchMap.get(course.courseId)?.matchScore}
+                    matchReason={matchMap.get(course.courseId)?.recommendationReason}
                   />
-                </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-8 sm:p-12 text-center bg-white dark:bg-[#0c0c0e] rounded-2xl sm:rounded-3xl border border-gray-200/80 dark:border-white/10">
+                <BookOpen className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 dark:text-zinc-600 mx-auto mb-3" />
+                <h4 className="font-extrabold text-sm sm:text-base text-gray-900 dark:text-white">No courses match your filters</h4>
+                <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 mb-4">Try clearing some search terms or filters.</p>
                 <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="md:hidden p-3 rounded-2xl bg-white dark:bg-[#0c0c0e] border border-gray-200 dark:border-white/10 text-gray-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-orange-400 flex items-center gap-2 text-xs font-bold shadow-xs cursor-pointer"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("");
+                    setFilters({ search: "", company: "", category: "", difficulty: "", duration: "", certificateOnly: false, freeOnly: false, language: "" });
+                  }}
+                  className="px-5 py-2.5 bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all"
                 >
-                  <SlidersHorizontal className="w-4 h-4" />
-                  <span>Filters</span>
+                  Reset Filters
                 </button>
               </div>
-
-              {/* Courses Grid */}
-              {filteredPlaylists.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-                  {filteredPlaylists.map((course, index) => (
-                    <CourseCard
-                      key={course.courseId}
-                      course={course}
-                      index={index}
-                      onOpenClassroom={(c) => router.push(`/courses/${c.courseId}`)}
-                      progress={getCourseProgress(course.courseId)}
-                      matchScore={matchMap.get(course.courseId)?.matchScore}
-                      matchReason={matchMap.get(course.courseId)?.recommendationReason}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="p-12 text-center bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10">
-                  <BookOpen className="w-12 h-12 text-gray-400 dark:text-zinc-600 mx-auto mb-3" />
-                  <h4 className="font-extrabold text-base text-gray-900 dark:text-white">No courses match your filters</h4>
-                  <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 mb-4">Try clearing some search terms or filters.</p>
-                  <button
-                    onClick={() => {
-                      setSearchQuery("");
-                      setFilters({ search: "", company: "", category: "", difficulty: "", duration: "", certificateOnly: false, freeOnly: false, language: "" });
-                    }}
-                    className="px-5 py-2.5 bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all"
-                  >
-                    Reset Filters
-                  </button>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         )}
       </main>

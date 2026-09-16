@@ -170,7 +170,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-[96px] md:pb-6 flex flex-col gap-6 custom-scrollbar">
           
           {/* Header & Controls (Clean rounded card with Live Progress) */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#151518] p-5 rounded-[28px] border border-slate-200/70 dark:border-white/10 shadow-sm shrink-0">
+          <div className="flex flex-col gap-3 sm:gap-4 bg-white dark:bg-[#151518] p-4 sm:p-5 rounded-2xl sm:rounded-[28px] border border-slate-200/70 dark:border-white/10 shadow-sm shrink-0">
             <div className="flex items-center gap-3.5">
               <button 
                 onClick={() => router.push("/courses")} 
@@ -197,14 +197,14 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
                     </span>
                   )}
                 </div>
-                <h3 className="text-base sm:text-lg font-extrabold text-gray-900 dark:text-white line-clamp-1">
+                <h3 className="text-sm sm:text-lg font-extrabold text-gray-900 dark:text-white line-clamp-1 sm:line-clamp-2">
                   {course.title}
                 </h3>
               </div>
             </div>
 
             {/* Live Progress Bar & Certificate Claim */}
-            <div className="flex items-center gap-3.5 self-end sm:self-center shrink-0">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
               <div className="flex flex-col items-end gap-1.5">
                 <div className="flex items-center gap-2 text-xs font-bold text-gray-600 dark:text-zinc-400">
                   <span>Progress:</span>
@@ -295,7 +295,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
                           <div 
                             key={lecture.lectureId}
                             onClick={() => router.push(`/courses/${course.courseId}/lectures/${lecture.lectureId}`)}
-                            className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4 group ${
+                            className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer flex flex-col gap-3 group ${
                               isCompleted 
                                 ? "bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200/80 dark:border-emerald-800/40 hover:border-emerald-400" 
                                 : "bg-gray-50 dark:bg-zinc-900/60 hover:bg-blue-50 dark:hover:bg-zinc-800/80 border-gray-200 dark:border-zinc-800 hover:border-blue-200 dark:hover:border-orange-500/40"
@@ -338,7 +338,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
                               </div>
                             </div>
 
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2 sm:gap-3 ml-8 sm:ml-0">
                               <div className="px-3 py-1 bg-white dark:bg-zinc-800 rounded-xl border border-gray-200 dark:border-zinc-700 text-xs font-bold text-gray-500 dark:text-zinc-400 flex items-center gap-1.5 shadow-2xs">
                                 <PlayCircle className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
                                 <span>Watch Video</span>

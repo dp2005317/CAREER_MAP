@@ -69,10 +69,10 @@ export function CourseCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
-      className="group relative rounded-[28px] bg-white dark:bg-[#151518] border border-slate-200/70 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-orange-500/40 shadow-sm hover:shadow-xl dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] transition-all duration-300 flex flex-col h-full overflow-hidden cursor-pointer hover:-translate-y-1"
+      className="group relative rounded-2xl sm:rounded-[28px] bg-white dark:bg-[#151518] border border-slate-200/70 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-orange-500/40 shadow-sm hover:shadow-xl dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] transition-all duration-300 flex flex-col h-full overflow-hidden cursor-pointer hover:-translate-y-1 w-full max-w-[420px] mx-auto sm:mx-0"
     >
       {/* Thumbnail Aspect Ratio 16:9 */}
-      <div className="relative aspect-video w-full overflow-hidden bg-slate-100 dark:bg-white/5">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 dark:bg-white/5 max-h-[220px]">
         {course.thumbnail && (course.thumbnail.startsWith("http") || course.thumbnail.startsWith("/")) ? (
           <img
             src={course.thumbnail}
@@ -139,7 +139,7 @@ export function CourseCard({
       </div>
 
       {/* Card Content Area */}
-      <div className="p-6 flex flex-col flex-1 gap-3">
+      <div className="p-4 sm:p-5 flex flex-col flex-1 gap-2.5">
         {/* Provider & Difficulty Header */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
@@ -157,7 +157,7 @@ export function CourseCard({
         </div>
 
         {/* Course Title */}
-        <h3 className="font-extrabold text-base text-gray-900 dark:text-white leading-snug line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
+        <h3 className="font-extrabold text-sm sm:text-base text-gray-900 dark:text-white leading-snug line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
           {course.title}
         </h3>
 
@@ -261,7 +261,7 @@ export function CourseCard({
               e.stopPropagation();
               setIsSaved(!isSaved);
             }}
-            className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
+            className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center transition-colors cursor-pointer shrink-0 ${
               isSaved
                 ? "bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/30 text-rose-500"
                 : "border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/5 text-gray-400 dark:text-gray-500 hover:text-rose-500 dark:hover:text-rose-400"
@@ -283,7 +283,7 @@ export function CourseCard({
                 navigator.clipboard.writeText(url);
               }
             }}
-            className="w-9 h-9 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/5 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-orange-400 transition-colors cursor-pointer shrink-0"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl border border-slate-200 dark:border-white/10 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/5 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-orange-400 transition-colors cursor-pointer shrink-0"
             title="Share course"
           >
             <Share2 className="w-4 h-4" />

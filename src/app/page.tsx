@@ -179,7 +179,7 @@ export default function Home() {
               </div>
 
               {/* Heading */}
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-4">
+              <h1 className="text-3xl sm:text-5xl xl:text-6xl font-black text-gray-900 dark:text-white leading-[1.1] tracking-tight mb-4">
                 Find Your Next <br />
                 Role on <span className="text-blue-600 dark:text-orange-500">the Map</span>
               </h1>
@@ -191,14 +191,14 @@ export default function Home() {
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 mb-8">
                 <Link href="/dashboard?tab=overview">
-                  <button className="bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-lg shadow-blue-600/25 dark:shadow-orange-600/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
+                  <button className="w-full sm:w-auto bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-blue-600/25 dark:shadow-orange-600/25 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
                     <Compass size={18} />
                     Launch Interactive Map
                     <ArrowRight size={16} />
                   </button>
                 </Link>
                 <Link href="/dashboard?tab=jobs">
-                  <button className="bg-white/80 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-md border border-slate-200 dark:border-white/10 text-gray-900 dark:text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
+                  <button className="w-full sm:w-auto bg-white/80 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 backdrop-blur-md border border-slate-200 dark:border-white/10 text-gray-900 dark:text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer">
                     <Briefcase size={18} />
                     Browse All Openings
                   </button>
@@ -206,7 +206,7 @@ export default function Home() {
               </div>
 
               {/* 4 Stats */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-y border-slate-200/60 dark:border-white/10 mb-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 py-4 border-y border-slate-200/60 dark:border-white/10 mb-6">
                 <div>
                   <span className="text-2xl font-black text-gray-900 dark:text-white block">250K+</span>
                   <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400">Verified Jobs</span>

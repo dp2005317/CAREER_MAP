@@ -25,7 +25,7 @@ export function DashboardHeader({
     <header className="h-14 sm:h-16 px-4 sm:px-6 bg-[#EEF2F6]/95 dark:bg-black/95 backdrop-blur-md border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between shrink-0 z-10">
       {/* Title */}
       <div className="flex items-center gap-2 sm:gap-3">
-        <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+        <h2 className="text-base sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight truncate max-w-[170px] sm:max-w-none">
           {title}
         </h2>
       </div>
