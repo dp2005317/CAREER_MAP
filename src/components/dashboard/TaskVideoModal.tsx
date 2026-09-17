@@ -14,7 +14,15 @@ import {
   Award,
   ChevronRight
 } from "lucide-react";
-import { WeeklyTaskItem } from "@/components/views/StudentDashboardView";
+export interface WeeklyTaskItem {
+  id: string;
+  title: string;
+  day: string;
+  category: string;
+  completed: boolean;
+  videoUrl?: string;
+  isAI?: boolean;
+}
 import { resolveTaskVideo } from "@/lib/taskVideoUtils";
 import Link from "next/link";
 

@@ -1,4 +1,4 @@
-import { Job } from "@/backend/mockData";
+type Job = any;
 import { Playlist } from "@/data/types";
 
 export interface JobMatchResult {
