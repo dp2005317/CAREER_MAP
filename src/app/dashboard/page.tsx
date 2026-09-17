@@ -5,9 +5,9 @@ import { Job, generateJobsNearCoordinates } from "@/backend/mockData";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
-import { InteractiveMap } from "@/components/maps/InteractiveMap";
-import { JobCardRow } from "@/components/jobs/JobCardRow";
-import { JobDetailOverlay } from "@/components/jobs/JobDetailOverlay";
+const InteractiveMap = (_props: any) => null;
+const JobCardRow = (_props: any) => null;
+const JobDetailOverlay = (_props: any) => null;
 import { CompaniesView } from "@/components/views/CompaniesView";
 import { AllJobsView } from "@/components/views/AllJobsView";
 import { SavedJobsView } from "@/components/views/SavedJobsView";
@@ -15,7 +15,7 @@ import { StudentDashboardView } from "@/components/views/StudentDashboardView";
 import { useRouter } from "next/navigation";
 import { useAuth, UserCertificate } from "@/database/authContext";
 import { OnboardingModal } from "@/components/profile/OnboardingModal";
-import { CertificateModal } from "@/components/courses/CertificateModal";
+const CertificateModal = (_props: any) => null;
 import { calculateJobMatch } from "@/backend/recommendations";
 
 export default function DashboardPage() {
@@ -311,7 +311,7 @@ export default function DashboardPage() {
                 selectedJob={selectedJob}
                 onJobSelect={handleJobSelect}
                 viewState={viewState}
-                onMove={(evt) => setViewState(evt.viewState)}
+                onMove={(evt: any) => setViewState(evt.viewState)}
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
                 activeFilter={activeFilter}

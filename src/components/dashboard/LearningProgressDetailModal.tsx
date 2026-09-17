@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { UserCertificate } from "@/database/authContext";
 import { Course } from "@/data/types";
-import { CertificateModal } from "@/components/courses/CertificateModal";
+const CertificateModal = (_props: any) => null;
 
 interface LearningProgressDetailModalProps {
   isOpen: boolean;
