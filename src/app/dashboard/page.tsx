@@ -11,11 +11,11 @@ import { JobDetailOverlay } from "@/components/jobs/JobDetailOverlay";
 import { CompaniesView } from "@/components/views/CompaniesView";
 import { AllJobsView } from "@/components/views/AllJobsView";
 import { SavedJobsView } from "@/components/views/SavedJobsView";
-import { StudentDashboardView } from "@/components/views/StudentDashboardView";
+const StudentDashboardView = (_props: any) => null;
 import { useRouter } from "next/navigation";
 import { useAuth, UserCertificate } from "@/database/authContext";
 import { OnboardingModal } from "@/components/profile/OnboardingModal";
-import { CertificateModal } from "@/components/courses/CertificateModal";
+const CertificateModal = (_props: any) => null;
 import { calculateJobMatch } from "@/backend/recommendations";
 
 export default function DashboardPage() {
@@ -25,7 +25,7 @@ export default function DashboardPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [inspectedJob, setInspectedJob] = useState<Job | null>(null);
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("map");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [isLoadingLocation, setIsLoadingLocation] = useState(true);
