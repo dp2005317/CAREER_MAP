@@ -11,14 +11,14 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "dark",
-  resolvedTheme: "dark",
+  theme: "light",
+  resolvedTheme: "light",
   setTheme: () => {},
 });
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "light",
   storageKey = "careermap-theme",
 }: {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ export function ThemeProvider({
   disableTransitionOnChange?: boolean;
 }) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("dark");
+  const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("light");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -47,12 +47,12 @@ export function ThemeProvider({
   useEffect(() => {
     if (!mounted) return;
 
-    let target: "dark" | "light" = "dark";
+    let target: "dark" | "light" = "light";
     if (theme === "system") {
       const systemDark = typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
       target = systemDark ? "dark" : "light";
     } else {
-      target = theme === "light" ? "light" : "dark";
+      target = theme === "dark" ? "dark" : "light";
     }
 
     setResolvedTheme(target);

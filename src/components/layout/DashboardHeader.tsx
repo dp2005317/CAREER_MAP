@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Bell, User } from "lucide-react";
+import { Bell, User, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 interface DashboardHeaderProps {
@@ -12,6 +12,8 @@ interface DashboardHeaderProps {
   hasResume?: boolean;
   onMenuToggle?: () => void;
   onOpenResumeUpload?: () => void;
+  isSidebarHidden?: boolean;
+  onToggleSidebar?: () => void;
 }
 
 export function DashboardHeader({
@@ -19,12 +21,28 @@ export function DashboardHeader({
   user,
   hasResume = false,
   onMenuToggle,
-  onOpenResumeUpload
+  onOpenResumeUpload,
+  isSidebarHidden = false,
+  onToggleSidebar
 }: DashboardHeaderProps) {
   return (
     <header className="h-14 sm:h-16 px-4 sm:px-6 bg-[#EEF2F6]/95 dark:bg-black/95 backdrop-blur-md border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between shrink-0 z-10">
-      {/* Title */}
+      {/* Title & Sidebar Toggle */}
       <div className="flex items-center gap-2 sm:gap-3">
+        {onToggleSidebar && (
+          <button
+            onClick={onToggleSidebar}
+            title={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
+            aria-label={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
+            className="neu-icon-btn hidden md:flex items-center justify-center w-9 h-9 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-orange-400 cursor-pointer rounded-xl transition-all"
+          >
+            {isSidebarHidden ? (
+              <PanelLeftOpen className="w-4 h-4 text-blue-600 dark:text-orange-400" />
+            ) : (
+              <PanelLeftClose className="w-4 h-4" />
+            )}
+          </button>
+        )}
         <h2 className="text-base sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight truncate max-w-[170px] sm:max-w-none">
           {title}
         </h2>

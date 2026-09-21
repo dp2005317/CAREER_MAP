@@ -401,7 +401,7 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
                     {isCompleted ? (
                       <>
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                        <span>Completed ✓</span>
+                        <span>Completed</span>
                       </>
                     ) : (
                       <>

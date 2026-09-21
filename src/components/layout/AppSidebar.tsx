@@ -14,7 +14,8 @@ import {
   GraduationCap,
   LayoutDashboard,
   Code2,
-  User as UserIcon
+  User as UserIcon,
+  PanelLeftClose
 } from "lucide-react";
 import Image from "next/image";
 import { BrandLogo } from "@/components/layout/BrandLogo";
@@ -25,6 +26,8 @@ interface AppSidebarProps {
   onSearchChange?: (query: string) => void;
   isOpen?: boolean;
   onClose?: () => void;
+  isSidebarHidden?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 export function AppSidebar({ 
@@ -32,7 +35,9 @@ export function AppSidebar({
   onTabChange,
   onSearchChange,
   isOpen = false,
-  onClose
+  onClose,
+  isSidebarHidden = false,
+  onToggleCollapse
 }: AppSidebarProps) {
   const [searchVal, setSearchVal] = useState("");
 
@@ -70,22 +75,30 @@ export function AppSidebar({
         />
       )}
       
-      <aside className={`hidden md:flex flex-col justify-between relative transition-transform duration-300 ease-in-out z-50 w-64 h-screen liquid-glass border-r border-slate-200/80 dark:border-white/10 p-4 shrink-0 select-none`}>
+      <aside 
+        className={`hidden md:flex flex-col justify-between relative transition-all duration-300 ease-in-out z-50 h-screen liquid-glass border-r border-slate-200/80 dark:border-white/10 shrink-0 select-none ${
+          isSidebarHidden 
+            ? "w-0 p-0 m-0 border-r-0 opacity-0 overflow-hidden pointer-events-none" 
+            : "w-64 p-4 opacity-100"
+        }`}
+      >
         <div className="flex flex-col gap-6">
-        {/* Logo / Brand */}
-        <Link href="/" className="flex items-center gap-3 px-2 pt-2 group">
-          <div className="flex items-center justify-center group-hover:scale-105 transition-transform -ml-2">
-            <BrandLogo priority />
-          </div>
-          <div>
-            <h1 className="font-extrabold text-gray-900 dark:text-white text-lg tracking-tight leading-none">
-              CareerMap
-            </h1>
-            <span className="text-[10px] font-bold text-blue-600 dark:text-orange-400 tracking-wider uppercase">
-              Spatial Discovery
-            </span>
-          </div>
-        </Link>
+        {/* Logo / Brand & Collapse Button */}
+        <div className="flex items-center justify-between gap-2 pt-1 pb-1">
+          <Link href="/" className="flex items-center gap-2.5 min-w-0 flex-1 group">
+            <div className="flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <BrandLogo className="object-contain w-auto h-8" priority />
+            </div>
+            <div className="min-w-0 flex flex-col justify-center">
+              <h1 className="font-extrabold text-gray-900 dark:text-white text-base tracking-tight leading-tight truncate">
+                CareerMap
+              </h1>
+              <span className="text-[9px] font-bold text-blue-600 dark:text-orange-500 tracking-wider uppercase whitespace-nowrap leading-none mt-0.5">
+                Spatial Discovery
+              </span>
+            </div>
+          </Link>
+        </div>
 
         {/* Quick Search - Soft Inset */}
         <div className="relative">

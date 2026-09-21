@@ -7,7 +7,7 @@ import { Job } from "@/backend/mockData";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
 import { getExactJobApplyUrl } from "@/backend/jobUrls";
 import { calculateJobMatch } from "@/backend/recommendations";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Check } from "lucide-react";
 
 interface JobCardRowProps {
   jobs: Job[];
@@ -160,8 +160,9 @@ export function JobCardRow({
                     return (
                       <div className="flex items-center gap-1 overflow-hidden mt-2">
                         {match.matchedSkills.slice(0, 2).map((s) => (
-                          <span key={s} className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200/60 truncate">
-                            ✓ {s}
+                          <span key={s} className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200/60 truncate inline-flex items-center gap-0.5">
+                            <Check className="w-2.5 h-2.5 shrink-0" />
+                            <span>{s}</span>
                           </span>
                         ))}
                         {match.matchedSkills.length > 2 && (

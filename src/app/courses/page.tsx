@@ -25,7 +25,13 @@ import {
   Video,
   FileText,
   CheckCircle2,
-  User
+  User,
+  Code,
+  Bot,
+  BarChart3,
+  Globe,
+  Terminal,
+  Cpu
 } from "lucide-react";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
@@ -47,6 +53,15 @@ import { useAuth, UserCertificate } from "@/database/authContext";
 import { getRecommendedCourses, calculateCourseMatch } from "@/backend/recommendations";
 import { CertificateModal } from "@/components/courses/CertificateModal";
 import { OnboardingModal } from "@/components/profile/OnboardingModal";
+
+const categoryIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  programming: Code,
+  ai: Bot,
+  "data-analytics": BarChart3,
+  "web-dev": Globe,
+  devops: Terminal,
+  "data-science": Cpu,
+};
 
 const tabs = [
   { id: "all", label: "All Playlists", icon: BookOpen },
@@ -81,6 +96,30 @@ export default function CoursesPage() {
 
   // Layout State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarHidden, setIsSidebarHidden] = useState(false);
+
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem("careermap_sidebar_hidden");
+      if (saved === "true") {
+        setIsSidebarHidden(true);
+      }
+    } catch (e) {
+      console.error("Error loading sidebar preference", e);
+    }
+  }, []);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarHidden((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("careermap_sidebar_hidden", String(next));
+      } catch (e) {
+        console.error("Error saving sidebar preference", e);
+      }
+      return next;
+    });
+  };
 
   // Modals
   const [viewingCert, setViewingCert] = useState<UserCertificate | null>(null);
@@ -169,6 +208,7 @@ export default function CoursesPage() {
         activeTab="courses"
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
+        isSidebarHidden={isSidebarHidden}
         onTabChange={(tab) => {
           if (tab === "courses") return;
           router.push(`/dashboard?tab=${tab}`);
@@ -184,11 +224,13 @@ export default function CoursesPage() {
           hasResume={!!profile?.resumeName}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
+          isSidebarHidden={isSidebarHidden}
+          onToggleSidebar={handleToggleSidebar}
         />
         <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8 pb-28 md:pb-8 flex flex-col gap-6 sm:gap-8 custom-scrollbar relative bg-[#FAF8F5] dark:bg-black">
         
         {/* Personalized Resume Hero Banner (Dashboard aesthetic) */}
-        <section className="relative z-10 shrink-0 rounded-2xl sm:rounded-[28px] overflow-hidden bg-white dark:bg-[#151518] text-gray-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-white/10 group">
+        <section className="relative z-10 shrink-0 rounded-2xl sm:rounded-[28px] overflow-hidden bg-gradient-to-b from-[#EFF5FF] via-[#F8FAFF] to-white dark:bg-gradient-to-b dark:from-[#151518] dark:via-[#121215] dark:to-[#0D0D10] text-gray-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-white/10 group">
           <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-10">
             <div className="w-full max-w-2xl">
               <motion.div 
@@ -428,24 +470,27 @@ export default function CoursesPage() {
                 <span>All Courses</span>
                 <span className="text-[10px] opacity-70">({playlists.length})</span>
               </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    const newCat = selectedCategory === cat.id ? "" : cat.id;
-                    setSelectedCategory(newCat);
-                    setFilters({ ...filters, category: newCat });
-                  }}
-                  className={`px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all cursor-pointer border shrink-0 ${
-                    selectedCategory === cat.id
-                      ? "bg-blue-600 dark:bg-orange-600 text-white border-blue-600 dark:border-orange-600 shadow-md shadow-blue-600/20 dark:shadow-orange-600/25"
-                      : "bg-white dark:bg-[#151518] text-gray-700 dark:text-zinc-300 border-slate-200/80 dark:border-white/10 hover:border-blue-400 dark:hover:border-orange-500/50"
-                  }`}
-                >
-                  <span>{cat.icon}</span>
-                  <span>{cat.name}</span>
-                </button>
-              ))}
+              {categories.map((cat) => {
+                const CatIcon = categoryIconMap[cat.id] || BookOpen;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      const newCat = selectedCategory === cat.id ? "" : cat.id;
+                      setSelectedCategory(newCat);
+                      setFilters({ ...filters, category: newCat });
+                    }}
+                    className={`px-3.5 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all cursor-pointer border shrink-0 ${
+                      selectedCategory === cat.id
+                        ? "bg-blue-600 dark:bg-orange-600 text-white border-blue-600 dark:border-orange-600 shadow-md shadow-blue-600/20 dark:shadow-orange-600/25"
+                        : "bg-white dark:bg-[#151518] text-gray-700 dark:text-zinc-300 border-slate-200/80 dark:border-white/10 hover:border-blue-400 dark:hover:border-orange-500/50"
+                    }`}
+                  >
+                    <CatIcon className="w-3.5 h-3.5" />
+                    <span>{cat.name}</span>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Filter Drawer (slide-over) */}

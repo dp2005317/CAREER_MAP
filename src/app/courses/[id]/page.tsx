@@ -324,7 +324,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
                                   </p>
                                   {isCompleted && (
                                     <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300">
-                                      Completed ✓
+                                      Completed
                                     </span>
                                   )}
                                 </div>

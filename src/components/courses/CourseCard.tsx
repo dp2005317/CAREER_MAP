@@ -14,6 +14,8 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
+  TrendingUp,
+  BookOpen,
 } from "lucide-react";
 import { Course } from "@/data/types";
 import { CompanyLogoSvg } from "@/components/courses/CompanyLogoSvg";
@@ -81,9 +83,7 @@ export function CourseCard({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-zinc-900 dark:to-[#151518]">
-            <span className="text-5xl select-none opacity-80 group-hover:scale-110 transition-transform duration-500">
-              {course.thumbnail || "💻"}
-            </span>
+            <BookOpen className="w-12 h-12 text-slate-400 dark:text-zinc-600 opacity-80 group-hover:scale-110 transition-transform duration-500" />
           </div>
         )}
 
@@ -109,12 +109,14 @@ export function CourseCard({
               {matchScore}% Match
             </span>
           ) : course.isTrending ? (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-400 text-stone-900 backdrop-blur-md shadow-sm">
-              🔥 Most popular
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-400 text-stone-900 backdrop-blur-md shadow-sm">
+              <TrendingUp className="w-3 h-3 text-stone-900" />
+              <span>Most Popular</span>
             </span>
           ) : course.isNew ? (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-600/90 dark:bg-orange-600/90 text-white backdrop-blur-md shadow-sm border border-white/20">
-              ✨ New
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-bold px-2.5 py-1 rounded-full bg-blue-600/90 dark:bg-orange-600/90 text-white backdrop-blur-md shadow-sm border border-white/20">
+              <Sparkles className="w-3 h-3 text-white" />
+              <span>New</span>
             </span>
           ) : null}
         </div>
@@ -213,7 +215,7 @@ export function CourseCard({
             <div className="flex items-center justify-between text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1.5">
               <span>Course Progress</span>
               <span className={progress === 100 ? "text-emerald-500 font-bold" : "text-blue-600 dark:text-orange-400 font-bold"}>
-                {progress === 100 ? "Completed ✓" : `${progress}%`}
+                {progress === 100 ? "Completed" : `${progress}%`}
               </span>
             </div>
             {/* 10 Segmented Dashes */}

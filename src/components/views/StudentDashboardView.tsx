@@ -317,7 +317,7 @@ export function StudentDashboardView({
       if (data?.tasks && Array.isArray(data.tasks)) {
         const combined = [...data.tasks, ...tasks].slice(0, 8);
         saveTasks(combined);
-        setAiFeedbackMsg("✨ 4 personalized daily AI tasks added to your schedule!");
+        setAiFeedbackMsg("4 personalized daily AI tasks added to your schedule!");
         setTimeout(() => setAiFeedbackMsg(null), 4500);
       }
     } catch (err) {
@@ -711,7 +711,7 @@ export function StudentDashboardView({
                     title="Generate smart daily tasks tailored to your learning progress"
                   >
                     <Sparkles className={`w-3.5 h-3.5 ${isGeneratingAI ? "animate-spin" : ""}`} />
-                    <span>{isGeneratingAI ? "Generating..." : "✨ AI Daily Tasks"}</span>
+                    <span>{isGeneratingAI ? "Generating..." : "AI Daily Tasks"}</span>
                   </button>
                   <button 
                     onClick={() => setIsAddingTask(!isAddingTask)}
@@ -837,7 +837,7 @@ export function StudentDashboardView({
                   <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                     <Check className="w-5 h-5 stroke-[3]" />
                   </div>
-                  <h4 className="text-sm font-extrabold text-gray-900 dark:text-white">All Weekly Tasks Completed! 🎉</h4>
+                  <h4 className="text-sm font-extrabold text-gray-900 dark:text-white">All Weekly Tasks Completed!</h4>
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-3">
                     You have cleared all active milestones. Generate fresh AI daily tasks to continue making progress.
                   </p>
@@ -949,7 +949,7 @@ export function StudentDashboardView({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {courses.slice(0, 3).map((c, idx) => {
               const prog = courseProgress[c.courseId]?.progressPercent || 0;
-              const tagText = idx === 0 ? "🔥 Most popular" : idx === 1 ? "⭐ Highest rated" : "🚀 Recommended";
+              const tagText = idx === 0 ? "Most Popular" : idx === 1 ? "Highest Rated" : "Recommended";
               return (
                 <Link 
                   key={c.courseId}

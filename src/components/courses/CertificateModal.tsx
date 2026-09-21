@@ -253,9 +253,10 @@ export function CertificateModal({ isOpen, onClose, certificate }: CertificateMo
                     {certificate.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200/60"
+                        className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200/60 inline-flex items-center gap-1"
                       >
-                        ✓ {skill}
+                        <CheckCircle2 className="w-2.5 h-2.5 text-amber-700" />
+                        <span>{skill}</span>
                       </span>
                     ))}
                   </div>

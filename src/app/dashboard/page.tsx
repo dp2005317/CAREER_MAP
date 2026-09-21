@@ -31,6 +31,31 @@ export default function DashboardPage() {
   const [isLoadingLocation, setIsLoadingLocation] = useState(true);
   const [savedJobIds, setSavedJobIds] = useState<Set<string>>(new Set());
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarHidden, setIsSidebarHidden] = useState(false);
+
+  // Load sidebar hidden preference
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("careermap_sidebar_hidden");
+      if (saved === "true") {
+        setIsSidebarHidden(true);
+      }
+    } catch (e) {
+      console.error("Error loading sidebar preference", e);
+    }
+  }, []);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarHidden((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("careermap_sidebar_hidden", String(next));
+      } catch (e) {
+        console.error("Error saving sidebar preference", e);
+      }
+      return next;
+    });
+  };
 
   // Modals
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
@@ -246,6 +271,8 @@ export default function DashboardPage() {
       {/* Dynamic Left Sidebar */}
       <AppSidebar
         activeTab={activeTab}
+        isSidebarHidden={isSidebarHidden}
+        onToggleCollapse={handleToggleSidebar}
         onTabChange={(tab) => {
           if (!user && tab !== "map") {
             router.push("/login?redirect=/dashboard");
@@ -280,6 +307,8 @@ export default function DashboardPage() {
           nearestDistanceKm={nearestDistance}
           user={user || profile}
           hasResume={!!profile?.resumeName}
+          isSidebarHidden={isSidebarHidden}
+          onToggleSidebar={handleToggleSidebar}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
