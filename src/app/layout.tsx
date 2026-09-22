@@ -4,6 +4,7 @@ import "./globals.css";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { AuthProvider } from "@/database/authContext";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -51,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`h-full antialiased font-sans ${plusJakarta.variable} ${plusJakarta.className}`}
     >
-      <body className={`min-h-full flex flex-col font-sans ${plusJakarta.className}`}>
+      <body className={`min-h-full flex flex-col font-sans ${plusJakarta.className} relative`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           storageKey="careermap-theme"
           disableTransitionOnChange
         >
+          <AnimatedBackground />
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>

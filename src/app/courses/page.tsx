@@ -203,7 +203,7 @@ export default function CoursesPage() {
   }, [effectiveSearch, filters, activeTab, profile, matchMap, playlists]);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden antialiased font-sans bg-[#FAF8F5] dark:bg-black">
+    <div className="flex h-screen w-screen overflow-hidden antialiased font-sans bg-transparent">
       <AppSidebar
         activeTab="courses"
         isOpen={isMobileMenuOpen}
@@ -227,10 +227,10 @@ export default function CoursesPage() {
           isSidebarHidden={isSidebarHidden}
           onToggleSidebar={handleToggleSidebar}
         />
-        <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8 pb-28 md:pb-8 flex flex-col gap-6 sm:gap-8 custom-scrollbar relative bg-[#FAF8F5] dark:bg-black">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8 pb-28 md:pb-8 flex flex-col gap-6 sm:gap-8 custom-scrollbar relative bg-transparent">
         
-        {/* Personalized Resume Hero Banner (Dashboard aesthetic) */}
-        <section className="relative z-10 shrink-0 rounded-2xl sm:rounded-[28px] overflow-hidden bg-gradient-to-b from-[#EFF5FF] via-[#F8FAFF] to-white dark:bg-gradient-to-b dark:from-[#151518] dark:via-[#121215] dark:to-[#0D0D10] text-gray-900 dark:text-white shadow-sm border border-slate-200/80 dark:border-white/10 group">
+        {/* Personalized Resume Hero Banner (Frosted glass card) */}
+        <section className="relative z-10 shrink-0 neu-card overflow-hidden text-gray-900 dark:text-white group">
           <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-10">
             <div className="w-full max-w-2xl">
               <motion.div 
@@ -271,7 +271,7 @@ export default function CoursesPage() {
                 transition={{ delay: 0.3 }}
               >
               {profile?.skills && profile.skills.length > 0 ? (
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 rounded-2xl p-3 sm:rounded-full sm:px-5 sm:py-2.5 w-full md:w-max overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 bg-white/60 dark:bg-white/5 backdrop-blur-md border border-white/80 dark:border-white/10 rounded-2xl p-3 sm:rounded-full sm:px-5 sm:py-2.5 w-full md:w-max overflow-hidden">
                   <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Target:</span>
                     <span className="text-[10px] sm:text-xs font-extrabold px-2.5 sm:px-3 py-0.5 rounded-full bg-blue-50 dark:bg-orange-500/20 text-blue-700 dark:text-orange-400 border border-blue-200 dark:border-orange-500/20">
@@ -282,7 +282,7 @@ export default function CoursesPage() {
                   <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0">
                     <span className="hidden sm:inline-block text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider shrink-0">Skills:</span>
                     {profile.skills.slice(0, 3).map((s) => (
-                      <span key={s} className="text-[9px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white dark:bg-white/10 text-gray-800 dark:text-gray-200 border border-slate-200/80 dark:border-white/10 whitespace-nowrap">
+                      <span key={s} className="text-[9px] sm:text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white dark:bg-white/10 text-gray-800 dark:text-gray-200 border border-white/80 dark:border-white/10 whitespace-nowrap shadow-2xs">
                         {s}
                       </span>
                     ))}
@@ -303,18 +303,18 @@ export default function CoursesPage() {
               </motion.div>
             </div>
 
-            {/* Quick Metrics Badge matching dashboard rounded-[28px] */}
+            {/* Quick Metrics Badge matching frosted cards */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, type: "spring" }}
               className="grid grid-cols-2 gap-3 sm:gap-4 shrink-0 w-full md:w-auto"
             >
-              <div className="p-3 sm:p-5 rounded-2xl sm:rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
+              <div className="p-3 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/60 dark:bg-white/5 backdrop-blur-md border border-white/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-xs">
                 <p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{enrolledCourses.length}</p>
                 <p className="text-[10px] sm:text-xs text-blue-600 dark:text-orange-400 font-extrabold uppercase tracking-widest mt-1 relative z-10">Enrolled</p>
               </div>
-              <div className="p-3 sm:p-5 rounded-2xl sm:rounded-[28px] bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-2xs">
+              <div className="p-3 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/60 dark:bg-white/5 backdrop-blur-md border border-white/80 dark:border-white/10 flex flex-col items-center justify-center relative overflow-hidden shadow-xs">
                 <p className="text-2xl sm:text-4xl font-black text-gray-900 dark:text-white relative z-10">{certificates.length}</p>
                 <p className="text-[10px] sm:text-xs text-amber-500 font-extrabold uppercase tracking-widest mt-1 relative z-10">Certificates</p>
               </div>
@@ -322,7 +322,7 @@ export default function CoursesPage() {
           </div>
         </section>
 
-        {/* Navigation Tabs (Dashboard styled pills: Light mode blue, Dark mode orange) */}
+        {/* Navigation Tabs (Reference 1 Minimalist clean frosted pills) */}
         <div className="flex items-center gap-2 overflow-x-auto py-2 custom-scrollbar shrink-0 relative z-20 -mx-3 px-3 sm:mx-0 sm:px-0 scrollbar-hide">
           {tabs.map((tab) => {
             const Icon = tab.icon;
@@ -331,16 +331,16 @@ export default function CoursesPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer ${
                   isActive
-                    ? "bg-blue-600 dark:bg-orange-600 text-white shadow-md shadow-blue-600/25 dark:shadow-orange-600/30"
-                    : "bg-white dark:bg-[#151518] text-gray-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white border border-slate-200/80 dark:border-white/10"
+                    ? "bg-white text-gray-950 shadow-sm border border-white/90 dark:bg-white/15 dark:text-white dark:border-white/15"
+                    : "bg-white/60 dark:bg-white/5 backdrop-blur-md text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white border border-white/80 dark:border-white/10"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-white" : "text-gray-500 dark:text-zinc-400"}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-blue-600 dark:text-orange-400" : "text-gray-500 dark:text-zinc-400"}`} />
                 <span>{tab.label}</span>
                 {tab.id === "mylearning" && enrolledCourses.length > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-white text-[10px] font-black">
+                  <span className="px-1.5 py-0.2 rounded-full bg-blue-100 dark:bg-white/20 text-blue-700 dark:text-white text-[10px] font-black">
                     {enrolledCourses.length}
                   </span>
                 )}

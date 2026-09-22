@@ -267,7 +267,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground antialiased font-sans">
+    <div className="flex h-screen w-screen overflow-hidden bg-transparent text-foreground antialiased font-sans">
       {/* Dynamic Left Sidebar */}
       <AppSidebar
         activeTab={activeTab}

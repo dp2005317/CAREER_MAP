@@ -122,7 +122,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#FAF8F5] dark:bg-black text-gray-800 dark:text-zinc-200 font-bold">
+      <div className="flex h-screen items-center justify-center bg-transparent text-gray-800 dark:text-zinc-200 font-bold">
         <div className="flex items-center gap-3">
           <div className="w-5 h-5 border-2 border-blue-600 dark:border-orange-500 border-t-transparent rounded-full animate-spin" />
           <span>Loading course curriculum...</span>
@@ -133,8 +133,8 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
 
   if (!course) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#FAF8F5] dark:bg-black">
-        <div className="text-center bg-white dark:bg-[#151518] p-8 rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm">
+      <div className="flex h-screen items-center justify-center bg-transparent">
+        <div className="text-center neu-card p-8">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">Course not found</h2>
           <button onClick={() => router.push("/courses")} className="mt-4 text-blue-600 dark:text-orange-400 hover:underline font-bold cursor-pointer">
             Back to Courses
@@ -145,7 +145,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#FAF8F5] dark:bg-black text-gray-800 dark:text-zinc-100 antialiased font-sans">
+    <div className="flex h-screen w-screen overflow-hidden bg-transparent text-gray-800 dark:text-zinc-100 antialiased font-sans">
       <AppSidebar 
         activeTab="courses" 
         isOpen={isMobileMenuOpen} 
@@ -169,8 +169,8 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
         
         <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 pb-[96px] md:pb-6 flex flex-col gap-6 custom-scrollbar">
           
-          {/* Header & Controls (Clean rounded card with Live Progress) */}
-          <div className="flex flex-col gap-3 sm:gap-4 bg-white dark:bg-[#151518] p-4 sm:p-5 rounded-2xl sm:rounded-[28px] border border-slate-200/70 dark:border-white/10 shadow-sm shrink-0">
+          {/* Header & Controls (Clean frosted glass card with Live Progress) */}
+          <div className="flex flex-col gap-3 sm:gap-4 neu-card p-4 sm:p-5 shrink-0">
             <div className="flex items-center gap-3.5">
               <button 
                 onClick={() => router.push("/courses")} 
@@ -264,7 +264,7 @@ export default function CourseClassroomPage({ params }: { params: Promise<{ id: 
 
           {/* Course Details & Curriculum List */}
           <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto mt-2">
-            <div className="bg-white dark:bg-[#151518] p-6 md:p-8 rounded-[28px] border border-slate-200/70 dark:border-white/10 shadow-sm">
+            <div className="neu-card p-6 md:p-8">
               <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">About this Course</h2>
               <p className="text-sm text-gray-600 dark:text-zinc-400 mb-8 leading-relaxed">{course.description}</p>
 

@@ -15,7 +15,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9 p-2 rounded-xl border border-gray-200/50 dark:border-white/10 bg-white/50 dark:bg-black/50" />
+      <div className="w-9 h-9 rounded-full border border-white/60 dark:border-white/10 bg-white/50 dark:bg-white/5 shrink-0" />
     );
   }
 
@@ -34,7 +34,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={handleToggle}
-      className="neu-icon-btn p-2 rounded-xl text-gray-600 dark:text-orange-400 hover:text-blue-600 dark:hover:text-orange-300 transition-colors relative flex items-center justify-center w-9 h-9 cursor-pointer"
+      className="w-9 h-9 rounded-full neu-icon-btn text-gray-600 dark:text-orange-400 hover:text-blue-600 dark:hover:text-orange-300 transition-all relative flex items-center justify-center shrink-0 cursor-pointer"
       aria-label="Toggle theme"
       title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
     >

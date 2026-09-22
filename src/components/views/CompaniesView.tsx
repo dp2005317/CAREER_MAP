@@ -37,7 +37,7 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
   }, [jobs]);
 
   return (
-    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-[#FAF8F5] dark:bg-black">
+    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-transparent">
       <div className="max-w-[1400px] mx-auto w-full space-y-6">
         
         {/* Header */}
@@ -50,7 +50,7 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
               Explore verified hiring partners, FAANG/MAANG organizations, and hyper-growth startups.
             </p>
           </div>
-          <span className="text-xs font-bold bg-white dark:bg-[#18181b] border border-slate-200/80 dark:border-white/10 px-4 py-2 rounded-full text-blue-600 dark:text-orange-400 shadow-xs w-fit">
+          <span className="text-xs font-bold bg-white/70 dark:bg-white/10 backdrop-blur-md border border-white/80 dark:border-white/10 px-4 py-2 rounded-full text-blue-600 dark:text-orange-400 shadow-xs w-fit">
             {companies.length} Companies Hiring
           </span>
         </div>
@@ -64,7 +64,7 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
                 key={c.company}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.2 }}
-                className="bg-white dark:bg-[#151518] rounded-[28px] p-6 border border-slate-200/70 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-blue-500/30 dark:hover:border-orange-500/30 transition-all flex flex-col justify-between"
+                className="neu-card p-6 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -86,7 +86,7 @@ export function CompaniesView({ jobs, onSelectCompany }: CompaniesViewProps) {
                 <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
                   <button
                     onClick={() => onSelectCompany(c.company)}
-                    className="bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                    className="bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
                   >
                     <span>View Openings</span>
                     <ArrowRight size={12} />

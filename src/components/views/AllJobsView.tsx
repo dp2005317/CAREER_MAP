@@ -53,7 +53,7 @@ export function AllJobsView({
   }, [jobs, search, roleFilter]);
 
   return (
-    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-[#FAF8F5] dark:bg-black">
+    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-transparent">
       <div className="max-w-[1400px] mx-auto w-full space-y-6">
         
         {/* Header & Controls */}
@@ -76,19 +76,19 @@ export function AllJobsView({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search title, company..."
-                className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-[#18181b] text-xs font-semibold text-gray-800 dark:text-white rounded-full border border-slate-200/80 dark:border-white/10 shadow-xs focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-orange-500/30 outline-none transition-all placeholder:text-gray-400"
+                className="w-full pl-9 pr-3.5 py-2.5 bg-white/70 dark:bg-white/5 backdrop-blur-md text-xs font-semibold text-gray-800 dark:text-white rounded-full border border-white/80 dark:border-white/10 shadow-xs focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 outline-none transition-all placeholder:text-gray-400"
               />
             </div>
 
-            <div className="flex items-center gap-1 bg-white dark:bg-[#18181b] p-1 rounded-full border border-slate-200/80 dark:border-white/10 shadow-xs">
+            <div className="flex items-center gap-1 bg-white/70 dark:bg-white/5 backdrop-blur-md p-1 rounded-full border border-white/80 dark:border-white/10 shadow-xs">
               {["All", "Full Time", "Internship", "Remote"].map((r) => (
                 <button
                   key={r}
                   onClick={() => setRoleFilter(r)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                     roleFilter === r
-                      ? "bg-blue-600 dark:bg-orange-600 text-white shadow-xs"
-                      : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-white"
+                      ? "bg-white text-gray-950 shadow-sm border border-white/90 dark:bg-white/15 dark:text-white dark:border-white/15"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
                   {r === "All" ? "All Roles" : r}
@@ -100,7 +100,7 @@ export function AllJobsView({
 
         {/* Jobs Grid */}
         {filtered.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-12 bg-white dark:bg-[#151518] rounded-[28px] border border-slate-200/70 dark:border-white/10 text-center max-w-lg mx-auto shadow-sm">
+          <div className="flex-1 flex flex-col items-center justify-center p-12 neu-card text-center max-w-lg mx-auto">
             <p className="font-bold text-gray-800 dark:text-white text-sm">No jobs match your criteria.</p>
             <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Try clearing search filters or search another query.</p>
           </div>
@@ -114,7 +114,7 @@ export function AllJobsView({
                   whileHover={{ y: -3 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => onOpenDetails(job)}
-                  className="bg-white dark:bg-[#151518] rounded-[28px] p-6 border border-slate-200/70 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-blue-500/30 dark:hover:border-orange-500/30 transition-all flex flex-col justify-between cursor-pointer"
+                  className="neu-card p-6 flex flex-col justify-between cursor-pointer"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-3 mb-4">

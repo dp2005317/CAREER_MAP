@@ -94,13 +94,13 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-black text-gray-900 dark:text-white font-sans selection:bg-blue-600/20 dark:selection:bg-orange-500/20 antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-transparent text-gray-900 dark:text-white font-sans selection:bg-blue-600/20 dark:selection:bg-orange-500/20 antialiased overflow-x-hidden">
       
       {/* Container wrapper matching the clean aesthetic */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 py-4 sm:py-6 flex flex-col gap-10 sm:gap-14">
 
         {/* ===================== HERO CARD ===================== */}
-        <section className="bg-gradient-to-b from-[#EFF5FF] via-[#F8FAFF] to-white dark:bg-gradient-to-b dark:from-[#181622] dark:via-[#121118] dark:to-[#0C0B12] border border-slate-200/80 dark:border-white/10 rounded-[28px] sm:rounded-[44px] shadow-sm relative overflow-hidden flex flex-col justify-between">
+        <section className="neu-card border border-white/80 dark:border-white/10 rounded-[28px] sm:rounded-[44px] relative overflow-hidden flex flex-col justify-between">
           
           {/* Top Header Inside Hero */}
           <header className="w-full px-5 sm:px-8 py-4 sm:py-5 flex items-center justify-between z-20 border-b border-slate-100 dark:border-white/5">
@@ -120,7 +120,7 @@ export default function Home() {
             </Link>
 
             {/* Desktop Center Nav */}
-            <div className="hidden md:flex items-center gap-7 bg-slate-100/80 dark:bg-white/5 px-6 py-2 rounded-full border border-slate-200/60 dark:border-white/10">
+            <div className="hidden md:flex items-center gap-7 bg-white/70 dark:bg-white/5 backdrop-blur-md px-6 py-2 rounded-full border border-white/80 dark:border-white/10 shadow-xs">
               {navLinks.map((link, i) => (
                 <Link 
                   key={i} 
@@ -278,7 +278,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
             
             {/* CARD 1: Wide Card with Balanced Text Flow and 3D Graphic */}
-            <div className="md:col-span-12 lg:col-span-6 bg-blue-50/90 dark:bg-[#141418] rounded-[28px] sm:rounded-[36px] p-6 sm:p-9 relative overflow-hidden flex flex-col justify-between min-h-[300px] sm:min-h-[360px] border border-blue-200/80 dark:border-orange-500/20 group">
+            <div className="md:col-span-12 lg:col-span-6 neu-card rounded-[28px] sm:rounded-[36px] p-6 sm:p-9 relative overflow-hidden flex flex-col justify-between min-h-[300px] sm:min-h-[360px] group">
               {/* Text Column - naturally flows together without being abandoned at the bottom */}
               <div className="relative z-10 w-full sm:max-w-[54%] flex flex-col justify-between h-full">
                 <div className="flex flex-col gap-2.5">
@@ -332,45 +332,45 @@ export default function Home() {
               </div>
             </div>
 
-            {/* CARD 2: Dark Slate Card (Always real-time, always verified) */}
-            <div className="md:col-span-6 lg:col-span-3 bg-slate-900 dark:bg-[#121215] text-white rounded-[28px] sm:rounded-[36px] p-6 sm:p-9 flex flex-col justify-between min-h-[280px] sm:min-h-[360px] border border-slate-800 dark:border-white/10 group hover:border-blue-500/40 dark:hover:border-orange-500/40 transition-colors">
+            {/* CARD 2: Always real-time, always verified */}
+            <div className="md:col-span-6 lg:col-span-3 neu-card text-gray-900 dark:text-white rounded-[28px] sm:rounded-[36px] p-6 sm:p-9 flex flex-col justify-between min-h-[280px] sm:min-h-[360px] group transition-colors">
               <div className="flex flex-col gap-2.5">
-                <span className="text-[10px] font-semibold text-blue-400 dark:text-orange-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-blue-600 dark:text-orange-400 uppercase tracking-wider block">
                   Salary Intelligence
                 </span>
                 <h3 className="font-display text-2xl sm:text-3xl font-normal tracking-tight leading-snug">
                   Always real-time, <br />
                   always verified
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-300 font-normal leading-relaxed pt-1">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-normal leading-relaxed pt-1">
                   Stay fully market-aligned with instant access to verified openings and salary data across 28+ cities — no ghost jobs or outdated benchmarks.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-[11px] text-gray-400 font-medium">
+              <div className="pt-6 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400 font-medium">
                 <span>Verified Benchmarks</span>
-                <span className="text-blue-400 dark:text-orange-400 font-bold">100% Transparent</span>
+                <span className="text-blue-600 dark:text-orange-400 font-bold">100% Transparent</span>
               </div>
             </div>
 
-            {/* CARD 3: Dark Slate Card (100% tailored roadmaps) */}
-            <div className="md:col-span-6 lg:col-span-3 bg-slate-900 dark:bg-[#121215] text-white rounded-[28px] sm:rounded-[36px] p-6 sm:p-9 flex flex-col justify-between min-h-[280px] sm:min-h-[360px] border border-slate-800 dark:border-white/10 group hover:border-blue-500/40 dark:hover:border-orange-500/40 transition-colors">
+            {/* CARD 3: 100% tailored roadmaps */}
+            <div className="md:col-span-6 lg:col-span-3 neu-card text-gray-900 dark:text-white rounded-[28px] sm:rounded-[36px] p-6 sm:p-9 flex flex-col justify-between min-h-[280px] sm:min-h-[360px] group transition-colors">
               <div className="flex flex-col gap-2.5">
-                <span className="text-[10px] font-semibold text-blue-400 dark:text-orange-400 uppercase tracking-wider block">
+                <span className="text-[10px] font-semibold text-blue-600 dark:text-orange-400 uppercase tracking-wider block">
                   AI Diagnostics
                 </span>
                 <h3 className="font-display text-2xl sm:text-3xl font-normal tracking-tight leading-snug">
                   100% tailored <br />
                   roadmaps
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-300 font-normal leading-relaxed pt-1">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-normal leading-relaxed pt-1">
                   No need to manage curriculums manually. CareerMap AI works in the background to diagnose missing skills and curate coding playlists.
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-[11px] text-gray-400 font-medium">
+              <div className="pt-6 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400 font-medium">
                 <span>Algorithmic Curriculums</span>
-                <span className="text-blue-400 dark:text-orange-400 font-bold">Automated</span>
+                <span className="text-blue-600 dark:text-orange-400 font-bold">Automated</span>
               </div>
             </div>
 
@@ -436,7 +436,7 @@ export default function Home() {
             </div>
 
             {/* Right Column: Featured Big Card with 3D Campus Building */}
-            <div className="lg:col-span-7 bg-white dark:bg-[#141418] border border-slate-200/80 dark:border-white/10 rounded-[28px] sm:rounded-[40px] p-6 sm:p-9 shadow-sm flex flex-col justify-between overflow-hidden relative min-h-[460px]">
+            <div className="lg:col-span-7 neu-card rounded-[28px] sm:rounded-[40px] p-6 sm:p-9 shadow-sm flex flex-col justify-between overflow-hidden relative min-h-[460px]">
               
               <div className="relative z-10 max-w-lg mb-6">
                 <span className="text-[10px] font-semibold text-blue-600 dark:text-orange-500 uppercase tracking-wider block mb-1">

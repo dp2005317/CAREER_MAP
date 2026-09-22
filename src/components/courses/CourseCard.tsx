@@ -71,7 +71,7 @@ export function CourseCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
-      className="group relative rounded-2xl sm:rounded-[28px] bg-white dark:bg-[#151518] border border-slate-200/70 dark:border-white/10 hover:border-blue-500/40 dark:hover:border-orange-500/40 shadow-sm hover:shadow-xl dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] transition-all duration-300 flex flex-col h-full overflow-hidden cursor-pointer hover:-translate-y-1 w-full max-w-[420px] mx-auto sm:mx-0"
+      className="group relative neu-card hover:border-blue-500/40 dark:hover:border-orange-500/40 hover:shadow-xl transition-all duration-300 flex flex-col h-full overflow-hidden cursor-pointer hover:-translate-y-1 w-full max-w-[420px] mx-auto sm:mx-0"
     >
       {/* Thumbnail Aspect Ratio 16:9 */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100 dark:bg-white/5 max-h-[220px]">

@@ -42,7 +42,7 @@ export function SavedJobsView({
   }
 
   return (
-    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-[#FAF8F5] dark:bg-black">
+    <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 overflow-y-auto custom-scrollbar bg-transparent">
       <div className="max-w-[1400px] mx-auto w-full space-y-6">
         
         {/* Header matching dashboard aesthetic */}
@@ -57,7 +57,7 @@ export function SavedJobsView({
           </div>
           <button
             onClick={onGoToMap}
-            className="bg-white dark:bg-[#151518] border border-slate-200/80 dark:border-white/10 px-4 py-2.5 rounded-full text-xs font-bold text-blue-600 dark:text-orange-400 hover:bg-slate-50 dark:hover:bg-white/5 flex items-center gap-2 shadow-xs transition-all cursor-pointer"
+            className="bg-white/70 dark:bg-white/10 backdrop-blur-md border border-white/80 dark:border-white/10 px-4 py-2 rounded-full text-xs font-bold text-blue-600 dark:text-orange-400 hover:bg-white dark:hover:bg-white/15 flex items-center gap-2 shadow-xs transition-all cursor-pointer"
           >
             <span>Back to Map View</span>
             <ArrowRight size={13} />
@@ -71,7 +71,7 @@ export function SavedJobsView({
               key={job.id}
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
-              className="bg-white dark:bg-[#151518] rounded-[28px] p-6 border border-slate-200/70 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-blue-500/30 dark:hover:border-orange-500/30 transition-all flex flex-col justify-between"
+              className="neu-card p-6 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between gap-3 mb-4">
