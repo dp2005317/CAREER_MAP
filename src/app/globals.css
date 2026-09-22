@@ -246,9 +246,6 @@
   border-radius: 1rem;
   box-shadow: 3px 3px 10px var(--neu-shadow-dark), -3px -3px 10px var(--neu-shadow-light);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   transition: all 0.2s ease;
 }
 .neu-icon-btn:hover {
@@ -257,12 +254,6 @@
 }
 .neu-icon-btn:active {
   box-shadow: inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
-}
-.neu-icon-btn.hidden,
-.neu-btn.hidden,
-.hidden .neu-icon-btn,
-.hidden .neu-btn {
-  display: none !important;
 }
 
 .neu-pill {

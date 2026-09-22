@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
@@ -16,6 +16,30 @@ export default function ProfilePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isSidebarHidden, setIsSidebarHidden] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("careermap_sidebar_hidden");
+      if (saved === "true") {
+        setIsSidebarHidden(true);
+      }
+    } catch (e) {
+      console.error("Error loading sidebar preference", e);
+    }
+  }, []);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarHidden((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("careermap_sidebar_hidden", String(next));
+      } catch (e) {
+        console.error("Error saving sidebar preference", e);
+      }
+      return next;
+    });
+  };
 
   const handleLogout = async () => {
     try {
@@ -34,6 +58,8 @@ export default function ProfilePage() {
         activeTab="profile"
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
+        isSidebarHidden={isSidebarHidden}
+        onToggleCollapse={handleToggleSidebar}
         onTabChange={(tab) => {
           if (tab === "courses") {
             router.push("/courses");
@@ -47,6 +73,8 @@ export default function ProfilePage() {
           title="Profile Settings"
           user={user || profile}
           hasResume={!!profile?.resumeName}
+          isSidebarHidden={isSidebarHidden}
+          onToggleSidebar={handleToggleSidebar}
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           onOpenResumeUpload={() => setIsOnboardingOpen(true)}
         />
