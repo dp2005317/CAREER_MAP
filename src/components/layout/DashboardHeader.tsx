@@ -30,18 +30,20 @@ export function DashboardHeader({
       {/* Title & Sidebar Toggle */}
       <div className="flex items-center gap-2 sm:gap-3">
         {onToggleSidebar && (
-          <button
-            onClick={onToggleSidebar}
-            title={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
-            aria-label={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
-            className="neu-icon-btn hidden lg:flex items-center justify-center w-9 h-9 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-orange-400 cursor-pointer rounded-xl transition-all"
-          >
-            {isSidebarHidden ? (
-              <PanelLeftOpen className="w-4 h-4 text-blue-600 dark:text-orange-400" />
-            ) : (
-              <PanelLeftClose className="w-4 h-4" />
-            )}
-          </button>
+          <div className="hidden lg:flex items-center">
+            <button
+              onClick={onToggleSidebar}
+              title={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
+              aria-label={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
+              className="neu-icon-btn !hidden lg:!flex items-center justify-center w-9 h-9 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-orange-400 cursor-pointer rounded-xl transition-all"
+            >
+              {isSidebarHidden ? (
+                <PanelLeftOpen className="w-4 h-4 text-blue-600 dark:text-orange-400" />
+              ) : (
+                <PanelLeftClose className="w-4 h-4" />
+              )}
+            </button>
+          </div>
         )}
         <h2 className="text-base sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight truncate max-w-[170px] sm:max-w-none">
           {title}

@@ -258,6 +258,12 @@
 .neu-icon-btn:active {
   box-shadow: inset 2px 2px 5px var(--neu-shadow-dark), inset -2px -2px 5px var(--neu-shadow-light);
 }
+.neu-icon-btn.hidden,
+.neu-btn.hidden,
+.hidden .neu-icon-btn,
+.hidden .neu-btn {
+  display: none !important;
+}
 
 .neu-pill {
   background: #ffffff;

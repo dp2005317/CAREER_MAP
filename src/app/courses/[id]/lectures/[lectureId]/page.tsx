@@ -320,17 +320,19 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
             </div>
 
             {/* Toggle Curriculum Sidebar */}
-            <button
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className={`hidden lg:flex p-2 rounded-xl border transition-all cursor-pointer ${
-                isSidebarOpen 
-                  ? "bg-blue-50 dark:bg-orange-950/40 border-blue-200 dark:border-orange-500/40 text-blue-600 dark:text-orange-400" 
-                  : "bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-600 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800"
-              }`}
-              title={isSidebarOpen ? "Hide Curriculum Sidebar" : "Show Curriculum Sidebar"}
-            >
-              <Sidebar className="w-4 h-4" />
-            </button>
+            <div className="hidden lg:flex items-center">
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className={`p-2 rounded-xl border transition-all cursor-pointer ${
+                  isSidebarOpen 
+                    ? "bg-blue-50 dark:bg-orange-950/40 border-blue-200 dark:border-orange-500/40 text-blue-600 dark:text-orange-400" 
+                    : "bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-600 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800"
+                }`}
+                title={isSidebarOpen ? "Hide Curriculum Sidebar" : "Show Curriculum Sidebar"}
+              >
+                <Sidebar className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
