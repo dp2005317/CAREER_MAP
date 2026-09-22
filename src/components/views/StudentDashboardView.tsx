@@ -418,29 +418,29 @@ export function StudentDashboardView({
   };
 
   return (
-    <main className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 pb-32 md:pb-8 custom-scrollbar bg-[#FAF8F5] dark:bg-black text-gray-900 dark:text-white transition-colors">
-      <div className="max-w-[1400px] mx-auto space-y-5 sm:space-y-7">
+    <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-32 md:pb-8 custom-scrollbar bg-slate-50 dark:bg-[#09090b] text-gray-900 dark:text-white transition-colors">
+      <div className="max-w-[1400px] mx-auto space-y-6 sm:space-y-8">
         
         {/* TOP GREETING & SEARCH HEADER */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           
           {/* Left: User Avatar + Greeting */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3.5">
             <div className="relative">
               {profile?.photoURL || user?.photoURL ? (
                 <img
                   src={profile?.photoURL || user?.photoURL || ""}
                   alt="Avatar"
-                  className="w-14 h-14 rounded-full object-cover ring-2 ring-blue-500/20 dark:ring-orange-500/30"
+                  className="w-13 h-13 rounded-full object-cover ring-2 ring-blue-500/20 dark:ring-orange-500/30"
                 />
               ) : (
-                <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-white/10 text-blue-600 dark:text-orange-400 flex items-center justify-center font-black text-lg ring-2 ring-blue-500/20 dark:ring-orange-500/30">
+                <div className="w-13 h-13 rounded-full bg-blue-100 dark:bg-white/10 text-blue-600 dark:text-orange-400 flex items-center justify-center font-bold text-base ring-2 ring-blue-500/20 dark:ring-orange-500/30 shadow-xs">
                   {profile?.displayName ? profile.displayName.charAt(0).toUpperCase() : user?.displayName ? user.displayName.charAt(0).toUpperCase() : user?.email ? user.email.charAt(0).toUpperCase() : "U"}
                 </div>
               )}
             </div>
             <div>
-              <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
                 Welcome back, {profile?.displayName || user?.displayName || "Learner"}!
               </h1>
               <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium mt-0.5">
@@ -452,20 +452,20 @@ export function StudentDashboardView({
           {/* Right: Search & Action Header */}
           <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative flex-1 md:w-80">
-              <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={onSearchFocus}
                 placeholder="Search jobs, courses, roadmap..."
-                className="w-full bg-white dark:bg-[#151518] text-gray-900 dark:text-white text-xs font-medium pl-10 pr-4 py-2.5 rounded-full border border-slate-200/80 dark:border-white/10 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-orange-500/50 transition-all placeholder:text-gray-400"
+                className="w-full bg-white dark:bg-[#151518] text-gray-900 dark:text-white text-xs font-medium pl-9 pr-4 py-2 rounded-xl border border-slate-200/80 dark:border-white/10 shadow-2xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-orange-500/20 focus:border-blue-500 dark:focus:border-orange-500 transition-all placeholder:text-gray-400"
               />
             </div>
             
             <button
               onClick={onGoToCourses}
-              className="px-4 py-2.5 rounded-full bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+              className="px-4 py-2 rounded-xl bg-blue-600 dark:bg-orange-600 hover:bg-blue-700 dark:hover:bg-orange-500 text-white font-semibold text-xs shadow-xs hover:shadow-sm transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
             >
               <BookOpen className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Browse</span> Courses

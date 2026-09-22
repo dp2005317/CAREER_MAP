@@ -140,16 +140,16 @@ export function JobCardRow({
                   })()}
                 </div>
                 
-                <div className="flex items-center gap-2 mt-1.5 text-[11px] font-semibold text-gray-500 flex-wrap">
-                  <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60 font-bold">
+                <div className="flex items-center gap-2 mt-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400 flex-wrap">
+                  <span className="text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200/60 dark:border-emerald-800/30 font-bold">
                     {formatSalaryBadge(job.salary)}
                   </span>
                   {job.distance !== undefined && job.distance < 99999 && (
-                    <span className="text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200/60 font-bold">
+                    <span className="text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 px-2 py-0.5 rounded-md border border-purple-200/60 dark:border-purple-800/30 font-bold">
                       {Math.round(job.distance)} km
                     </span>
                   )}
-                  <span className="text-gray-500 text-[10px] font-medium truncate">
+                  <span className="text-gray-500 dark:text-gray-400 text-[10px] font-medium truncate">
                     {job.type}
                   </span>
                 </div>
@@ -160,13 +160,13 @@ export function JobCardRow({
                     return (
                       <div className="flex items-center gap-1 overflow-hidden mt-2">
                         {match.matchedSkills.slice(0, 2).map((s) => (
-                          <span key={s} className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200/60 truncate inline-flex items-center gap-0.5">
+                          <span key={s} className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 dark:bg-white/10 text-blue-700 dark:text-orange-300 border border-blue-200/60 dark:border-white/10 truncate inline-flex items-center gap-0.5">
                             <Check className="w-2.5 h-2.5 shrink-0" />
                             <span>{s}</span>
                           </span>
                         ))}
                         {match.matchedSkills.length > 2 && (
-                          <span className="text-[9px] font-bold text-gray-400">
+                          <span className="text-[9px] font-bold text-gray-400 dark:text-gray-500">
                             +{match.matchedSkills.length - 2}
                           </span>
                         )}
@@ -178,13 +178,13 @@ export function JobCardRow({
               </div>
 
               {/* Footer: Apply Button & Details */}
-              <div className="flex items-center gap-2 pt-2.5 border-t border-slate-100">
+              <div className="flex items-center gap-2 pt-2.5 border-t border-slate-100 dark:border-white/5">
                 <a
                   href={getExactJobApplyUrl(job)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="flex-1 neu-btn-primary text-xs font-bold py-2.5 px-3 text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 neu-btn-primary text-xs font-semibold py-2 px-3 text-center flex items-center justify-center gap-1.5 cursor-pointer rounded-xl"
                 >
                   <span>Apply</span>
                   <ExternalLink className="w-3 h-3" />
@@ -196,7 +196,7 @@ export function JobCardRow({
                     e.stopPropagation();
                     if (onOpenDetails) onOpenDetails(job);
                   }}
-                  className="px-3.5 py-2.5 neu-btn text-gray-700 text-xs font-bold transition-all cursor-pointer"
+                  className="px-3.5 py-2 neu-btn text-gray-700 dark:text-gray-200 text-xs font-semibold rounded-xl transition-all cursor-pointer"
                 >
                   Details
                 </button>

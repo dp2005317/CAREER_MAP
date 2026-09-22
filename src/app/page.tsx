@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { TeamButton } from "@/components/team/TeamButton";
 import { 
   MapPin, 
   ArrowRight, 
@@ -133,7 +134,8 @@ export default function Home() {
             </div>
 
             {/* Right Controls */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <TeamButton />
               <ThemeToggle />
               
               <Link 
@@ -169,6 +171,7 @@ export default function Home() {
                 </Link>
               ))}
               <div className="pt-3 border-t border-slate-100 dark:border-white/10 flex flex-col gap-2.5">
+                <TeamButton className="w-full justify-center py-2.5" />
                 <Link
                   href="/login"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -183,23 +186,29 @@ export default function Home() {
           {/* Hero Typography & CTA */}
           <div className="px-5 sm:px-10 pt-8 sm:pt-14 pb-6 sm:pb-10 flex flex-col items-center text-center relative z-10 max-w-4xl mx-auto">
             
-            {/* Top Minimal Plus Icon */}
-            <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 dark:text-gray-500 mb-4 sm:mb-6">
-              <Plus className="w-5 h-5" />
+            {/* Top Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 dark:bg-orange-500/10 border border-blue-500/25 dark:border-orange-500/25 backdrop-blur-md mb-4 sm:mb-6 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-orange-400" />
+              <span className="text-[11px] sm:text-xs font-semibold text-blue-700 dark:text-orange-300 tracking-wide">
+                Next-Gen Spatial Career Intelligence • 28+ Tech Metros
+              </span>
             </div>
 
-            {/* Main Headline (Outfit / Plus Jakarta Sans style matching reference) */}
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal tracking-[-0.03em] text-gray-900 dark:text-white leading-[1.1] mb-4 sm:mb-6">
-              Where Careers Grow
+            {/* Main Headline */}
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] text-gray-900 dark:text-white leading-[1.08] mb-4 sm:mb-6">
+              Where Careers{" "}
+              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 dark:from-orange-400 dark:via-amber-400 dark:to-yellow-400 bg-clip-text text-transparent">
+                Accelerate
+              </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="font-display text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl font-normal leading-relaxed mb-6 sm:mb-8">
-              A programmable, utility-driven career platform designed for native skill accrual, salary intelligence, and seamless integration into tech hiring.
+            <p className="font-display text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl font-normal leading-relaxed mb-7 sm:mb-9 text-balance">
+              A spatial career intelligence platform connecting geocoded talent discovery, university-grade curricula, and real-time tech hiring across India.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-center">
+            <div className="flex flex-col sm:flex-row items-center gap-3.5 w-full sm:w-auto justify-center">
               <Link 
                 href="/dashboard?tab=map"
                 className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 dark:bg-orange-600 dark:hover:bg-orange-500 text-white font-semibold text-xs sm:text-sm px-8 py-3.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-600/25 dark:shadow-orange-600/25 flex items-center justify-center gap-2 cursor-pointer"
@@ -220,29 +229,47 @@ export default function Home() {
 
           {/* 3D Visual Centerpiece: Spatial Tech Map of India */}
           <div className="relative w-full px-4 sm:px-8 pb-4 sm:pb-8">
-            <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[22px] sm:rounded-[36px] overflow-hidden shadow-inner border border-slate-200/80 dark:border-white/10 bg-slate-950">
-              <Image
-                src="/images/careermap_spatial_hero.jpg"
-                alt="Spatial Career Intelligence Map"
-                fill
-                priority
-                className="object-cover object-center transform hover:scale-[1.01] transition-transform duration-700 ease-out"
-                sizes="(max-width: 1440px) 100vw, 1440px"
-              />
-              
-              {/* Subtle top & bottom vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-
-              {/* Floating Stat Badges on Artwork */}
-              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-                <div className="bg-white/95 dark:bg-black/90 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/60 dark:border-white/10 shadow-lg text-[10px] sm:text-xs font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>250K+ Verified Indian Tech Openings</span>
+            <div className="relative w-full rounded-[22px] sm:rounded-[36px] overflow-hidden shadow-2xl border border-slate-200/90 dark:border-white/10 bg-slate-950">
+              {/* Sleek Browser-bar Chrome */}
+              <div className="w-full bg-slate-100/90 dark:bg-[#151518]/90 backdrop-blur-md px-4 py-2.5 border-b border-slate-200/80 dark:border-white/10 flex items-center justify-between z-20">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
                 </div>
+                <div className="bg-white/80 dark:bg-black/40 px-4 py-1 rounded-full text-[11px] font-mono text-gray-500 dark:text-gray-400 border border-slate-200/60 dark:border-white/5 flex items-center gap-2 max-w-xs sm:max-w-sm truncate">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>careermap.ai/spatial-explorer</span>
+                </div>
+                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:block">
+                  Live View
+                </div>
+              </div>
 
-                <div className="hidden sm:flex items-center gap-2 bg-white/95 dark:bg-black/90 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 dark:border-white/10 shadow-lg text-xs font-semibold text-gray-900 dark:text-white">
-                  <MapPin size={13} className="text-blue-600 dark:text-orange-400" />
-                  <span>28+ Tech Metros Mapped</span>
+              <div className="relative w-full aspect-[16/9] sm:aspect-[21/9]">
+                <Image
+                  src="/images/careermap_spatial_hero.jpg"
+                  alt="Spatial Career Intelligence Map"
+                  fill
+                  priority
+                  className="object-cover object-center transform hover:scale-[1.01] transition-transform duration-700 ease-out"
+                  sizes="(max-width: 1440px) 100vw, 1440px"
+                />
+                
+                {/* Subtle top & bottom vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+
+                {/* Floating Stat Badges on Artwork */}
+                <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                  <div className="bg-white/95 dark:bg-black/90 backdrop-blur-md px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/60 dark:border-white/10 shadow-lg text-[10px] sm:text-xs font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>250K+ Verified Indian Tech Openings</span>
+                  </div>
+
+                  <div className="hidden sm:flex items-center gap-2 bg-white/95 dark:bg-black/90 backdrop-blur-md px-4 py-2 rounded-full border border-white/60 dark:border-white/10 shadow-lg text-xs font-semibold text-gray-900 dark:text-white">
+                    <MapPin size={13} className="text-blue-600 dark:text-orange-400" />
+                    <span>28+ Tech Metros Mapped</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -696,23 +723,35 @@ export default function Home() {
         </section>
 
         {/* ===================== FOOTER ===================== */}
-        <footer className="pt-8 pb-6 border-t border-slate-200/80 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500 dark:text-gray-400 font-normal">
-          <div className="flex items-center gap-3">
-            <span className="font-display font-semibold text-gray-900 dark:text-white">CareerMap</span>
+        <footer className="pt-10 pb-8 border-t border-slate-200/80 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-5 text-xs text-gray-500 dark:text-gray-400 font-normal">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="font-display font-bold text-gray-900 dark:text-white text-sm">CareerMap AI</span>
             <span>•</span>
-            <span>Smart India Hackathon 2026</span>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>All Systems Operational</span>
+            </div>
           </div>
 
-          <div className="flex items-center gap-6">
-            <Link href="/terms" className="hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
-              Terms of Service
+          <div className="flex flex-wrap items-center gap-6 text-xs font-medium">
+            <Link href="/courses" className="hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
+              Courses & Playlists
             </Link>
-            <Link href="/privacy" className="hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
-              Privacy Policy
+            <Link href="/code" className="hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
+              Code Playground
             </Link>
             <Link href="/dashboard?tab=map" className="hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
-              Spatial Map
+              Spatial Tech Map
             </Link>
+            <Link href="/dashboard?tab=companies" className="hover:text-blue-600 dark:hover:text-orange-400 transition-colors">
+              Hiring Companies
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] text-gray-500 dark:text-gray-400">
+            <span>© {new Date().getFullYear()} CareerMap.</span>
+            <span>•</span>
+            <span>Made by <strong className="font-semibold text-gray-800 dark:text-gray-200">Honest Visions</strong></span>
           </div>
         </footer>
 
