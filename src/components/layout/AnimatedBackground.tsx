@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 export const AnimatedBackground = () => (
-  <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+  <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10 select-none">
     {/* Light mode ambient aura orbs (Reference 1 & 2 inspired) */}
     <div className="dark:hidden absolute inset-0 w-full h-full transition-opacity duration-700">
       {/* Top-right soft peach/coral bloom */}

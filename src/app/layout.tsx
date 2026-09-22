@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`h-full antialiased font-sans ${plusJakarta.variable} ${plusJakarta.className}`}
     >
-      <body className={`min-h-full flex flex-col font-sans ${plusJakarta.className} relative`}>
+      <body className={`min-h-full flex flex-col font-sans ${plusJakarta.className} relative isolate`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -61,7 +61,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
           <AnimatedBackground />
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <div className="relative z-10 flex-1 flex flex-col">
+              {children}
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

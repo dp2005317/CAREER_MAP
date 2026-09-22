@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { LiquidGlass } from "@/components/layout/LiquidGlass";
-import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 import { Mail, Lock, User, ArrowRight, Sparkles, AlertCircle, Compass } from "lucide-react";
 import { useAuth } from "@/database/authContext";
 import { useRouter } from "next/navigation";
@@ -112,7 +111,6 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[100dvh] bg-slate-50/50 dark:bg-black text-gray-800 dark:text-gray-100 flex flex-col justify-center relative overflow-hidden font-sans selection:bg-orange-500/20">
-      <AnimatedBackground />
       
       {/* Brand Header */}
       <div className="absolute top-6 left-6 z-50">
