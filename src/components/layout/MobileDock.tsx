@@ -18,7 +18,7 @@ export function MobileDock({ activeTab, onTabChange, onOpenProfile }: MobileDock
   ];
 
   return (
-    <div className="md:hidden fixed bottom-5 inset-x-5 z-50 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden">
+    <div className="lg:hidden fixed bottom-5 inset-x-5 z-50 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent dark:from-white/5 pointer-events-none" />
       <div className="flex items-center justify-between px-5 py-2.5 relative">
         {navItems.map((item) => {

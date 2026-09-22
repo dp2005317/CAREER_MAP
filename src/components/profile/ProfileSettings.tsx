@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { 
   User, Briefcase, Award, MapPin, 
-  Settings, Save, CheckCircle2, X, Plus, FileText, UploadCloud
+  Settings, Save, CheckCircle2, X, Plus, FileText, UploadCloud, LogOut
 } from "lucide-react";
 import { useAuth, UserProfile } from "@/database/authContext";
 
@@ -15,11 +16,24 @@ const tabs = [
 ];
 
 export function ProfileSettings({ onOpenResumeUpload }: { onOpenResumeUpload?: () => void }) {
-  const { user, profile, updateProfile } = useAuth();
+  const router = useRouter();
+  const { user, profile, updateProfile, logout } = useAuth();
   
   const [activeTab, setActiveTab] = useState("general");
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await logout();
+      router.push("/login");
+    } catch (e) {
+      console.error("Logout error", e);
+      setIsLoggingOut(false);
+    }
+  };
 
   // Form State
   const [formData, setFormData] = useState<Partial<UserProfile>>({
@@ -75,9 +89,9 @@ export function ProfileSettings({ onOpenResumeUpload }: { onOpenResumeUpload?: (
   return (
     <div className="flex flex-col md:flex-row gap-6 lg:gap-8 max-w-6xl mx-auto w-full">
       
-      {/* Sidebar Navigation */}
+      {/* Navigation: Responsive pills on mobile, clean side panel on desktop */}
       <div className="w-full md:w-64 shrink-0 flex flex-col gap-2">
-        <div className="p-5 liquid-glass rounded-3xl flex flex-col gap-2">
+        <div className="p-2 sm:p-3 md:p-5 liquid-glass rounded-2xl md:rounded-3xl flex flex-row md:flex-col gap-2 overflow-x-auto custom-scrollbar">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -85,7 +99,7 @@ export function ProfileSettings({ onOpenResumeUpload }: { onOpenResumeUpload?: (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all text-sm font-bold cursor-pointer ${
+                className={`flex items-center gap-2 sm:gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl transition-all text-xs sm:text-sm font-bold cursor-pointer whitespace-nowrap shrink-0 ${
                   isActive 
                     ? "bg-blue-50 dark:bg-orange-500/10 text-blue-700 dark:text-orange-400 shadow-xs border border-blue-100 dark:border-orange-500/20" 
                     : "bg-transparent text-gray-600 dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-white/[0.04] hover:text-gray-900 dark:hover:text-white border border-transparent"
@@ -96,6 +110,19 @@ export function ProfileSettings({ onOpenResumeUpload }: { onOpenResumeUpload?: (
               </button>
             );
           })}
+
+          <div className="hidden md:block my-1 border-t border-gray-200/60 dark:border-white/10" />
+
+          {/* Logout Option in Navigation */}
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="flex items-center gap-2 sm:gap-3 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl transition-all text-xs sm:text-sm font-bold cursor-pointer whitespace-nowrap text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 border border-transparent hover:border-red-200 dark:hover:border-red-900/30 shrink-0 ml-auto md:ml-0"
+            title="Log out of CareerMap"
+          >
+            <LogOut className="w-4 h-4 text-red-600 dark:text-red-400" />
+            <span>{isLoggingOut ? "Logging out..." : "Log Out"}</span>
+          </button>
         </div>
       </div>
 
@@ -294,6 +321,24 @@ export function ProfileSettings({ onOpenResumeUpload }: { onOpenResumeUpload?: (
               </motion.div>
             )}
 
+          </div>
+
+          {/* Account Actions / Log Out Footer */}
+          <div className="p-6 sm:p-8 bg-slate-50/70 dark:bg-white/[0.02] border-t border-gray-100 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h4 className="text-sm font-extrabold text-gray-900 dark:text-white">Account Session</h4>
+              <p className="text-xs text-gray-500 dark:text-zinc-400 mt-0.5">
+                Signed in as <span className="font-semibold text-gray-800 dark:text-zinc-200">{user?.email || profile?.displayName || "User"}</span>
+              </p>
+            </div>
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="px-5 py-2.5 bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:hover:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200/80 dark:border-red-900/40 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-95 w-full sm:w-auto"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>{isLoggingOut ? "Logging out..." : "Log Out of Account"}</span>
+            </button>
           </div>
         </div>
       </div>

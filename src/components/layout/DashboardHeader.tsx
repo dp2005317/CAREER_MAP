@@ -34,7 +34,7 @@ export function DashboardHeader({
             onClick={onToggleSidebar}
             title={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
             aria-label={isSidebarHidden ? "Show sidebar" : "Hide sidebar"}
-            className="neu-icon-btn hidden md:flex items-center justify-center w-9 h-9 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-orange-400 cursor-pointer rounded-xl transition-all"
+            className="neu-icon-btn hidden lg:flex items-center justify-center w-9 h-9 text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-orange-400 cursor-pointer rounded-xl transition-all"
           >
             {isSidebarHidden ? (
               <PanelLeftOpen className="w-4 h-4 text-blue-600 dark:text-orange-400" />

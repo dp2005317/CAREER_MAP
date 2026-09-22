@@ -67,16 +67,9 @@ export function AppSidebar({
 
   return (
     <>
-      {/* Mobile Overlay - Kept for structure but unused since sidebar is hidden on mobile */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden"
-          onClick={onClose}
-        />
-      )}
       
       <aside 
-        className={`hidden md:flex flex-col justify-between relative transition-all duration-300 ease-in-out z-50 h-screen liquid-glass border-r border-slate-200/80 dark:border-white/10 shrink-0 select-none ${
+        className={`hidden lg:flex flex-col justify-between relative transition-all duration-300 ease-in-out z-50 h-screen liquid-glass border-r border-slate-200/80 dark:border-white/10 shrink-0 select-none ${
           isSidebarHidden 
             ? "w-0 p-0 m-0 border-r-0 opacity-0 overflow-hidden pointer-events-none" 
             : "w-64 p-4 opacity-100"

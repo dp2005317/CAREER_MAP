@@ -322,7 +322,7 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
             {/* Toggle Curriculum Sidebar */}
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className={`p-2 rounded-xl border transition-all cursor-pointer ${
+              className={`hidden lg:flex p-2 rounded-xl border transition-all cursor-pointer ${
                 isSidebarOpen 
                   ? "bg-blue-50 dark:bg-orange-950/40 border-blue-200 dark:border-orange-500/40 text-blue-600 dark:text-orange-400" 
                   : "bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-600 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-800"
@@ -581,7 +581,7 @@ export default function LecturePage({ params }: { params: Promise<{ id: string, 
 
         {/* Right Column: Full Course Curriculum / Playlist Sidebar */}
         {isSidebarOpen && (
-          <aside className="lg:col-span-4 xl:col-span-3 flex flex-col gap-4">
+          <aside className="hidden lg:flex lg:col-span-4 xl:col-span-3 flex-col gap-4">
             <div className="bg-white dark:bg-[#0c0c0e] rounded-3xl border border-gray-200/80 dark:border-white/10 shadow-xs p-5 flex flex-col gap-4 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto custom-scrollbar">
               
               {/* Sidebar Header: Course Progress */}
