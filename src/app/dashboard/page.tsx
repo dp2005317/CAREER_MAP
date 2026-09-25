@@ -130,6 +130,7 @@ export default function DashboardPage() {
     });
   };
 
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [viewState, setViewState] = useState({
     longitude: 88.3639,
     latitude: 22.5726,
@@ -167,6 +168,7 @@ export default function DashboardPage() {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
 
+          setUserLocation({ lat, lng });
           setViewState((prev) => ({
             ...prev,
             longitude: lng,
@@ -176,11 +178,13 @@ export default function DashboardPage() {
           fetchRealJobs(lat, lng);
         },
         () => {
+          setUserLocation({ lat: 22.5726, lng: 88.3639 });
           fetchRealJobs(22.5726, 88.3639);
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
     } else {
+      setUserLocation({ lat: 22.5726, lng: 88.3639 });
       fetchRealJobs(22.5726, 88.3639);
     }
   }, []);
@@ -346,6 +350,7 @@ export default function DashboardPage() {
                 activeFilter={activeFilter}
                 onFilterChange={setActiveFilter}
                 hasResumeSkills={!!profile?.skills?.length}
+                userLocation={userLocation}
               />
             </div>
 

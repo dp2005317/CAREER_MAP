@@ -18,12 +18,13 @@ interface InteractiveMapProps {
   activeFilter?: string;
   onFilterChange?: (filter: string) => void;
   hasResumeSkills?: boolean;
+  userLocation?: { lat: number; lng: number } | null;
 }
 
 const GOOGLE_MAPS_KEY =
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
   process.env.NEXT_PUBLIC_GMAP_API_KEY ||
-  "AIzaSyBldZQamQ6VgSO1nGuqdZt4LGwcWqKZazQ";
+  "";
 
 export const InteractiveMap = ({
   jobs,
@@ -36,6 +37,7 @@ export const InteractiveMap = ({
   activeFilter = "All",
   onFilterChange,
   hasResumeSkills = false,
+  userLocation,
 }: InteractiveMapProps) => {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
@@ -206,6 +208,25 @@ export const InteractiveMap = ({
         <GeolocateControl position="top-right" />
         <NavigationControl position="top-right" />
 
+        {/* User Current Location Marker */}
+        {userLocation && (
+          <Marker
+            longitude={userLocation.lng}
+            latitude={userLocation.lat}
+            anchor="center"
+          >
+            <div className="relative group cursor-pointer flex items-center justify-center">
+              <div className="absolute -inset-2 rounded-full bg-blue-500/50 animate-ping" />
+              <div className="relative w-5 h-5 rounded-full bg-blue-600 border-2 border-white shadow-xl flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-white" />
+              </div>
+              <div className="absolute bottom-full mb-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap bg-gray-900/95 text-white text-[10px] font-bold px-2.5 py-1 rounded-xl shadow-xl border border-white/20">
+                You are here
+              </div>
+            </div>
+          </Marker>
+        )}
+
         {jobs
           .filter((job) => job.lat !== null && job.lng !== null)
           .map((job) => {
@@ -257,10 +278,17 @@ export const InteractiveMap = ({
 
                   {/* Floating tooltip */}
                   <div className="absolute opacity-0 group-hover:opacity-100 bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none transition-all duration-200 translate-y-1 group-hover:translate-y-0 z-30">
-                    <div className="bg-gray-900/95 dark:bg-black/95 border border-white/10 text-white px-2.5 py-1.5 rounded-xl shadow-xl text-xs font-semibold whitespace-nowrap">
-                      {job.company}
+                    <div className="bg-gray-900/95 dark:bg-black/95 border border-white/15 text-white px-3 py-1.5 rounded-xl shadow-xl text-xs font-semibold whitespace-nowrap">
+                      <div className="font-bold flex items-center gap-1.5">
+                        <span>{job.company}</span>
+                        {job.distance !== undefined && job.distance < 99999 && (
+                          <span className="text-[10px] text-blue-400 font-semibold">
+                            ({Math.round(job.distance)} km)
+                          </span>
+                        )}
+                      </div>
                       <span className="text-gray-300 dark:text-gray-400 font-normal block text-[10px]">
-                        {job.title}
+                        {job.title} • {job.location.split(",")[0]}
                       </span>
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { generateJobsNearCoordinates } from '@/backend/mockData';
+import staticJobsData from '@/data/jobs.json';
 import fs from 'fs';
 import path from 'path';
 
@@ -79,29 +80,22 @@ export async function GET(request: Request) {
 
     let jobs: any[] = [];
 
-    // 1.5 Try loading from static pre-generated jobs JSON
+    // 1.5 Load static curated real tech jobs dataset with precise office coordinates
     try {
-      const staticDbPath = path.join(process.cwd(), 'src', 'lib', 'data', 'jobs.json');
-      if (fs.existsSync(staticDbPath)) {
-        const allStaticJobs = JSON.parse(fs.readFileSync(staticDbPath, 'utf8'));
-        
-        // Add distance to each job and sort so the closest are first
-        const jobsWithDistance = allStaticJobs.map((job: any) => {
-          if (!job.lat || !job.lng) return { ...job, distance: 999999 };
-          return {
-            ...job,
-            distance: getDistanceKm(lat, lng, job.lat, job.lng)
-          };
-        }).sort((a: any, b: any) => a.distance - b.distance);
-        
-        if (jobsWithDistance.length > 0) {
-          console.log(`Serving ${jobsWithDistance.length} static jobs for ${city}`);
-          return NextResponse.json({ jobs: jobsWithDistance, city }, {
-            headers: {
-              'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200'
-            }
-          });
-        }
+      const jobsWithDistance = (staticJobsData as any[])
+        .filter((job) => typeof job.lat === 'number' && typeof job.lng === 'number')
+        .map((job) => ({
+          ...job,
+          distance: Math.round(getDistanceKm(lat, lng, job.lat, job.lng))
+        }))
+        .sort((a, b) => a.distance - b.distance);
+
+      if (jobsWithDistance.length > 0) {
+        return NextResponse.json({ jobs: jobsWithDistance, city }, {
+          headers: {
+            'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200'
+          }
+        });
       }
     } catch (staticErr) {
       console.warn('Could not read static jobs DB:', staticErr);
