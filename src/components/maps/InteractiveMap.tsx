@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Map, { Marker, NavigationControl, GeolocateControl } from "react-map-gl/maplibre";
 import { Job } from "@/backend/mockData";
 import { motion } from "framer-motion";
-import { Search, SlidersHorizontal, MapPin } from "lucide-react";
+import { Search, SlidersHorizontal, MapPin, Layers } from "lucide-react";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface InteractiveMapProps {
@@ -20,6 +20,11 @@ interface InteractiveMapProps {
   hasResumeSkills?: boolean;
 }
 
+const GOOGLE_MAPS_KEY =
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+  process.env.NEXT_PUBLIC_GMAP_API_KEY ||
+  "AIzaSyBldZQamQ6VgSO1nGuqdZt4LGwcWqKZazQ";
+
 export const InteractiveMap = ({
   jobs,
   selectedJob,
@@ -34,6 +39,74 @@ export const InteractiveMap = ({
 }: InteractiveMapProps) => {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
+
+  const [mapType, setMapType] = useState<"gmap" | "satellite" | "theme">("gmap");
+
+  const googleRoadmapStyle = useMemo(
+    () => ({
+      version: 8 as const,
+      sources: {
+        "google-roadmap": {
+          type: "raster" as const,
+          tiles: [
+            `https://mt0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+            `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+            `https://mt2.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+            `https://mt3.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+          ],
+          tileSize: 256,
+          attribution: "© Google Maps",
+        },
+      },
+      layers: [
+        {
+          id: "google-roadmap-layer",
+          type: "raster" as const,
+          source: "google-roadmap",
+          minzoom: 0,
+          maxzoom: 22,
+        },
+      ],
+    }),
+    []
+  );
+
+  const googleSatelliteStyle = useMemo(
+    () => ({
+      version: 8 as const,
+      sources: {
+        "google-satellite": {
+          type: "raster" as const,
+          tiles: [
+            `https://mt0.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+            `https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+            `https://mt2.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+            `https://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&key=${GOOGLE_MAPS_KEY}`,
+          ],
+          tileSize: 256,
+          attribution: "© Google Maps Satellite",
+        },
+      },
+      layers: [
+        {
+          id: "google-satellite-layer",
+          type: "raster" as const,
+          source: "google-satellite",
+          minzoom: 0,
+          maxzoom: 22,
+        },
+      ],
+    }),
+    []
+  );
+
+  const activeMapStyle = useMemo(() => {
+    if (mapType === "gmap") return googleRoadmapStyle;
+    if (mapType === "satellite") return googleSatelliteStyle;
+    return isDark
+      ? "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
+      : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
+  }, [mapType, isDark, googleRoadmapStyle, googleSatelliteStyle]);
 
   const filters = hasResumeSkills 
     ? ["Recommended", "All", "Full Time", "Internship", "Remote"]
@@ -71,17 +144,58 @@ export const InteractiveMap = ({
             </button>
           ))}
         </div>
+
+        {/* Map Layer Switcher */}
+        <div className="flex items-center gap-1 bg-white/90 dark:bg-black/80 backdrop-blur-md p-1 rounded-2xl border border-gray-200/80 dark:border-white/10 shadow-xs">
+          <Layers className="w-3.5 h-3.5 text-gray-500 ml-1 mr-0.5 shrink-0 hidden sm:block" />
+          <button
+            type="button"
+            onClick={() => setMapType("gmap")}
+            className={`px-2.5 py-1 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
+              mapType === "gmap"
+                ? "bg-blue-600 text-white shadow-xs"
+                : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            }`}
+          >
+            Google Maps
+          </button>
+          <button
+            type="button"
+            onClick={() => setMapType("satellite")}
+            className={`px-2.5 py-1 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
+              mapType === "satellite"
+                ? "bg-blue-600 text-white shadow-xs"
+                : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            }`}
+          >
+            Satellite
+          </button>
+          <button
+            type="button"
+            onClick={() => setMapType("theme")}
+            className={`px-2.5 py-1 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
+              mapType === "theme"
+                ? "bg-blue-600 text-white shadow-xs"
+                : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            }`}
+          >
+            {isDark ? "Dark GL" : "Light GL"}
+          </button>
+        </div>
       </div>
+
+      {/* Google Maps Active Badge */}
+      {(mapType === "gmap" || mapType === "satellite") && (
+        <div className="absolute bottom-2 left-2 z-10 pointer-events-none flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md border border-gray-200/60 dark:border-white/10 text-[10px] font-semibold text-gray-800 dark:text-gray-200 shadow-xs">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Google Maps Engine</span>
+        </div>
+      )}
 
       <Map
         {...viewState}
         onMove={onMove}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-        mapStyle={
-          isDark 
-            ? "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-            : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-        }
+        mapStyle={activeMapStyle}
         style={{ width: "100%", height: "100%" }}
         minZoom={3}
         maxBounds={[

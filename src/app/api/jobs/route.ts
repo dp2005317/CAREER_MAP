@@ -53,6 +53,27 @@ export async function GET(request: Request) {
       }
     }
 
+    const gmapKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GMAP_API_KEY;
+    if (gmapKey && city === 'India') {
+      try {
+        const gRes = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${gmapKey}`,
+          { next: { revalidate: 86400 } }
+        );
+        const gData = await gRes.json();
+        if (gData.results && gData.results.length > 0) {
+          const comp = gData.results[0].address_components?.find((c: any) =>
+            c.types.includes('locality') || c.types.includes('administrative_area_level_2')
+          );
+          if (comp?.long_name) {
+            city = comp.long_name;
+          }
+        }
+      } catch (gErr) {
+        console.warn('Google Maps reverse geocode fallback:', gErr);
+      }
+    }
+
     const tavilyKey = process.env.TAVILY_API_KEY;
     const mistralKey = process.env.MISTRAL_API_KEY;
 
