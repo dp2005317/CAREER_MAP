@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { generateJobsNearCoordinates } from '@/backend/mockData';
+import staticJobsData from '@/data/jobs.json';
 import fs from 'fs';
 import path from 'path';
 
@@ -53,34 +54,48 @@ export async function GET(request: Request) {
       }
     }
 
+    const gmapKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.NEXT_PUBLIC_GMAP_API_KEY;
+    if (gmapKey && city === 'India') {
+      try {
+        const gRes = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${gmapKey}`,
+          { next: { revalidate: 86400 } }
+        );
+        const gData = await gRes.json();
+        if (gData.results && gData.results.length > 0) {
+          const comp = gData.results[0].address_components?.find((c: any) =>
+            c.types.includes('locality') || c.types.includes('administrative_area_level_2')
+          );
+          if (comp?.long_name) {
+            city = comp.long_name;
+          }
+        }
+      } catch (gErr) {
+        console.warn('Google Maps reverse geocode fallback:', gErr);
+      }
+    }
+
     const tavilyKey = process.env.TAVILY_API_KEY;
     const mistralKey = process.env.MISTRAL_API_KEY;
 
     let jobs: any[] = [];
 
-    // 1.5 Try loading from static pre-generated jobs JSON
+    // 1.5 Load static curated real tech jobs dataset with precise office coordinates
     try {
-      const staticDbPath = path.join(process.cwd(), 'src', 'lib', 'data', 'jobs.json');
-      if (fs.existsSync(staticDbPath)) {
-        const allStaticJobs = JSON.parse(fs.readFileSync(staticDbPath, 'utf8'));
-        
-        // Add distance to each job and sort so the closest are first
-        const jobsWithDistance = allStaticJobs.map((job: any) => {
-          if (!job.lat || !job.lng) return { ...job, distance: 999999 };
-          return {
-            ...job,
-            distance: getDistanceKm(lat, lng, job.lat, job.lng)
-          };
-        }).sort((a: any, b: any) => a.distance - b.distance);
-        
-        if (jobsWithDistance.length > 0) {
-          console.log(`Serving ${jobsWithDistance.length} static jobs for ${city}`);
-          return NextResponse.json({ jobs: jobsWithDistance, city }, {
-            headers: {
-              'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200'
-            }
-          });
-        }
+      const jobsWithDistance = (staticJobsData as any[])
+        .filter((job) => typeof job.lat === 'number' && typeof job.lng === 'number')
+        .map((job) => ({
+          ...job,
+          distance: Math.round(getDistanceKm(lat, lng, job.lat, job.lng))
+        }))
+        .sort((a, b) => a.distance - b.distance);
+
+      if (jobsWithDistance.length > 0) {
+        return NextResponse.json({ jobs: jobsWithDistance, city }, {
+          headers: {
+            'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200'
+          }
+        });
       }
     } catch (staticErr) {
       console.warn('Could not read static jobs DB:', staticErr);
