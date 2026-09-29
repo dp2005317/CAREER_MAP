@@ -4,6 +4,7 @@ import "./globals.css";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { AuthProvider } from "@/database/authContext";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { GlobalTeamWatermark } from "@/components/team/GlobalTeamWatermark";
 import { AnimatedBackground } from "@/components/layout/AnimatedBackground";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="relative z-10 flex-1 flex flex-col">
               {children}
             </div>
+            <GlobalTeamWatermark />
           </AuthProvider>
         </ThemeProvider>
       </body>

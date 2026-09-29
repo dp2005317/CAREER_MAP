@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CompanyLogo } from "@/components/jobs/CompanyLogo";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { TeamSection } from "@/components/team/TeamSection";
 import { 
   MapPin, 
   ArrowRight, 
@@ -34,13 +35,31 @@ export default function Home() {
     if (user) {
       router.push("/dashboard?tab=overview");
     }
+    if (typeof window !== "undefined" && window.location.hash === "#team") {
+      setTimeout(() => {
+        document.getElementById("team")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 350);
+    }
   }, [user, router]);
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const targetId = href.replace("#", "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        elem.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.pushState(null, "", href);
+      }
+    }
+  };
 
   const navLinks = [
     { label: "Map Discovery", href: "/dashboard?tab=map" },
     { label: "Courses", href: "/courses" },
     { label: "Companies", href: "/dashboard?tab=companies" },
     { label: "Saved Jobs", href: "/dashboard?tab=saved" },
+    { label: "Team", href: "#team" },
   ];
 
   const trustedCompanies = [
@@ -125,7 +144,8 @@ export default function Home() {
                 <Link 
                   key={i} 
                   href={link.href}
-                  className="text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-orange-400 transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
                 >
                   {link.label}
                 </Link>
@@ -161,8 +181,11 @@ export default function Home() {
                 <Link 
                   key={i} 
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-sm font-semibold text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-orange-400 py-1 flex items-center justify-between"
+                  onClick={(e) => {
+                    setIsMobileMenuOpen(false);
+                    handleNavClick(e, link.href);
+                  }}
+                  className="text-sm font-semibold text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-orange-400 py-1 flex items-center justify-between cursor-pointer"
                 >
                   <span>{link.label}</span>
                   <ArrowRight size={16} className="opacity-50" />
@@ -376,22 +399,25 @@ export default function Home() {
 
           </div>
 
-          {/* Backed By Row */}
-          <div className="pt-4 sm:pt-6 border-t border-slate-200/80 dark:border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6">
-            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 max-w-xs uppercase tracking-wider">
+          {/* Backed By Row: Infinite Auto-Scrolling Slideshow */}
+          <div className="pt-4 sm:pt-6 border-t border-slate-200/80 dark:border-white/10 flex flex-col md:flex-row items-start md:items-center gap-4 sm:gap-8 overflow-hidden">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider shrink-0 whitespace-nowrap">
               TRUSTED BY LEARNERS & PROFESSIONALS FROM:
             </p>
 
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4">
-              {trustedCompanies.map((company) => (
-                <div 
-                  key={company}
-                  className="flex items-center gap-2 bg-white dark:bg-white/5 border border-slate-200/80 dark:border-white/10 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-800 dark:text-gray-200 shadow-2xs hover:scale-105 transition-transform"
-                >
-                  <CompanyLogo company={company} size="sm" />
-                  <span>{company}</span>
-                </div>
-              ))}
+            {/* Infinite Marquee Slideshow Container with Fade Masks */}
+            <div className="relative flex-1 w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+              <div className="animate-marquee flex items-center gap-3 sm:gap-4 py-1">
+                {[...trustedCompanies, ...trustedCompanies, ...trustedCompanies, ...trustedCompanies].map((company, idx) => (
+                  <div 
+                    key={`${company}-${idx}`}
+                    className="flex items-center gap-2 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-slate-200/80 dark:border-white/10 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-gray-800 dark:text-gray-200 shadow-2xs hover:scale-105 transition-transform shrink-0 whitespace-nowrap select-none"
+                  >
+                    <CompanyLogo company={company} size="sm" />
+                    <span>{company}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -670,6 +696,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* ===================== SECTION: TEAM BUILDERS ===================== */}
+        <TeamSection />
 
         {/* ===================== CTA BANNER ===================== */}
         <section className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 dark:from-orange-600 dark:via-amber-600 dark:to-orange-700 text-white rounded-[28px] sm:rounded-[44px] p-8 sm:p-14 text-center flex flex-col items-center justify-center relative overflow-hidden shadow-xl">

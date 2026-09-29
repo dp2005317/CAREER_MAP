@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Bell, User, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { TeamButton } from "@/components/team/TeamButton";
 
 interface DashboardHeaderProps {
   title?: string;
@@ -61,6 +62,7 @@ export function DashboardHeader({
           </button>
         )}
 
+        <TeamButton />
         <ThemeToggle />
 
         <button 
