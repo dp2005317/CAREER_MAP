@@ -119,14 +119,14 @@ export const InteractiveMap = ({
       {/* Search & Filter Floating Bar */}
       <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20 flex flex-col sm:flex-row items-start sm:items-center gap-2 max-w-[calc(100%-60px)] sm:max-w-[calc(100%-80px)]">
         {/* Search Input */}
-        <div className="relative neu-card-sm px-3.5 py-2 flex items-center gap-2 min-w-[200px] w-full sm:w-auto">
-          <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+        <div className="relative bg-white/95 dark:bg-[#0c0e17]/95 backdrop-blur-xl border border-gray-300/80 dark:border-white/20 shadow-lg rounded-2xl px-3.5 py-2 flex items-center gap-2 min-w-[200px] w-full sm:w-auto">
+          <Search className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
             placeholder="Search roles, companies..."
-            className="w-full bg-transparent text-xs font-semibold text-gray-800 dark:text-white outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500"
+            className="w-full bg-transparent text-xs font-bold text-gray-900 dark:text-white outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
           />
         </div>
 
@@ -136,10 +136,10 @@ export const InteractiveMap = ({
             <button
               key={f}
               onClick={() => onFilterChange && onFilterChange(f)}
-              className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1.5 sm:py-2 text-[10px] sm:text-xs font-bold rounded-xl transition-all cursor-pointer shadow-md ${
                 activeFilter === f
-                  ? "neu-btn-primary"
-                  : "neu-btn text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-blue-600 dark:bg-orange-500 text-white shadow-blue-500/20 dark:shadow-orange-500/20 ring-1 ring-white/30"
+                  : "bg-white/95 dark:bg-[#0c0e17]/95 text-gray-800 dark:text-gray-200 hover:text-black dark:hover:text-white border border-gray-300/80 dark:border-white/20 hover:bg-white dark:hover:bg-[#141824]"
               }`}
             >
               {f === "Recommended" ? "Recommended" : (f === "All" ? "All Roles" : f)}
@@ -148,15 +148,15 @@ export const InteractiveMap = ({
         </div>
 
         {/* Map Layer Switcher */}
-        <div className="flex items-center gap-1 bg-white/90 dark:bg-black/80 backdrop-blur-md p-1 rounded-2xl border border-gray-200/80 dark:border-white/10 shadow-xs">
-          <Layers className="w-3.5 h-3.5 text-gray-500 ml-1 mr-0.5 shrink-0 hidden sm:block" />
+        <div className="flex items-center gap-1 bg-white/95 dark:bg-[#0c0e17]/95 backdrop-blur-xl p-1 rounded-2xl border border-gray-300/80 dark:border-white/20 shadow-md">
+          <Layers className="w-3.5 h-3.5 text-gray-600 dark:text-gray-400 ml-1 mr-0.5 shrink-0 hidden sm:block" />
           <button
             type="button"
             onClick={() => setMapType("gmap")}
             className={`px-2.5 py-1 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
               mapType === "gmap"
-                ? "bg-blue-600 text-white shadow-xs"
-                : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                ? "bg-blue-600 dark:bg-orange-500 text-white shadow-xs"
+                : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
             }`}
           >
             Google Maps
@@ -166,8 +166,8 @@ export const InteractiveMap = ({
             onClick={() => setMapType("satellite")}
             className={`px-2.5 py-1 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
               mapType === "satellite"
-                ? "bg-blue-600 text-white shadow-xs"
-                : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                ? "bg-blue-600 dark:bg-orange-500 text-white shadow-xs"
+                : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
             }`}
           >
             Satellite
@@ -177,8 +177,8 @@ export const InteractiveMap = ({
             onClick={() => setMapType("theme")}
             className={`px-2.5 py-1 text-[10px] font-bold rounded-xl transition-all cursor-pointer ${
               mapType === "theme"
-                ? "bg-blue-600 text-white shadow-xs"
-                : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                ? "bg-blue-600 dark:bg-orange-500 text-white shadow-xs"
+                : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
             }`}
           >
             {isDark ? "Dark GL" : "Light GL"}
@@ -188,7 +188,7 @@ export const InteractiveMap = ({
 
       {/* Google Maps Active Badge */}
       {(mapType === "gmap" || mapType === "satellite") && (
-        <div className="absolute bottom-2 left-2 z-10 pointer-events-none flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md border border-gray-200/60 dark:border-white/10 text-[10px] font-semibold text-gray-800 dark:text-gray-200 shadow-xs">
+        <div className="absolute bottom-2 left-2 z-10 pointer-events-none flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 dark:bg-[#0c0e17]/95 backdrop-blur-md border border-gray-300/80 dark:border-white/20 text-[10px] font-bold text-gray-900 dark:text-gray-100 shadow-md">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>Google Maps Engine</span>
         </div>

@@ -1,11 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { TeamModal } from "./TeamModal";
 import { HONEST_VISIONS_TEAM } from "@/data/teamData";
 
 export function GlobalTeamWatermark() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Completely removed from dashboard, courses, and sub-pages
+  if (pathname !== "/") {
+    return null;
+  }
 
   return (
     <>
