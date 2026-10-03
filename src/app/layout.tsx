@@ -53,10 +53,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={`h-full antialiased font-sans ${plusJakarta.variable} ${plusJakarta.className}`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var storageKey = 'careermap-theme';
+                  var saved = localStorage.getItem(storageKey);
+                  var theme = saved || 'light';
+                  var target = theme;
+                  if (theme === 'system') {
+                    target = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  var root = document.documentElement;
+                  if (target === 'dark') {
+                    root.classList.add('dark');
+                    root.classList.remove('light');
+                  } else {
+                    root.classList.remove('dark');
+                    root.classList.add('light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={`min-h-full flex flex-col font-sans ${plusJakarta.className} relative isolate`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           storageKey="careermap-theme"
           disableTransitionOnChange

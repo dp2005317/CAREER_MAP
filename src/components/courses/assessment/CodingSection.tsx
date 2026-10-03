@@ -6,7 +6,7 @@ import Editor from '@monaco-editor/react';
 import { Play, Send, CheckCircle2, XCircle, Terminal, AlertTriangle, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/components/theme/ThemeProvider';
 
 interface Props {
   questions: CodingQuestion[];
