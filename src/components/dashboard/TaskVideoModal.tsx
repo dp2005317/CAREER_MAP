@@ -91,10 +91,11 @@ export function TaskVideoModal({
             {/* 16:9 Video Player Container */}
             <div className="relative w-full aspect-video rounded-[24px] overflow-hidden bg-black shadow-lg border border-slate-300/40 dark:border-white/10">
               <iframe
-                src={`${videoInfo.videoUrl}?autoplay=1&modestbranding=1&rel=0`}
+                src={`${(videoInfo.videoUrl || "").replace("youtube.com", "youtube-nocookie.com")}?autoplay=1&modestbranding=1&rel=0`}
                 title={videoInfo.videoTitle}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                loading="lazy"
                 className="w-full h-full border-0"
               />
             </div>

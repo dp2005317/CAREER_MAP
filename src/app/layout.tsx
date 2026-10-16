@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import "maplibre-gl/dist/maplibre-gl.css";
 import { AuthProvider } from "@/database/authContext";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { GlobalTeamWatermark } from "@/components/team/GlobalTeamWatermark";

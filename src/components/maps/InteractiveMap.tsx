@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import "maplibre-gl/dist/maplibre-gl.css";
 import Map, { Marker, NavigationControl, GeolocateControl } from "react-map-gl/maplibre";
 import { Job } from "@/backend/mockData";
 import { motion } from "framer-motion";

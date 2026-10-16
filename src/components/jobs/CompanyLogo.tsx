@@ -109,14 +109,14 @@ function resolveBrandLogo(company: string, providedUrl?: string): string {
   // 3. Known domain mappings
   for (const [key, domain] of Object.entries(BRAND_DOMAINS)) {
     if (rawLower.includes(key) || norm.includes(key)) {
-      return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
     }
   }
 
-  // 4. Extract first meaningful company keyword and query Google Favicon Service
+  // 4. Extract first meaningful company keyword and query zero-cookie Favicon Service
   const firstWord = norm.split(" ")[0];
   if (firstWord && firstWord.length > 2) {
-    return `https://www.google.com/s2/favicons?domain=${firstWord}.com&sz=128`;
+    return `https://icons.duckduckgo.com/ip3/${firstWord}.com.ico`;
   }
 
   return "";

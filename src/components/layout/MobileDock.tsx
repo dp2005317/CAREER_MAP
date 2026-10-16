@@ -35,14 +35,14 @@ export function MobileDock({ activeTab, onTabChange, onOpenProfile }: MobileDock
                 className={`w-5 h-5 transition-all duration-300 ${
                   isActive 
                     ? "text-blue-600 dark:text-orange-400 scale-110 drop-shadow-md" 
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                    : "text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white"
                 }`} 
               />
               <span 
                 className={`text-[10px] font-bold transition-all duration-300 ${
                   isActive 
                     ? "text-blue-600 dark:text-orange-400 opacity-100 drop-shadow-md" 
-                    : "text-gray-500 dark:text-gray-400 opacity-80"
+                    : "text-gray-700 dark:text-gray-300"
                 }`}
               >
                 {item.label}
@@ -57,8 +57,8 @@ export function MobileDock({ activeTab, onTabChange, onOpenProfile }: MobileDock
           onClick={onOpenProfile}
           className="flex flex-col items-center justify-center w-14 h-12 gap-1 relative z-10"
         >
-          <User className="w-5 h-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-300" />
-          <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 opacity-80 transition-all duration-300">
+          <User className="w-5 h-5 text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white transition-all duration-300" />
+          <span className="text-[10px] font-bold text-gray-700 dark:text-gray-300 transition-all duration-300">
             Profile
           </span>
         </button>

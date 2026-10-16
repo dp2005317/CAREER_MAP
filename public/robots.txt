@@ -1,0 +1,7 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Host & Sitemap
+Host: https://careermap-ai.vercel.app
+Sitemap: https://careermap-ai.vercel.app/sitemap.xml

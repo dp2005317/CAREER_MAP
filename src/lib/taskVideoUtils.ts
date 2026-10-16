@@ -19,7 +19,7 @@ export function resolveTaskVideo(
   if (explicitCourseId === "course-mern-stack" && explicitLectureId) {
     if (explicitLectureId === "mern-lec-07") {
       return {
-        videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+        videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
         videoTitle: "ReactJS Full Course | ReactJS - Learn Everything",
         duration: "2 hrs 30 min",
         courseId: "course-mern-stack",
@@ -29,7 +29,7 @@ export function resolveTaskVideo(
     }
     if (explicitLectureId === "mern-lec-08") {
       return {
-        videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+        videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
         videoTitle: "Redux Toolkit Complete Course 2026",
         duration: "1 hr 45 min",
         courseId: "course-mern-stack",
@@ -39,7 +39,7 @@ export function resolveTaskVideo(
     }
     if (explicitLectureId === "mern-lec-10") {
       return {
-        videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+        videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
         videoTitle: "Complete Backend One Shot: Node.js, Express & MongoDB",
         duration: "3 hrs 15 min",
         courseId: "course-mern-stack",
@@ -49,7 +49,7 @@ export function resolveTaskVideo(
     }
     if (explicitLectureId === "mern-lec-12") {
       return {
-        videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+        videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
         videoTitle: "Complete Authentication System | JWT, Refresh Token & Security",
         duration: "2 hrs 00 min",
         courseId: "course-mern-stack",
@@ -62,7 +62,7 @@ export function resolveTaskVideo(
   // MERN Stack specific topics
   if (lower.includes("redux") || lower.includes("state management") || lower.includes("toolkit")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "Redux Toolkit Complete Course 2026",
       duration: "1 hr 45 min",
       courseId: "course-mern-stack",
@@ -73,7 +73,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("react") || lower.includes("hooks") || lower.includes("component") || lower.includes("usestate") || lower.includes("useeffect")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "ReactJS Full Course | ReactJS - Learn Everything",
       duration: "2 hrs 30 min",
       courseId: "course-mern-stack",
@@ -84,7 +84,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("typescript") || lower.includes("ts ") || lower.includes("types ")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "TypeScript Domination - Full Course",
       duration: "1 hr 50 min",
       courseId: "course-mern-stack",
@@ -95,7 +95,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("jwt") || lower.includes("auth") || lower.includes("token") || lower.includes("login") || lower.includes("cookie") || lower.includes("security")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "Complete Authentication System | JWT, Refresh Token & Security",
       duration: "2 hrs 00 min",
       courseId: "course-mern-stack",
@@ -106,7 +106,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("node") || lower.includes("express") || lower.includes("mongo") || lower.includes("api") || lower.includes("backend") || lower.includes("endpoint") || lower.includes("crud")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "Complete Backend One Shot: Node.js, Express & MongoDB",
       duration: "3 hrs 15 min",
       courseId: "course-mern-stack",
@@ -117,7 +117,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("responsive") || lower.includes("flexbox") || lower.includes("grid") || lower.includes("css")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "Responsive Web Development Complete Course for Beginners",
       duration: "2 hrs 10 min",
       courseId: "course-mern-stack",
@@ -128,7 +128,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("mern") || lower.includes("full stack") || lower.includes("web development") || lower.includes("javascript") || lower.includes("html") || lower.includes("dom")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY",
+      videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY",
       videoTitle: "Learn HTML, CSS and JavaScript in Single Video | Basics of MERN Stack",
       duration: "2 hrs 10 min",
       courseId: "course-mern-stack",
@@ -140,7 +140,7 @@ export function resolveTaskVideo(
   // DSA & C++ Specific
   if (lower.includes("array") || lower.includes("vector") || lower.includes("kadane") || lower.includes("subarray")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/VTLCoHnyACE",
+      videoUrl: "https://www.youtube-nocookie.com/embed/VTLCoHnyACE",
       videoTitle: "Arrays, Vectors & Kadane's Algorithm in C++",
       duration: "1 hr 30 min",
       courseId: "course-dsa",
@@ -151,7 +151,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("pointer") || lower.includes("memory") || lower.includes("reference")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/VTLCoHnyACE",
+      videoUrl: "https://www.youtube-nocookie.com/embed/VTLCoHnyACE",
       videoTitle: "Pointers, References & Memory Management in C++",
       duration: "1 hr 15 min",
       courseId: "course-dsa",
@@ -162,7 +162,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("loop") || lower.includes("conditional") || lower.includes("pattern") || lower.includes("if-else")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/VTLCoHnyACE",
+      videoUrl: "https://www.youtube-nocookie.com/embed/VTLCoHnyACE",
       videoTitle: "Conditional Statements & Loops in C++",
       duration: "1 hr 20 min",
       courseId: "course-dsa",
@@ -173,7 +173,7 @@ export function resolveTaskVideo(
 
   if (lower.includes("dsa") || lower.includes("algorithm") || lower.includes("leetcode") || lower.includes("problem") || lower.includes("c++") || lower.includes("complexity") || lower.includes("flowchart") || lower.includes("pseudocode")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/VTLCoHnyACE",
+      videoUrl: "https://www.youtube-nocookie.com/embed/VTLCoHnyACE",
       videoTitle: "Data Structures & Algorithms: Flowcharts, Logic & Pseudocode",
       duration: "1 hr 15 min",
       courseId: "course-dsa",
@@ -202,7 +202,7 @@ export function resolveTaskVideo(
   // Linux & DevOps
   if (lower.includes("linux") || lower.includes("terminal") || lower.includes("bash") || lower.includes("shell") || lower.includes("command line") || lower.includes("devops")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/sWbANNq40_k",
+      videoUrl: "https://www.youtube-nocookie.com/embed/sWbANNq40_k",
       videoTitle: "Linux Command Line & Shell Fundamentals",
       duration: "1 hr 20 min",
       courseId: "course-linux",
@@ -219,7 +219,7 @@ export function resolveTaskVideo(
   // SQL & Data Analytics
   if (lower.includes("sql") || lower.includes("query") || lower.includes("database") || lower.includes("table") || lower.includes("join") || lower.includes("analytics")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/HXV3zeRR3h4",
+      videoUrl: "https://www.youtube-nocookie.com/embed/HXV3zeRR3h4",
       videoTitle: "SQL & Data Analytics Complete Curriculum",
       duration: "1 hr 40 min",
       courseId: "course-data-analytics",
@@ -236,7 +236,7 @@ export function resolveTaskVideo(
   // Machine Learning
   if (lower.includes("ml") || lower.includes("machine learning") || lower.includes("model") || lower.includes("scikit") || lower.includes("regression") || lower.includes("classification")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/i_LwzRVP7bg",
+      videoUrl: "https://www.youtube-nocookie.com/embed/i_LwzRVP7bg",
       videoTitle: "Machine Learning with Python & Scikit-Learn",
       duration: "1 hr 30 min",
       courseId: "course-ml",
@@ -253,7 +253,7 @@ export function resolveTaskVideo(
   // Data Science
   if (lower.includes("data science") || lower.includes("pandas") || lower.includes("numpy")) {
     return {
-      videoUrl: "https://www.youtube.com/embed/i_LwzRVP7bg",
+      videoUrl: "https://www.youtube-nocookie.com/embed/i_LwzRVP7bg",
       videoTitle: "Python for Data Science Bootcamp",
       duration: "1 hr 30 min",
       courseId: "course-data-science",

@@ -32,17 +32,64 @@ import Image from "next/image";
 import { User as FirebaseUser } from "firebase/auth";
 import { UserProfile, UserCertificate } from "@/database/authContext";
 import { Job } from "@/backend/mockData";
+import dynamic from "next/dynamic";
 import { getAllCourses } from "@/lib/courseData";
 import { Course } from "@/data/types";
-import { mernCourseData } from "@/data/courses/mernCourse";
-import { mlCourseData } from "@/data/courses/mlCourse";
-import { dataScienceCourseData } from "@/data/courses/dataScienceCourse";
 import { useTheme } from "@/components/theme/ThemeProvider";
-import { LearningProgressDetailModal } from "@/components/dashboard/LearningProgressDetailModal";
-import { TaskVideoModal } from "@/components/dashboard/TaskVideoModal";
 import { resolveTaskVideo, getLectureRoute } from "@/lib/taskVideoUtils";
-import confetti from "canvas-confetti";
 import Link from "next/link";
+
+const LearningProgressDetailModal = dynamic(
+  () => import("@/components/dashboard/LearningProgressDetailModal").then((m) => m.LearningProgressDetailModal),
+  { ssr: false }
+);
+
+const TaskVideoModal = dynamic(
+  () => import("@/components/dashboard/TaskVideoModal").then((m) => m.TaskVideoModal),
+  { ssr: false }
+);
+
+const defaultInitialCourses: Course[] = [
+  {
+    courseId: "course-mern-stack",
+    title: "Full Stack Web Development with MERN",
+    description: "Build robust full-stack production apps with MongoDB, Express, React, and Node.js.",
+    category: "Full Stack",
+    company: "Meta",
+    skills: ["React", "Node.js", "Express", "MongoDB"],
+    source: { type: "youtube_playlist" },
+    difficulty: "Beginner",
+    duration: "40 hours",
+    thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=800&q=80",
+    modules: [],
+  },
+  {
+    courseId: "course-ml",
+    title: "Machine Learning with Python & Scikit-Learn",
+    description: "Learn Supervised, Unsupervised learning, Model evaluation and End-to-end ML pipelines.",
+    category: "Machine Learning",
+    company: "Google",
+    skills: ["Python", "Scikit-Learn", "Machine Learning"],
+    source: { type: "youtube_playlist" },
+    difficulty: "Intermediate",
+    duration: "35 hours",
+    thumbnail: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80",
+    modules: [],
+  },
+  {
+    courseId: "course-datascience",
+    title: "Data Science & Advanced Analytics",
+    description: "Master Pandas, NumPy, Data Visualization, Statistical Inference, and Business Intelligence.",
+    category: "Data Science",
+    company: "IBM",
+    skills: ["Python", "Pandas", "NumPy", "Statistics"],
+    source: { type: "youtube_playlist" },
+    difficulty: "Beginner",
+    duration: "45 hours",
+    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    modules: [],
+  },
+];
 
 export interface WeeklyTaskItem {
   id: string;
@@ -92,11 +139,7 @@ export function StudentDashboardView({
   const [searchQuery, setSearchQuery] = useState("");
 
   // Courses list
-  const [courses, setCourses] = useState<Course[]>([
-    mernCourseData,
-    mlCourseData,
-    dataScienceCourseData,
-  ]);
+  const [courses, setCourses] = useState<Course[]>(defaultInitialCourses);
 
   // ================= REAL USER-DRIVEN WEEKLY TASKS =================
   const initialRealTasks: WeeklyTaskItem[] = useMemo(() => {
@@ -144,7 +187,7 @@ export function StudentDashboardView({
         courseId: "course-dsa",
         lectureId: "dsa-lecture-01",
         videoTitle: "Data Structures & Algorithms: Flowcharts, Logic & Pseudocode",
-        videoUrl: "https://www.youtube.com/embed/VTLCoHnyACE"
+        videoUrl: "https://www.youtube-nocookie.com/embed/VTLCoHnyACE"
       },
       { 
         id: "task-3", 
@@ -155,7 +198,7 @@ export function StudentDashboardView({
         courseId: "course-mern-stack",
         lectureId: "mern-lec-02",
         videoTitle: "Responsive Web Development Complete Course for Beginners",
-        videoUrl: "https://www.youtube.com/embed/kkOuRJ69BRY"
+        videoUrl: "https://www.youtube-nocookie.com/embed/kkOuRJ69BRY"
       },
       { 
         id: "task-4", 
@@ -166,7 +209,7 @@ export function StudentDashboardView({
         courseId: "course-linux",
         lectureId: "linux-lec-01",
         videoTitle: "Linux Command Line & Shell Fundamentals",
-        videoUrl: "https://www.youtube.com/embed/sWbANNq40_k"
+        videoUrl: "https://www.youtube-nocookie.com/embed/sWbANNq40_k"
       }
     ];
   }, [courseProgress, courses]);
@@ -227,7 +270,10 @@ export function StudentDashboardView({
     });
     saveTasks(updated);
     try {
-      confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
+      import("canvas-confetti").then((mod) => {
+        const confettiFn = mod.default || mod;
+        confettiFn({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
+      });
     } catch (e) {}
   };
 
@@ -443,7 +489,7 @@ export function StudentDashboardView({
               <h1 className="text-xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                 Welcome back, {profile?.displayName || user?.displayName || "Learner"}!
               </h1>
-              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium mt-0.5">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium mt-0.5">
                 Here is your live roadmap progress and daily career milestones.
               </p>
             </div>
@@ -452,14 +498,14 @@ export function StudentDashboardView({
           {/* Right: Search & Action Header */}
           <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative flex-1 md:w-80">
-              <Search className="w-4 h-4 text-gray-400 dark:text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-gray-500 dark:text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={onSearchFocus}
                 placeholder="Search jobs, courses, roadmap..."
-                className="w-full bg-white/70 dark:bg-white/5 backdrop-blur-md text-gray-900 dark:text-white text-xs font-medium pl-10 pr-4 py-2.5 rounded-full border border-white/80 dark:border-white/10 shadow-xs focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-orange-500/40 transition-all placeholder:text-gray-400"
+                className="w-full bg-white/70 dark:bg-white/5 backdrop-blur-md text-gray-900 dark:text-white text-xs font-medium pl-10 pr-4 py-2.5 rounded-full border border-white/80 dark:border-white/10 shadow-xs focus:outline-none focus:ring-2 focus:ring-blue-500/30 dark:focus:ring-orange-500/40 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400"
               />
             </div>
             
@@ -486,8 +532,8 @@ export function StudentDashboardView({
                     <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight whitespace-nowrap">
                       Learning Progress
                     </h2>
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200/50 dark:border-emerald-800/30 whitespace-nowrap shrink-0 shadow-2xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100/90 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-700/40 whitespace-nowrap shrink-0 shadow-2xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse transform-gpu will-change-transform will-change-opacity"></span>
                       Real-Time
                     </span>
                   </div>
@@ -495,13 +541,13 @@ export function StudentDashboardView({
                   {/* View Details Button */}
                   <button
                     onClick={() => setIsProgressModalOpen(true)}
-                    className="px-3 py-1.5 rounded-full text-xs font-extrabold text-blue-600 dark:text-orange-400 bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-white/10 transition-colors border border-blue-200/50 dark:border-white/10 cursor-pointer flex items-center gap-1.5 shrink-0"
+                    className="px-3 py-1.5 rounded-full text-xs font-extrabold text-blue-700 dark:text-orange-400 bg-blue-50 dark:bg-white/5 hover:bg-blue-100 dark:hover:bg-white/10 transition-colors border border-blue-200/70 dark:border-white/10 cursor-pointer flex items-center gap-1.5 shrink-0"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>View Details</span>
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
                   Calculated accurately from your completed lessons and credentials.
                 </p>
               </div>
@@ -532,7 +578,7 @@ export function StudentDashboardView({
                         strokeDasharray={circumference}
                         strokeDashoffset={strokeDashoffset}
                         strokeLinecap="round"
-                        className="transition-all duration-1000 ease-out"
+                        className="transition-[stroke-dashoffset] duration-1000 ease-out transform-gpu"
                       />
                     </svg>
 
@@ -540,7 +586,7 @@ export function StudentDashboardView({
                       <span className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white tracking-tight">
                         {realtimePercent}%
                       </span>
-                      <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+                      <span className="text-[10px] font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                         Mastery
                       </span>
                     </div>
@@ -548,13 +594,13 @@ export function StudentDashboardView({
 
                   {/* Summary labels next to gauge */}
                   <div className="space-y-1">
-                    <p className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                    <p className="text-xs font-bold text-gray-600 dark:text-gray-300">
                       Completed Lessons
                     </p>
                     <p className="text-lg sm:text-xl font-black text-gray-900 dark:text-white">
                       {totalCompletedLessons} / {totalCourseLessons > 0 ? totalCourseLessons : "0"}
                     </p>
-                    <p className="text-[11px] font-semibold text-gray-400 dark:text-gray-500">
+                    <p className="text-[11px] font-semibold text-gray-600 dark:text-gray-300">
                       Across {activeCoursesCount} enrolled {activeCoursesCount === 1 ? "course" : "courses"}
                     </p>
                   </div>
@@ -565,14 +611,14 @@ export function StudentDashboardView({
                   
                   {/* Verified Certificates */}
                   <div className="flex items-center gap-2.5 text-xs">
-                    <div className="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-amber-100/80 dark:bg-amber-500/15 text-amber-800 dark:text-amber-300 flex items-center justify-center shrink-0">
                       <Award className="w-4 h-4" />
                     </div>
                     <div>
                       <p className="font-extrabold text-gray-900 dark:text-white">
                         {certificates.length} {certificates.length === 1 ? "Certificate" : "Certificates"} Earned
                       </p>
-                      <p className="text-[10px] text-gray-400">
+                      <p className="text-[10px] text-gray-600 dark:text-gray-300 font-medium">
                         {certificates.length > 0 ? "Verifiable credentials" : "Complete a course to claim"}
                       </p>
                     </div>
@@ -580,14 +626,14 @@ export function StudentDashboardView({
 
                   {/* Completed Tasks Count */}
                   <div className="flex items-center gap-2.5 text-xs">
-                    <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-orange-500/10 text-blue-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-blue-100/80 dark:bg-orange-500/15 text-blue-800 dark:text-orange-300 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="w-4 h-4" />
                     </div>
                     <div>
                       <p className="font-extrabold text-gray-900 dark:text-white">
                         {completedTasks.length} Weekly Tasks Done
                       </p>
-                      <p className="text-[10px] text-gray-400">
+                      <p className="text-[10px] text-gray-600 dark:text-gray-300 font-medium">
                         {completedTasks.length} of {tasks.length} tasks completed ({taskCompletionRate}%)
                       </p>
                     </div>
@@ -595,14 +641,14 @@ export function StudentDashboardView({
 
                   {/* Career Readiness Points */}
                   <div className="flex items-center gap-2.5 text-xs">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100/80 dark:bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
                       <Flame className="w-4 h-4" />
                     </div>
                     <div>
                       <p className="font-extrabold text-gray-900 dark:text-white">
                         {bonusPoints} Career XP
                       </p>
-                      <p className="text-[10px] text-gray-400">
+                      <p className="text-[10px] text-gray-600 dark:text-gray-300 font-medium">
                         Live dynamic ranking score
                       </p>
                     </div>
@@ -652,7 +698,7 @@ export function StudentDashboardView({
                           </div>
                           <div className="w-full bg-slate-200/80 dark:bg-white/10 h-1.5 rounded-full overflow-hidden">
                             <div
-                              className="bg-blue-600 dark:bg-orange-500 h-full rounded-full transition-all duration-500"
+                              className="bg-blue-600 dark:bg-orange-500 h-full rounded-full transition-[width] duration-500 ease-out"
                               style={{ width: `${prog}%` }}
                             />
                           </div>
@@ -663,7 +709,7 @@ export function StudentDashboardView({
                   })}
                 </div>
               ) : (
-                <span className="text-xs text-gray-400 dark:text-gray-500 italic flex items-center gap-1.5">
+                <span className="text-xs text-gray-600 dark:text-gray-300 italic flex items-center gap-1.5">
                   <span>No active course enrollments yet •</span>
                   <button onClick={onGoToCourses} className="text-blue-600 dark:text-orange-400 font-bold hover:underline not-italic cursor-pointer">
                     Browse Courses →
@@ -678,11 +724,11 @@ export function StudentDashboardView({
                     <button
                       key={cert.id}
                       onClick={() => onOpenCertificate(cert)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-xs font-bold text-amber-800 dark:text-amber-400 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer shrink-0"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100/90 dark:bg-amber-500/15 border border-amber-300/60 dark:border-amber-500/25 text-xs font-bold text-amber-900 dark:text-amber-300 hover:scale-[1.02] active:scale-95 transition-all cursor-pointer shrink-0"
                     >
-                      <Award size={13} className="text-amber-500 shrink-0" />
+                      <Award size={13} className="text-amber-600 dark:text-amber-400 shrink-0" />
                       <span className="truncate max-w-[160px] sm:max-w-xs">{cert.courseTitle}</span>
-                      <span className="text-[10px] bg-amber-200/60 dark:bg-amber-500/20 px-1.5 py-0.2 rounded font-black text-amber-700 dark:text-amber-300">Verified</span>
+                      <span className="text-[10px] bg-amber-200/80 dark:bg-amber-500/25 px-1.5 py-0.2 rounded font-black text-amber-900 dark:text-amber-200">Verified</span>
                     </button>
                   ))}
                 </div>
@@ -698,7 +744,7 @@ export function StudentDashboardView({
                   <h2 className="text-lg sm:text-xl font-extrabold text-gray-900 dark:text-white">
                     Weekly Tasks
                   </h2>
-                  <span className="text-xs font-bold text-gray-500 dark:text-gray-400 bg-slate-100 dark:bg-white/5 px-2.5 py-0.5 rounded-full">
+                  <span className="text-xs font-bold text-gray-700 dark:text-gray-200 bg-slate-100 dark:bg-white/10 px-2.5 py-0.5 rounded-full">
                     {completedTasks.length}/{tasks.length} Done ({taskCompletionRate}%)
                   </span>
                 </div>
@@ -715,7 +761,7 @@ export function StudentDashboardView({
                   </button>
                   <button 
                     onClick={() => setIsAddingTask(!isAddingTask)}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-orange-400 hover:underline cursor-pointer bg-blue-50 dark:bg-white/5 border border-blue-200/60 dark:border-white/10 px-3 py-1.5 rounded-full shadow-2xs"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 dark:text-orange-400 hover:underline cursor-pointer bg-blue-50 dark:bg-white/5 border border-blue-200/60 dark:border-white/10 px-3 py-1.5 rounded-full shadow-2xs"
                   >
                     <Plus size={13} />
                     <span>Add Task</span>
@@ -724,7 +770,7 @@ export function StudentDashboardView({
               </div>
 
               <div className="flex items-center justify-between mb-4">
-                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
                   Personalized daily milestones updated dynamically as you study.
                 </p>
                 <div className="shrink-0">
@@ -748,7 +794,7 @@ export function StudentDashboardView({
                     value={newTaskTitle}
                     onChange={(e) => setNewTaskTitle(e.target.value)}
                     placeholder="Enter task (e.g. Master Docker, Build Auth API)..."
-                    className="flex-1 bg-transparent px-3 py-1.5 text-xs font-medium text-gray-900 dark:text-white outline-none placeholder:text-gray-400"
+                    className="flex-1 bg-transparent px-3 py-1.5 text-xs font-medium text-gray-900 dark:text-white outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
                     autoFocus
                   />
                   <button
@@ -793,12 +839,12 @@ export function StudentDashboardView({
                         </span>
                         <div className="flex items-center gap-2 mt-0.5">
                           {task.isAI && (
-                            <span className="text-[10px] font-bold text-blue-600 dark:text-orange-400 flex items-center gap-1">
+                            <span className="text-[10px] font-bold text-blue-700 dark:text-orange-400 flex items-center gap-1">
                               <Sparkles className="w-2.5 h-2.5" />
                               <span>{task.category || "AI Daily Goal"}</span>
                             </span>
                           )}
-                          <span className="text-[10px] font-bold text-gray-400 dark:text-gray-500 flex items-center gap-1 group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
+                          <span className="text-[10px] font-bold text-gray-600 dark:text-gray-300 flex items-center gap-1 group-hover:text-blue-600 dark:group-hover:text-orange-400 transition-colors">
                             <Play className="w-2 h-2 fill-current" />
                             <span>Watch Lecture Video →</span>
                           </span>
@@ -838,7 +884,7 @@ export function StudentDashboardView({
                     <Check className="w-5 h-5 stroke-[3]" />
                   </div>
                   <h4 className="text-sm font-extrabold text-gray-900 dark:text-white">All Weekly Tasks Completed!</h4>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-3">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 mt-1 mb-3">
                     You have cleared all active milestones. Generate fresh AI daily tasks to continue making progress.
                   </p>
                   <div className="flex items-center justify-center gap-2">
@@ -867,14 +913,14 @@ export function StudentDashboardView({
               <div className="mt-5 pt-4 border-t border-slate-100 dark:border-white/5">
                 <div className="flex items-center justify-between mb-2.5">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse transform-gpu will-change-transform will-change-opacity" />
+                    <span className="text-xs font-black uppercase tracking-wider text-gray-600 dark:text-gray-300">
                       Completed Tasks ({completedTasks.length})
                     </span>
                   </div>
                   <button
                     onClick={handleClearCompleted}
-                    className="text-[11px] font-bold text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
+                    className="text-[11px] font-bold text-gray-600 dark:text-gray-300 hover:text-red-500 transition-colors cursor-pointer"
                   >
                     Clear completed
                   </button>
@@ -895,7 +941,7 @@ export function StudentDashboardView({
                           <Check className="w-3 h-3 stroke-[3]" />
                         </button>
                         <div className="flex flex-col min-w-0 flex-1">
-                          <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 line-through truncate">
+                          <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 line-through truncate">
                             {task.title}
                           </span>
                           <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
@@ -907,7 +953,7 @@ export function StudentDashboardView({
                       <div className="flex items-center gap-2 shrink-0">
                         <button
                           onClick={() => handleWatchLecture(task)}
-                          className="text-[10px] font-extrabold text-gray-400 hover:text-blue-600 dark:hover:text-orange-400 flex items-center gap-1 cursor-pointer transition-colors"
+                          className="text-[10px] font-extrabold text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-orange-400 flex items-center gap-1 cursor-pointer transition-colors"
                           title="Re-watch lecture video at the course section"
                         >
                           <Play className="w-2 h-2 fill-current" />
@@ -915,7 +961,7 @@ export function StudentDashboardView({
                         </button>
                         <button
                           onClick={(e) => handleDeleteTask(task.id, e)}
-                          className="text-gray-300 dark:text-gray-600 hover:text-red-500 p-1 rounded transition-colors cursor-pointer"
+                          className="text-gray-400 dark:text-gray-500 hover:text-red-500 p-1 rounded transition-colors cursor-pointer"
                           title="Delete task"
                         >
                           <Trash2 size={12} />
@@ -981,11 +1027,11 @@ export function StudentDashboardView({
                       <h3 className="font-extrabold text-base text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-orange-500 transition-colors line-clamp-1 mb-2">
                         {c.title}
                       </h3>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 font-medium line-clamp-2 mb-4 leading-relaxed">
+                      <p className="text-xs text-gray-600 dark:text-gray-300 font-medium line-clamp-2 mb-4 leading-relaxed">
                         {c.description}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px] font-bold text-blue-600 dark:text-orange-400">
+                    <div className="flex items-center gap-2 text-[11px] font-bold text-blue-700 dark:text-orange-400">
                       <span>{c.duration || "40 hours"}</span>
                       <span>•</span>
                       <span>{c.difficulty || "Beginner"}</span>
@@ -1029,15 +1075,15 @@ export function StudentDashboardView({
                       <h4 className="font-bold text-sm text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-orange-500 transition-colors">
                         {job.title}
                       </h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">
+                      <p className="text-xs text-gray-600 dark:text-gray-300 font-medium mt-0.5">
                         {job.company}
                       </p>
                     </div>
-                    <span className="text-[10px] font-black text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-black text-emerald-900 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/60 px-2 py-0.5 rounded">
                       {job.salary.split(" ")[0]}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 mt-3 text-[10px] font-semibold text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-3 mt-3 text-[10px] font-semibold text-gray-600 dark:text-gray-300">
                     <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{job.location}</span>
                     <span>•</span>
                     <span>{job.type}</span>

@@ -1,22 +1,51 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { Job, generateJobsNearCoordinates } from "@/backend/mockData";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MobileDock } from "@/components/layout/MobileDock";
 import { DashboardHeader } from "@/components/layout/DashboardHeader";
-import { InteractiveMap } from "@/components/maps/InteractiveMap";
 import { JobCardRow } from "@/components/jobs/JobCardRow";
-import { JobDetailOverlay } from "@/components/jobs/JobDetailOverlay";
-import { CompaniesView } from "@/components/views/CompaniesView";
-import { AllJobsView } from "@/components/views/AllJobsView";
-import { SavedJobsView } from "@/components/views/SavedJobsView";
 import { StudentDashboardView } from "@/components/views/StudentDashboardView";
 import { useRouter } from "next/navigation";
 import { useAuth, UserCertificate } from "@/database/authContext";
-import { OnboardingModal } from "@/components/profile/OnboardingModal";
-import { CertificateModal } from "@/components/courses/CertificateModal";
 import { calculateJobMatch } from "@/backend/recommendations";
+
+const InteractiveMap = dynamic(
+  () => import("@/components/maps/InteractiveMap").then((mod) => mod.InteractiveMap),
+  { ssr: false }
+);
+
+const CompaniesView = dynamic(
+  () => import("@/components/views/CompaniesView").then((mod) => mod.CompaniesView),
+  { ssr: false }
+);
+
+const AllJobsView = dynamic(
+  () => import("@/components/views/AllJobsView").then((mod) => mod.AllJobsView),
+  { ssr: false }
+);
+
+const SavedJobsView = dynamic(
+  () => import("@/components/views/SavedJobsView").then((mod) => mod.SavedJobsView),
+  { ssr: false }
+);
+
+const JobDetailOverlay = dynamic(
+  () => import("@/components/jobs/JobDetailOverlay").then((mod) => mod.JobDetailOverlay),
+  { ssr: false }
+);
+
+const OnboardingModal = dynamic(
+  () => import("@/components/profile/OnboardingModal").then((mod) => mod.OnboardingModal),
+  { ssr: false }
+);
+
+const CertificateModal = dynamic(
+  () => import("@/components/courses/CertificateModal").then((mod) => mod.CertificateModal),
+  { ssr: false }
+);
 
 export default function DashboardPage() {
   const router = useRouter();

@@ -1,0 +1,26 @@
+# CareerMap AI
+
+> Spatial Career Discovery & Real-Time Job Intelligence across India. Designed for engineering students, self-taught developers, and hiring managers to discover geo-located tech opportunities, master structured learning roadmaps, and track hands-on coding achievements.
+
+## Main Navigation & Core Features
+
+- [Student Dashboard](https://careermap-ai.vercel.app/dashboard): Real-time learning progress, active module mastery, and AI-generated personalized milestones.
+- [Spatial Job Map](https://careermap-ai.vercel.app/dashboard?tab=map): Interactive geo-located map of tech companies and engineering jobs across tier-1, tier-2, and tier-3 Indian hubs.
+- [Classroom Courses](https://careermap-ai.vercel.app/courses): Structured video courses covering Full-Stack MERN, Machine Learning, Data Structures & Algorithms, Linux, and Data Science.
+- [Code Playground](https://careermap-ai.vercel.app/code): In-browser IDE powered by Monaco editor with instant syntax compilation and coding assessments.
+- [Company Directory](https://careermap-ai.vercel.app/dashboard?tab=companies): Verified technology companies, hiring trends, salary benchmarks, and tech stacks.
+- [Student Profile](https://careermap-ai.vercel.app/profile): Verified resume parsing, skills radar, milestone streaks, and certificate portfolio.
+
+## Technical Architecture
+
+- **Framework**: Next.js 16 (App Router, Turbopack, React 19)
+- **Styling**: Tailwind CSS, Frosted Glassmorphism, Dual Theme (Light & Ember Dark)
+- **Mapping**: MapLibre GL, Vector Tile Clustering, Spatial Geolocation
+- **State & Database**: Firebase Firestore, Browser Local Persistence
+- **AI Core**: Resume Parser, Real-time Job Matching Score, Daily AI Task Generator
+
+## Optional Resources
+
+- [Full LLM Documentation](https://careermap-ai.vercel.app/llms-full.txt): Comprehensive schema, data models, and API descriptions.
+- [Robots.txt](https://careermap-ai.vercel.app/robots.txt): Crawler indexing policies.
+- [Sitemap](https://careermap-ai.vercel.app/sitemap.xml): Complete machine-readable XML site structure.

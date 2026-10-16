@@ -1,0 +1,22 @@
+# CareerMap AI — Full Technical Specification
+
+> Spatial Career Discovery & Real-Time Job Intelligence across India.
+
+## Application Overview
+CareerMap AI combines spatial geolocation mapping with AI-assisted career progression. It enables students and tech aspirants across India to visualize job hotspots, evaluate compensation ranges, follow verified industry learning roadmaps, and solve interactive coding challenges.
+
+### Core Routes
+- GET /: Landing page with spatial platform highlights and real-time statistics.
+- GET /dashboard: Student overview, progress radial gauge, weekly tasks, and course milestones.
+- GET /dashboard?tab=map: Vector map with marker clusters, proximity search, and salary filters.
+- GET /dashboard?tab=companies: Curated database of tech firms across Bangalore, Hyderabad, Pune, NCR, Kolkata, and emerging IT hubs.
+- GET /courses: Full curriculum library with video lectures, lesson notes, and interactive quizzes.
+- GET /courses/:id: Dynamic course syllabus, module completion tracking, and verifiable certificates.
+- GET /code: Monaco-powered sandboxed execution environment supporting JavaScript, Python, C++, and Java.
+- GET /profile: Student profile with parsed skills, resume analysis, and bookmarked roles.
+
+### API Endpoints
+- GET /api/jobs: Returns geo-tagged tech jobs filtered by latitude, longitude, and radius.
+- POST /api/parse-resume: Parses PDF resumes using PDF text extraction and skills taxonomy mapping.
+- POST /api/ai/generate-tasks: Generates tailored weekly tasks based on current syllabus progress.
+- POST /api/execute: Executes and evaluates sandboxed code against test cases.
